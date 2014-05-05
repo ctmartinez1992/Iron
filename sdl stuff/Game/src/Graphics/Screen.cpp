@@ -160,7 +160,7 @@ void Screen::renderSprite(Sprite* sprite) const {
 	}
 
 	//Render
-	if (SDL_RenderCopy(renderer, sprite->texture, clip, &positionAndSize) == -1) {
+	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) == -1) {
 		printf("An error occured when rendering a sprite! SDL Error: %s\n", SDL_GetError());
 	}
 

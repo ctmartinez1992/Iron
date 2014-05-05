@@ -110,10 +110,10 @@ bool loadMedia() {
 	//Load a sprite from a sheet, clip it and throw some animations in
 	sprite = new Sprite(sheet);
 	SDL_Rect clip = { 0, 0, sheet->getSpriteWidth(), sheet->getSpriteHeight() };
-	sprite->loadSprite(50, 50, &clip, true, true);
+	sprite->loadSprite(200, 200, &clip, true, true, 0);
 	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 7, 1);
 	sprite->animations->addAnimation("cycle2", { 0, 1, 2, 1, 3, 2, 1 }, 10, 1);
-	sprite->animations->play("cycle");
+	//sprite->animations->play("cycle");
 
 	//Add the sprite to the world
 	world->addSprite(sprite);
@@ -141,7 +141,7 @@ void close() {
 
 void update() {
 	world->update();
-	std::cout << sprite->animations->state << std::endl;
+	sprite->angle += 0.22;
 }
 
 void render() {
@@ -199,8 +199,24 @@ int main(int argc, char* args[]) {
 							sprite->animations->resume();
 							break;
 
-						case SDLK_e:
-							sprite->animations->play("cycle2");
+						case SDLK_a:
+							sprite->setAnchor(0, 0);
+							break;
+
+						case SDLK_s:
+							sprite->setAnchor(0.5, 0.5);
+							break;
+
+						case SDLK_d:
+							sprite->setAnchor(1, 1);
+							break;
+
+						case SDLK_f:
+							sprite->setAnchor(0.5, 1);
+							break;
+
+						case SDLK_g:
+							sprite->setAnchor(2, -1);
 							break;
 
 						default:

@@ -63,8 +63,6 @@ void Animation::update() {
 		currentIndex = maxIndex;
 	}
 
-	std::cout << currentIndex << " - " << indexInc << " - " << timeRate << std::endl;
-
 	//Update the currentFrame with the new currentFrame
 	currentFrame = frames[currentIndex];
 }
