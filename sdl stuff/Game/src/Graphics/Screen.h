@@ -1,0 +1,120 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
+#define _CRTDBG_MAP_ALLOC
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+
+//SDL
+#include <SDL.h>
+#include <SDL_image.h>
+
+//C++
+#include <stdio.h>
+#include <string>
+
+//OWN
+#include "Colors.h"
+#include "NormalTexture.h"
+#include "SpriteSheet.h"
+
+class Sprite;
+
+class Screen {
+	/*************** Variables ***************/
+	private:
+		//The canvas.
+		SDL_Window*				window;
+
+		//The name of the window.
+		const char*				screenTitle;
+
+		//Controls if the Screen class was initiated.
+		bool					init;
+
+	protected:
+
+	public:
+		//Singleton.
+		static Screen*			_instance;
+
+		//Default Blend Mode, use to restore values
+		static SDL_BlendMode	DEFAULT_BLEND_MODE;
+
+		//Default Color Scheme, use to restore values
+		static SDL_Color		DEFAULT_COLOR_SCHEME;
+
+		//The window renderer.
+		SDL_Renderer*			renderer;
+
+		//Standard applied viewport
+		SDL_Rect				normalViewport;
+
+		//The resolution of the screen and other pre-computed resolutions.
+		Uint16					width;
+		Uint16					height;
+		Uint16					widthHalf;
+		Uint16					heightHalf;
+		Uint16					widthThird;
+		Uint16					heightThird;
+		Uint16					widthFourth;
+		Uint16					heightFourth;
+
+		//The current viewport width and height
+		Uint16					viewportWidth;
+		Uint16					viewportHeight;
+
+
+	/*************** Contructors & Destructors ***************/
+	public:
+		Screen();
+		Screen(const char* screenTitle, Uint16 width, Uint16 height);
+		~Screen();
+
+	/*************** Methods ***************/
+	private:
+
+	protected:
+
+	public:
+		//Obtain an instance of the Screen class.
+		static Screen*			getInstance();
+
+		//Initializes the class.
+		bool					initScreen();
+
+		//Clears the entire screen.
+		void					clearScreen();
+
+		//Flush the screen to render everything.
+		void					updateScreen();
+
+		//Loads and returns a SDL_Texture pointer.
+		SDL_Texture*			loadTexture(const std::string path);
+
+		//Renders a texture (part of a sheet) to the screen given the position and its dimensions. Optionally, you can pass a sheet clip, a color mod and a alpha mod
+		void					renderTexture(SDL_Texture* texture, SDL_Rect* positionAndSize, SDL_Rect* sheetClip = nullptr, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255) const;
+
+		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
+		void					renderSprite(Sprite* sprite) const;
+
+		//Renders a normal texture (see class) to the screen.
+		void					renderNormalTexture(NormalTexture* normalTexture) const;
+
+		//Renders a filled square to the screen.
+		void					renderFilledSquare(SDL_Rect* fillRect, const Colors color) const;
+
+		//Renders a border-only square to the screen.
+		void					renderDrawnSquare(SDL_Rect* drawRect, const Colors color) const;
+
+		//Renders a point to the screen.
+		void					renderPoint(const SDL_Point* point, const Colors color) const;
+
+		//Sets a viewport for the screen
+		void					setViewport(const SDL_Rect* viewport);
+
+		//Sets a viewport for the screen
+		void					restoreNormalViewport();
+};
+
+#endif
