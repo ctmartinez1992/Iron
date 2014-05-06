@@ -92,20 +92,17 @@ class Screen {
 		//Loads and returns a SDL_Texture pointer.
 		SDL_Texture*			loadTexture(const std::string path);
 
-		//Renders a texture (part of a sheet) to the screen given the position and its dimensions. Optionally, you can pass a sheet clip, a color mod and a alpha mod
-		void					renderTexture(SDL_Texture* texture, SDL_Rect* positionAndSize, SDL_Rect* sheetClip = nullptr, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255) const;
-
 		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
-		void					renderSprite(Sprite* sprite) const;
+		void					renderSprite(const Sprite* sprite) const;
 
 		//Renders a normal texture (see class) to the screen.
-		void					renderNormalTexture(NormalTexture* normalTexture) const;
+		void					renderNormalTexture(const NormalTexture* normalTexture) const;
 
 		//Renders a filled square to the screen.
-		void					renderFilledSquare(SDL_Rect* fillRect, const Colors color) const;
+		void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;
 
 		//Renders a border-only square to the screen.
-		void					renderDrawnSquare(SDL_Rect* drawRect, const Colors color) const;
+		void					renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const;
 
 		//Renders a point to the screen.
 		void					renderPoint(const SDL_Point* point, const Colors color) const;

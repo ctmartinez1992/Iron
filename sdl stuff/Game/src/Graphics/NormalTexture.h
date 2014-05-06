@@ -34,7 +34,7 @@ public:
 	/*************** Contructors & Destructors ***************/
 public:
 	NormalTexture();
-	NormalTexture(SDL_Point* position, SDL_Renderer* renderer);
+	NormalTexture(SDL_Point position, SDL_Renderer* renderer);
 	~NormalTexture();
 
 	/*************** Methods ***************/

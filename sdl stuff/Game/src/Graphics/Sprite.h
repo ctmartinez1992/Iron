@@ -15,6 +15,7 @@
 
 //OWN
 #include "Animations.h"
+#include "../Util/Vector2.h"
 
 class Screen;
 class SpriteSheet;
@@ -23,10 +24,10 @@ class Sprite {
 	/*************** Variables ***************/
 private:
 	//The position of the point in the world
-	SDL_Point*				position;
+	Vector2*				position;
 
 	//The anchor is the pivot point at which the sprite is rendered upon, the fake anchor receives values more intuitive like [.5, .5] is the center of the sprite and [0, 0] is the upper left corner and [1, 0] is the right upper corner
-	SDL_Point*				fakeAnchor;
+	Vector2*				fakeAnchor;
 
 	//The anchor is the pivot point at which the sprite is rendered upon, the real anchor holds the actual values, this is done by multiplying x with spriteWidth and y with spriteHeight from the SpriteSheet class
 	SDL_Point*				realAnchor;
@@ -88,13 +89,13 @@ public:
 	void					render(Screen* screen);
 
 	//Loads the sprite clip
-	bool					loadSprite(double x, double y, SDL_Rect* clip, bool useClip = false, bool useAnimation = false, double angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+	bool					loadSprite(double x, double y, SDL_Rect clip, bool useClip = false, bool useAnimation = false, double angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
 
 	//Sets the position with the given values
 	void					setPosition(const double x, const double y);
 
 	//Gets the position
-	SDL_Point*				getPosition() const;
+	Vector2*				getPosition() const;
 
 	//Sets the position with the given values
 	void					setAnchor(const double x, const double y);

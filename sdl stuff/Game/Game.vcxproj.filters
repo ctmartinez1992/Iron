@@ -25,6 +25,18 @@
     <Filter Include="Source Files\General">
       <UniqueIdentifier>{db1bdad0-cc36-49de-bc61-6cb3886e74c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Geometry">
+      <UniqueIdentifier>{8ab3a2b7-d67f-406a-83d2-383f078367f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Geometry">
+      <UniqueIdentifier>{779838a1-5cbf-4a10-910a-9fe6d4983d5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{f87bbf17-fa88-417c-926e-0a8baee437b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{1a0accd3-45e6-4bd1-8049-723767f3f7d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\texture07.png">
@@ -59,6 +71,15 @@
     <ClCompile Include="src\General\World.cpp">
       <Filter>Source Files\General</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Geometry\GeometryObject.cpp">
+      <Filter>Source Files\Graphics\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\Vector2.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\Math.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics\Screen.h">
@@ -84,6 +105,15 @@
     </ClInclude>
     <ClInclude Include="src\General\World.h">
       <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Geometry\GeometryObject.h">
+      <Filter>Header Files\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Vector2.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Math.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

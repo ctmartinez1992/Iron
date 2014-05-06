@@ -4,8 +4,8 @@
 
 Sprite::Sprite() : angle(0), useClip(false), useAnimation(false), loaded(false)
 {
-	position = new SDL_Point();
-	fakeAnchor = new SDL_Point();
+	position = new Vector2();
+	fakeAnchor = new Vector2();
 	realAnchor = new SDL_Point();
 	clip = new SDL_Rect();
 	colorMod = new SDL_Color();
@@ -19,8 +19,8 @@ Sprite::Sprite() : angle(0), useClip(false), useAnimation(false), loaded(false)
 
 Sprite::Sprite(SpriteSheet* sheet) : angle(0), useClip(false), useAnimation(false), loaded(false)
 {
-	position = new SDL_Point();
-	fakeAnchor = new SDL_Point();
+	position = new Vector2();
+	fakeAnchor = new Vector2();
 	realAnchor = new SDL_Point();
 	clip = new SDL_Rect();
 	colorMod = new SDL_Color();
@@ -91,9 +91,9 @@ void Sprite::render(Screen* screen) {
 	screen->renderSprite(this);
 }
 
-bool Sprite::loadSprite(double x, double y, SDL_Rect* clip, bool useClip, bool useAnimation, double angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
+bool Sprite::loadSprite(double x, double y, SDL_Rect clip, bool useClip, bool useAnimation, double angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
 	setPosition(x, y);
-	setSpriteClip(clip->x, clip->y, clip->w, clip->h);
+	setSpriteClip(clip.x, clip.y, clip.w, clip.h);
 	setColorMod(rMod, gMod, bMod, alpha);
 
 	this->angle = angle;
@@ -109,7 +109,7 @@ void Sprite::setPosition(const double x, const double y) {
 	position->y = y;
 }
 
-SDL_Point* Sprite::getPosition() const {
+Vector2* Sprite::getPosition() const {
 	return position;
 }
 

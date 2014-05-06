@@ -38,10 +38,6 @@ void render();
 //Frees media and shuts down SDL.
 void close();
 
-//Scene textures
-NormalTexture* bgTexture = nullptr;
-NormalTexture* fooTexture = nullptr;
-
 //SpriteSheet test
 SpriteSheet* sheet = nullptr;
 
@@ -81,22 +77,6 @@ bool loadMedia() {
 	//Loading success flag.
 	bool success = true;
 
-	//Load background texture
-	SDL_Point bgPosition = { 0, 0 };
-	bgTexture = new NormalTexture(&bgPosition, screen->renderer);
-	if (!bgTexture->loadTexture("res/bg10.png")) {
-		printf("Failed to load background texture image!\n");
-		success = false;
-	}
-	
-	//Load Foo' texture
-	SDL_Point fooPosition = { 190, 240 };
-	fooTexture = new NormalTexture(&fooPosition, screen->renderer);
-	if (!fooTexture->loadTexture("res/foo10.png")) {
-		printf("Failed to load Foo' texture image!\n");
-		success = false;
-	}
-
 	//Load a SpriteSheet
 	sheet = new SpriteSheet(screen->renderer);
 	if (!sheet->loadTextureAndClips("res/dots11.png", 200, 200, 4)) {
@@ -110,10 +90,10 @@ bool loadMedia() {
 	//Load a sprite from a sheet, clip it and throw some animations in
 	sprite = new Sprite(sheet);
 	SDL_Rect clip = { 0, 0, sheet->getSpriteWidth(), sheet->getSpriteHeight() };
-	sprite->loadSprite(200, 200, &clip, true, true, 0);
+	sprite->loadSprite(200, 200, clip, true, true, 0);
 	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 7, 1);
 	sprite->animations->addAnimation("cycle2", { 0, 1, 2, 1, 3, 2, 1 }, 10, 1);
-	//sprite->animations->play("cycle");
+	sprite->animations->play("cycle");
 
 	//Add the sprite to the world
 	world->addSprite(sprite);
@@ -122,12 +102,6 @@ bool loadMedia() {
 }
 
 void close() {
-	//Free loaded images
-	delete bgTexture;
-	bgTexture = nullptr;
-	delete fooTexture;
-	fooTexture = nullptr;
-
 	//Quit SDL subsystems.
 	IMG_Quit();
 	SDL_Quit();
@@ -230,12 +204,6 @@ int main(int argc, char* args[]) {
 
 				//Then render
 				render();
-
-				////Render background texture to screen
-				//screen->renderTexture(bgTexture->getTexture(), bgTexture->getPositionAndSize());
-
-				////Render Foo' to the screen
-				//screen->renderTexture(fooTexture->getTexture(), fooTexture->getPositionAndSize());
 
 				////Render filled square to screen
 				//SDL_Rect fillRect = { screen->widthFourth, screen->heightFourth, screen->widthHalf, screen->heightHalf };

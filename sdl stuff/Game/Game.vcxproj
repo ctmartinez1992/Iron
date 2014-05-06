@@ -18,21 +18,27 @@
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\Animations.cpp" />
     <ClCompile Include="src\Graphics\Colors.cpp" />
+    <ClCompile Include="src\Graphics\Geometry\GeometryObject.cpp" />
     <ClCompile Include="src\Graphics\NormalTexture.cpp" />
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Util\Math.cpp" />
+    <ClCompile Include="src\Util\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\General\World.h" />
     <ClInclude Include="src\Graphics\Animation.h" />
     <ClInclude Include="src\Graphics\Animations.h" />
     <ClInclude Include="src\Graphics\Colors.h" />
+    <ClInclude Include="src\Graphics\Geometry\GeometryObject.h" />
     <ClInclude Include="src\Graphics\NormalTexture.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />
     <ClInclude Include="src\Graphics\SpriteSheet.h" />
+    <ClInclude Include="src\Util\Math.h" />
+    <ClInclude Include="src\Util\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{59D56A45-84A9-4147-940B-1FF2EF10F9CC}</ProjectGuid>

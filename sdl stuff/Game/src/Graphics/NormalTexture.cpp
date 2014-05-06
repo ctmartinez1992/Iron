@@ -5,9 +5,9 @@ NormalTexture::NormalTexture() : texture(nullptr), loaded(false)
 	positionAndSize = new SDL_Rect({ 0, 0, 0, 0 });
 }
 
-NormalTexture::NormalTexture(SDL_Point* position, SDL_Renderer* renderer) : texture(nullptr), loaded(false)
+NormalTexture::NormalTexture(SDL_Point position, SDL_Renderer* renderer) : texture(nullptr), loaded(false)
 {
-	positionAndSize = new SDL_Rect({ position->x, position->y, 0, 0 });
+	positionAndSize = new SDL_Rect({ position.x, position.y, 0, 0 });
 	this->renderer = renderer;
 }
 

@@ -117,28 +117,7 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	return newTexture;
 }
 
-void Screen::renderTexture(SDL_Texture* texture, SDL_Rect* positionAndSize, SDL_Rect* sheetClip, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) const {
-	//Assign color mod and alpha mod
-	SDL_SetTextureColorMod(texture, rMod, gMod, bMod);
-	if (alpha < 255) {
-		SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-		SDL_SetTextureAlphaMod(texture, alpha);
-	}
-
-	//Render
-	if (SDL_RenderCopy(renderer, texture, nullptr, positionAndSize) == -1) {
-		printf("An error occured when rendering a texture! SDL Error: %s\n", SDL_GetError());
-	}
-
-	//Restore color mod and alpha mod
-	SDL_SetTextureColorMod(texture, DEFAULT_COLOR_SCHEME.r, DEFAULT_COLOR_SCHEME.g, DEFAULT_COLOR_SCHEME.b);
-	if (alpha < 255) {
-		SDL_SetTextureBlendMode(texture, DEFAULT_BLEND_MODE);
-		SDL_SetTextureAlphaMod(texture, DEFAULT_COLOR_SCHEME.a);
-	}
-}
-
-void Screen::renderSprite(Sprite* sprite) const {
+void Screen::renderSprite(const Sprite* sprite) const {
 	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
 	SDL_Rect positionAndSize = { sprite->getPosition()->x, sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
 	SDL_Color* color = sprite->getColorMod();
@@ -172,18 +151,18 @@ void Screen::renderSprite(Sprite* sprite) const {
 	}
 }
 
-void Screen::renderNormalTexture(NormalTexture* normalTexture) const {
+void Screen::renderNormalTexture(const NormalTexture* normalTexture) const {
 	if (SDL_RenderCopy(renderer, normalTexture->getTexture(), nullptr, normalTexture->getPositionAndSize()) == -1) {
 		printf("An error occured when rendering a texture! SDL Error: %s\n", SDL_GetError());
 	}
 }
 
-void Screen::renderFilledSquare(SDL_Rect* fillRect, const Colors color) const {
+void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const {
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, fillRect);
 }
 
-void Screen::renderDrawnSquare(SDL_Rect* drawRect, const Colors color) const {
+void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRect(renderer, drawRect);
 }
