@@ -17,11 +17,11 @@ Screen::Screen() : screenTitle("Not defined"), width(800), height(600),
 }
 
 Screen::Screen(const char* screenTitle, Uint16 width, Uint16 height) : screenTitle(screenTitle), width(width), height(height),
-																					   widthHalf(width / 2), heightHalf(height / 2),
-																					   widthThird(width / 3), heightThird(height / 3),
-																					   widthFourth(width / 4), heightFourth(height / 4),
-																					   viewportWidth(width), viewportHeight(height),
-																					   init(false), window(nullptr)
+																								 widthHalf(width / 2), heightHalf(height / 2),
+																								 widthThird(width / 3), heightThird(height / 3),
+																								 widthFourth(width / 4), heightFourth(height / 4),
+																								 viewportWidth(width), viewportHeight(height),
+																								 init(false), window(nullptr)
 {
 	normalViewport = { 0, 0, width, height };
 }
@@ -50,7 +50,6 @@ bool Screen::initScreen() {
 
 	//Initialize SDL.
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		success = false;
 	} else {
 		//Set texture filtering to linear

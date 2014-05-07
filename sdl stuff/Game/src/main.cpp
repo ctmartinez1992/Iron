@@ -18,6 +18,7 @@
 #include "Graphics/NormalTexture.h"
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
+#include "Util\Log.h"
 
 //Screen dimension constants.
 const int SCREEN_WIDTH = 640;
@@ -134,10 +135,14 @@ int main(int argc, char* args[]) {
 	if(!init())	{
 		printf("Failed to initialize!\n");
 	} else {
+		Log::s()->log("Init was successfull");
+
 		//Load media
 		if(!loadMedia()) {
 			printf("Failed to load media!\n");
-		} else {	
+		} else {
+			Log::s()->log("LoadMedia was successfull");
+
 			//Main loop flag
 			bool quit = false;
 

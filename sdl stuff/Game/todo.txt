@@ -1,2 +1,0 @@
-Screen class-
-	method in screen that receives a normalTexture pointer and renders it
