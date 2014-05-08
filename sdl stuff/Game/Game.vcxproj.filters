@@ -53,9 +53,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\NormalTexture.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Sprite.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
@@ -89,9 +86,6 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Colors.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\NormalTexture.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Sprite.h">

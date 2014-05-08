@@ -1,4 +1,13 @@
-[13:29:13]: [INFO] - Init was successfull
-[13:29:13]: [DEBUG] - Animation (cycle) was added
-[13:29:13]: [DEBUG] - Animation (cycle2) was added
-[13:29:13]: [INFO] - LoadMedia was successfull
+[14:23:23]: [INFO] - Initializing...
+[14:23:23]: [DEBUG] - World was created
+[14:23:23]: [INFO] - Initialization was successfull
+[14:23:23]: [INFO] - Loading media...
+[14:23:23]: [DEBUG] - Sprite Sheet (Balls) was loaded
+[14:23:23]: [DEBUG] - Sprite (Sprite) was loaded
+[14:23:23]: [DEBUG] - Animation (cycle) was added
+[14:23:23]: [DEBUG] - Animation (cycle2) was added
+[14:23:23]: [INFO] - Media load was successfull
+[14:23:24]: [INFO] - Closing...
+[14:23:24]: [DEBUG] - Sprite (Ball) was UNloaded
+[14:23:24]: [DEBUG] - Sprite Sheet (Balls) was UNloaded
+[14:23:24]: [DEBUG] - World was destroyed

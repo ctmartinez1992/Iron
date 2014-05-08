@@ -16,6 +16,7 @@
 //OWN
 #include "Animations.h"
 #include "../Util/Vector2.h"
+#include "../Util/Log.h"
 
 class Screen;
 class SpriteSheet;
@@ -52,6 +53,9 @@ public:
 
 	//Flips vertically or horizontally
 	SDL_RendererFlip		flip;
+
+	//Name of the sprite
+	std::string				name;
 
 	//Angle of the sprite
 	double					angle;

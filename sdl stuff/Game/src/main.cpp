@@ -15,7 +15,6 @@
 //OWN
 #include "General/World.h"
 #include "Graphics/Screen.h"
-#include "Graphics/NormalTexture.h"
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
 #include "Util\Log.h"
@@ -80,6 +79,7 @@ bool loadMedia() {
 
 	//Load a SpriteSheet
 	sheet = new SpriteSheet(screen->renderer);
+	sheet->name = "Balls";
 	if (!sheet->loadTextureAndClips("res/dots11.png", 200, 200, 4)) {
 		printf("Failed to load Sprite Sheet!\n");
 		success = false;
@@ -95,6 +95,7 @@ bool loadMedia() {
 	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 7, 1);
 	sprite->animations->addAnimation("cycle2", { 0, 1, 2, 1, 3, 2, 1 }, 10, 1);
 	sprite->animations->play("cycle");
+	sprite->name = "Ball";
 
 	//Add the sprite to the world
 	world->addSprite(sprite);
@@ -107,14 +108,14 @@ void close() {
 	IMG_Quit();
 	SDL_Quit();
 
-	//Close the log
-	Log::s()->close();
-
 	//Clear our classes.
 	delete world;
 	world = nullptr;
 	delete screen;
 	screen = nullptr;
+
+	//Close the log
+	Log::s()->close();
 }
 
 void update() {
@@ -135,16 +136,18 @@ int main(int argc, char* args[]) {
 	screen = new Screen("Game v0.002", 800, 600);
 
 	//Start up SDL and create window.
+	Log::s()->logInfo("Initializing...");
 	if(!init())	{
 		printf("Failed to initialize!\n");
 	} else {
-		Log::s()->logInfo("Init was successfull");
+		Log::s()->logInfo("Initialization was successfull");
 
 		//Load media
+		Log::s()->logInfo("Loading media...");
 		if(!loadMedia()) {
 			printf("Failed to load media!\n");
 		} else {
-			Log::s()->logInfo("LoadMedia was successfull");
+			Log::s()->logInfo("Media load was successfull");
 
 			//Main loop flag
 			bool quit = false;
@@ -239,6 +242,7 @@ int main(int argc, char* args[]) {
 	}
 
 	//Free resources and close SDL
+	Log::s()->logInfo("Closing...");
 	close();
 	
 	//Checks for Memory Leaks

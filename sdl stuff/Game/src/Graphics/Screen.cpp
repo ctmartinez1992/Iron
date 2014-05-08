@@ -166,12 +166,6 @@ void Screen::renderSprite(const Sprite* sprite) const {
 	}
 }
 
-void Screen::renderNormalTexture(const NormalTexture* normalTexture) const {
-	if (SDL_RenderCopy(renderer, normalTexture->getTexture(), nullptr, normalTexture->getPositionAndSize()) == -1) {
-		Log::s()->logError("An error occured when rendering a texture! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
 void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const {
 	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
 		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
@@ -203,7 +197,7 @@ void Screen::renderPoint(const SDL_Point* point, const Colors color) const {
 }
 
 void Screen::setViewport(const SDL_Rect* viewport) {
-	if (SDL_RenderSetViewport(renderer, viewport)) {
+	if (SDL_RenderSetViewport(renderer, viewport) < 0) {
 		Log::s()->logError("An error occured when setting the viewport! SDL Error: " + std::string(SDL_GetError()));
 	}
 
@@ -212,7 +206,7 @@ void Screen::setViewport(const SDL_Rect* viewport) {
 }
 
 void Screen::restoreNormalViewport() {
-	if (SDL_RenderSetViewport(renderer, &normalViewport)) {
+	if (SDL_RenderSetViewport(renderer, &normalViewport) < 0) {
 		Log::s()->logError("An error occured when setting the viewport! SDL Error: " + std::string(SDL_GetError()));
 	}
 

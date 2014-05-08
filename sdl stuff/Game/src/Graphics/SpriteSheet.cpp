@@ -1,11 +1,11 @@
 #include "SpriteSheet.h"
 #include "Sprite.h"
 
-SpriteSheet::SpriteSheet() : sheet(nullptr), sheetWidth(0), sheetHeight(0), nSprites(0), nRowsAndColumns(0), loaded(false)
+SpriteSheet::SpriteSheet() : sheet(nullptr), sheetWidth(0), sheetHeight(0), nSprites(0), nRowsAndColumns(0), loaded(false), name("SpriteSheet")
 {
 }
 
-SpriteSheet::SpriteSheet(SDL_Renderer* renderer) : sheet(nullptr), sheetWidth(0), sheetHeight(0), nSprites(0), nRowsAndColumns(0), loaded(false)
+SpriteSheet::SpriteSheet(SDL_Renderer* renderer) : sheet(nullptr), sheetWidth(0), sheetHeight(0), nSprites(0), nRowsAndColumns(0), loaded(false), name("SpriteSheet")
 {
 	this->renderer = renderer;
 }
@@ -32,35 +32,30 @@ bool SpriteSheet::loadTextureAndClips(std::string path, Uint16 sheetWidth, Uint1
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == nullptr) {
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		Log::s()->logError("Unable to load image " + path + "! SDL_image Error: " + std::string(IMG_GetError()));
 	} else {
 		//Color key image (cyan)
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+		if (SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF)) < 0) {
+			Log::s()->logError("Unable to set the color key for the sprite sheet! SDL Error: " + std::string(SDL_GetError()));
+		}
 
 		//Create texture from surface pixels
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture == nullptr) {
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			Log::s()->logError("Unable to create texture from " + path + "! SDL Error: " + std::string(SDL_GetError()));
 		}
 
 		//Get rid of old loaded surface
 		SDL_FreeSurface(loadedSurface);
 	}
 
-	////Create the sprites
-	//sprites = new Sprite*[nRowsAndColumns];
-	//for (int i = 0; i<nRowsAndColumns; i++) {
-	//	sprites[i] = new Sprite[nRowsAndColumns];
-	//	for (int j = 0; j < nRowsAndColumns; j++) {
-	//		sprites[i][j].setSpriteClip(i * spriteWidth, j * spriteHeight, spriteWidth, spriteHeight);
-	//		sprites[i][j].sheet = this;
-	//		sprites[i][j].texture = newTexture;
-	//	}
-	//}
-
 	//Return success
 	sheet = newTexture;
 	loaded = sheet != nullptr;
+	if (loaded) {
+		Log::s()->logDebug("Sprite Sheet (" + name + ") was loaded");
+	}
+
 	return loaded;
 }
 
@@ -70,6 +65,7 @@ void SpriteSheet::freeTexture() {
 		SDL_DestroyTexture(sheet);
 		sheet = nullptr;
 		loaded = false;
+		Log::s()->logDebug("Sprite Sheet (" + name + ") was UNloaded");
 	}
 }
 

@@ -45,6 +45,9 @@ public:
 	//pointer to the used SDL renderer
 	SDL_Renderer*			renderer;
 
+	//Name of the SpriteSheet
+	std::string				name;
+
 	/*************** Contructors & Destructors ***************/
 public:
 	SpriteSheet();

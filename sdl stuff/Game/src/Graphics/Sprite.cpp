@@ -2,7 +2,7 @@
 #include "Screen.h"
 #include "SpriteSheet.h"
 
-Sprite::Sprite() : angle(0), useClip(false), useAnimation(false), loaded(false)
+Sprite::Sprite() : name("Sprite"), angle(0), useClip(false), useAnimation(false), loaded(false)
 {
 	position = new Vector2();
 	fakeAnchor = new Vector2();
@@ -17,7 +17,7 @@ Sprite::Sprite() : angle(0), useClip(false), useAnimation(false), loaded(false)
 	resetToDefaultValues();
 }
 
-Sprite::Sprite(SpriteSheet* sheet) : angle(0), useClip(false), useAnimation(false), loaded(false)
+Sprite::Sprite(SpriteSheet* sheet) : name("Sprite"), angle(0), useClip(false), useAnimation(false), loaded(false)
 {
 	position = new Vector2();
 	fakeAnchor = new Vector2();
@@ -48,6 +48,8 @@ Sprite::~Sprite() {
 	sheet = nullptr;
 	texture = nullptr;
 	loaded = nullptr;
+
+	Log::s()->logDebug("Sprite (" + name + ") was UNloaded");
 }
 
 void Sprite::updateAnimations() {
@@ -75,6 +77,7 @@ void Sprite::resetToDefaultValues() {
 	colorMod->b = 255;
 	colorMod->a = 255;
 
+	name = "Sprite";
 	flip = SDL_FLIP_NONE;
 	angle = 0;
 	useClip = false;
@@ -99,6 +102,8 @@ bool Sprite::loadSprite(double x, double y, SDL_Rect clip, bool useClip, bool us
 	this->angle = angle;
 	this->useClip = useClip;
 	this->useAnimation = useAnimation;
+
+	Log::s()->logDebug("Sprite (" + name + ") was loaded");
 
 	this->loaded = true;
 	return loaded;

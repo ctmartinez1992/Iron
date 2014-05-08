@@ -15,7 +15,6 @@
 
 //OWN
 #include "Colors.h"
-#include "NormalTexture.h"
 #include "SpriteSheet.h"
 #include "../Util/Log.h"
 
@@ -95,9 +94,6 @@ class Screen {
 
 		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
 		void					renderSprite(const Sprite* sprite) const;
-
-		//Renders a normal texture (see class) to the screen.
-		void					renderNormalTexture(const NormalTexture* normalTexture) const;
 
 		//Renders a filled square to the screen.
 		void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;

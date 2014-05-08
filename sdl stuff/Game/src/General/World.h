@@ -16,6 +16,7 @@
 #include "../Graphics/Screen.h"
 #include "../Graphics/SpriteSheet.h"
 #include "../Graphics/Sprite.h"
+#include "../General/World.h"
 
 //World controls everything
 class World {
