@@ -1,3 +1,4 @@
-
-[21:25:22]:	Init was successfull
-[21:25:22]:	LoadMedia was successfull
+[13:29:13]: [INFO] - Init was successfull
+[13:29:13]: [DEBUG] - Animation (cycle) was added
+[13:29:13]: [DEBUG] - Animation (cycle2) was added
+[13:29:13]: [INFO] - LoadMedia was successfull

@@ -17,6 +17,7 @@
 #include "Colors.h"
 #include "NormalTexture.h"
 #include "SpriteSheet.h"
+#include "../Util/Log.h"
 
 class Sprite;
 

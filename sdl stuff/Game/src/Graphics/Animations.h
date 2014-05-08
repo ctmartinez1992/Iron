@@ -17,6 +17,7 @@
 
 //OWN
 #include "Animation.h"
+#include "../Util/Log.h"
 
 class Animations {
 	/*************** Variables ***************/

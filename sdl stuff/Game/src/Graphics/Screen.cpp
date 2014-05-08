@@ -53,20 +53,20 @@ bool Screen::initScreen() {
 		success = false;
 	} else {
 		//Set texture filtering to linear
-		if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-			printf("Warning: Linear texture filtering not enabled!");
+		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
+			Log::s()->logWarning("Linear texture filtering not enabled!");
 		}
 
 		//Create window
 		window = SDL_CreateWindow(this->screenTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
-		if(window == nullptr) {
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+		if (window == nullptr) {
+			Log::s()->logError("Window could not be created! SDL Error: " + std::string(SDL_GetError()));
 			success = false;
 		} else {
 			//Create renderer for window
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if(renderer == nullptr) {
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+			if (renderer == nullptr) {
+				Log::s()->logError("Renderer could not be created! SDL Error: " + std::string(SDL_GetError()));
 				success = false;
 			} else {
 				//Initialize renderer color
@@ -74,8 +74,8 @@ bool Screen::initScreen() {
 
 				//Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
-				if(!(IMG_Init(imgFlags) & imgFlags)) {
-					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+				if (!(IMG_Init(imgFlags) & imgFlags)) {
+					Log::s()->logError("SDL_image could not initialize! SDL_image Error: " + std::string(IMG_GetError()));
 					success = false;
 				}
 			}
@@ -86,8 +86,8 @@ bool Screen::initScreen() {
 }
 
 void Screen::clearScreen() {
-	if(SDL_RenderClear(renderer) == -1) {
-		printf("An error occured when clearing the screen! SDL Error: %s\n", SDL_GetError());
+	if (SDL_RenderClear(renderer) < 0) {
+		Log::s()->logError("An error occured when clearing the screen! SDL Error: " + std::string(SDL_GetError()));
 	}
 }
 
@@ -101,13 +101,13 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	//Load image at specified path.
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == nullptr) {
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+		Log::s()->logError("Unable to load image " + path + "! SDL_image Error : " + std::string(IMG_GetError()));
 	}
 	else {
 		//Create texture from surface pixels.
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture == nullptr) {
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+			Log::s()->logError("Unable to create texture from " + path + "! SDL Error: " + std::string(SDL_GetError()));
 		}
 
 		SDL_FreeSurface(loadedSurface);
@@ -120,10 +120,18 @@ void Screen::renderSprite(const Sprite* sprite) const {
 	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
 	SDL_Rect positionAndSize = { sprite->getPosition()->x, sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
 	SDL_Color* color = sprite->getColorMod();
-	SDL_SetTextureColorMod(sprite->texture, color->r, color->g, color->b);
+	if (SDL_SetTextureColorMod(sprite->texture, color->r, color->g, color->b) < 0) {
+		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
+	}
+
 	if (color->a < 255) {
-		SDL_SetTextureBlendMode(sprite->texture, DEFAULT_BLEND_MODE);
-		SDL_SetTextureAlphaMod(sprite->texture, color->a);
+		if (SDL_SetTextureBlendMode(sprite->texture, DEFAULT_BLEND_MODE) < 0) {
+			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
+		}
+
+		if (SDL_SetTextureAlphaMod(sprite->texture, color->a) < 0) {
+			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
+		}
 	}
 
 	//Obtain clip
@@ -138,47 +146,76 @@ void Screen::renderSprite(const Sprite* sprite) const {
 	}
 
 	//Render
-	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) == -1) {
-		printf("An error occured when rendering a sprite! SDL Error: %s\n", SDL_GetError());
+	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) < 0) {
+		Log::s()->logError("An error occured when rendering a sprite! SDL Error: " + std::string(SDL_GetError()));
 	}
 
 	//Restore color mod and alpha mod
-	SDL_SetTextureColorMod(sprite->texture, DEFAULT_COLOR_SCHEME.r, DEFAULT_COLOR_SCHEME.g, DEFAULT_COLOR_SCHEME.b);
+	if (SDL_SetTextureColorMod(sprite->texture, DEFAULT_COLOR_SCHEME.r, DEFAULT_COLOR_SCHEME.g, DEFAULT_COLOR_SCHEME.b) < 0) {
+		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
+	}
+
 	if (color->a < 255) {
-		SDL_SetTextureBlendMode(sprite->texture, SDL_BLENDMODE_BLEND);
-		SDL_SetTextureAlphaMod(sprite->texture, DEFAULT_COLOR_SCHEME.a);
+		if (SDL_SetTextureBlendMode(sprite->texture, SDL_BLENDMODE_BLEND) < 0) {
+			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
+		}
+
+		if (SDL_SetTextureAlphaMod(sprite->texture, DEFAULT_COLOR_SCHEME.a) < 0) {
+			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
+		}
 	}
 }
 
 void Screen::renderNormalTexture(const NormalTexture* normalTexture) const {
 	if (SDL_RenderCopy(renderer, normalTexture->getTexture(), nullptr, normalTexture->getPositionAndSize()) == -1) {
-		printf("An error occured when rendering a texture! SDL Error: %s\n", SDL_GetError());
+		Log::s()->logError("An error occured when rendering a texture! SDL Error: " + std::string(SDL_GetError()));
 	}
 }
 
 void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const {
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, fillRect);
+	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderFillRect(renderer, fillRect) < 0) {
+		Log::s()->logError("An error occured when rendering a filled rect! SDL Error: " + std::string(SDL_GetError()));
+	}
 }
 
 void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderDrawRect(renderer, drawRect);
+	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawRect(renderer, drawRect) < 0) {
+		Log::s()->logError("An error occured when rendering an empty rect! SDL Error: " + std::string(SDL_GetError()));
+	}
 }
 
 void Screen::renderPoint(const SDL_Point* point, const Colors color) const {
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderDrawPoint(renderer, point->x, point->y);
+	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawPoint(renderer, point->x, point->y) < 0) {
+		Log::s()->logError("An error occured when rendering a point! SDL Error: " + std::string(SDL_GetError()));
+	}
 }
 
 void Screen::setViewport(const SDL_Rect* viewport) {
-	SDL_RenderSetViewport(renderer, viewport);
+	if (SDL_RenderSetViewport(renderer, viewport)) {
+		Log::s()->logError("An error occured when setting the viewport! SDL Error: " + std::string(SDL_GetError()));
+	}
+
 	this->viewportWidth = viewport->w;
 	this->viewportHeight = viewport->h;
 }
 
 void Screen::restoreNormalViewport() {
-	SDL_RenderSetViewport(renderer, &normalViewport);
+	if (SDL_RenderSetViewport(renderer, &normalViewport)) {
+		Log::s()->logError("An error occured when setting the viewport! SDL Error: " + std::string(SDL_GetError()));
+	}
+
 	this->viewportWidth = width;
 	this->viewportHeight = height;
 }

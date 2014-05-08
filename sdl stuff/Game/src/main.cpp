@@ -107,6 +107,9 @@ void close() {
 	IMG_Quit();
 	SDL_Quit();
 
+	//Close the log
+	Log::s()->close();
+
 	//Clear our classes.
 	delete world;
 	world = nullptr;
@@ -135,13 +138,13 @@ int main(int argc, char* args[]) {
 	if(!init())	{
 		printf("Failed to initialize!\n");
 	} else {
-		Log::s()->log("Init was successfull");
+		Log::s()->logInfo("Init was successfull");
 
 		//Load media
 		if(!loadMedia()) {
 			printf("Failed to load media!\n");
 		} else {
-			Log::s()->log("LoadMedia was successfull");
+			Log::s()->logInfo("LoadMedia was successfull");
 
 			//Main loop flag
 			bool quit = false;

@@ -16,7 +16,7 @@
 
 //OWN
 
-#define LOGGER Log::getLogger()
+//Use [INFO], [WARNING], [ERROR], [DEBUG] accordingly, no point in wasting time implementing it
 
 class Log {	
 	/*************** Variables ***************/
@@ -30,6 +30,12 @@ private:
 	//The stream object, writes to the file
 	static std::ofstream			logFile;
 
+	//Booleans to control the log types
+	static bool						showDebug;
+	static bool						showInfo;
+	static bool						showError;
+	static bool						showWarning;
+
 protected:
 
 public:
@@ -37,10 +43,18 @@ public:
 	/*************** Contructors & Destructors ***************/
 public:
 	Log();
-	~Log();
+	virtual ~Log();
 
 	/*************** Methods ***************/
 private:
+	//Don't implement
+	Log&							operator=(const Log&) { return *this; }; 
+
+	//Don't implement
+	Log(Log const&);
+
+	//Overused function
+	void							log(const std::string type, const std::string& message);
 	
 protected:
 
@@ -48,18 +62,19 @@ public:
 	//Singleton get
 	static Log*						s();
 
-	//Variable length log function
-	void							log(const char * format, ...);
-
-	//Logs a message
-	void							log(const std::string& message);
+	//Logs a debug message
+	void							logDebug(const std::string& message);
+	//Logs an info message
+	void							logInfo(const std::string& message);
+	//Logs an error message
+	void							logError(const std::string& message);
+	//Logs a warning message
+	void							logWarning(const std::string& message);
 
 	//Overload write operator
 	Log&							operator<<(const std::string& message);
 
-
-private:
-	//Overload assign operator
-	Log&							operator=(const Log&) { return *this; };
+	//Closes the log
+	void							close();
 };
 #endif

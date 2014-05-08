@@ -27,6 +27,7 @@ void Animations::addAnimation(std::string name, std::vector<Uint16> frames, Uint
 	this->animations.push_back(new Animation(name, frames, frameRate, indexInc, yoyo));
 	nAnimations++;
 	state = "Animation[" + name + "] is loaded but has no state...";
+	Log::s()->logDebug("Animation (" + name + ") was added");
 }
 
 void Animations::play(std::string name) {

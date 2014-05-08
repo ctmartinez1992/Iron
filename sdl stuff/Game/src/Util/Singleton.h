@@ -8,6 +8,7 @@
 //SDL
 
 //C++
+#include <cassert>
 
 //OWN
 

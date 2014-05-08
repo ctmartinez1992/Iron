@@ -118,10 +118,10 @@
     <ClInclude Include="src\Util\Math.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Util\Singleton.h">
+    <ClInclude Include="src\Util\Log.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Util\Log.h">
+    <ClInclude Include="src\Util\Singleton.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
