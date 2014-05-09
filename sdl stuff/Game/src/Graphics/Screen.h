@@ -18,6 +18,7 @@
 #include "SpriteSheet.h"
 #include "../Util/Log.h"
 
+class GameObject;
 class Sprite;
 
 class Screen {

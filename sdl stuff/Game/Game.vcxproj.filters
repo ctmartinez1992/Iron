@@ -80,6 +80,9 @@
     <ClCompile Include="src\Util\Log.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\General\GameObject.cpp">
+      <Filter>Source Files\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics\Screen.h">
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="src\Util\Singleton.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\General\GameObject.h">
+      <Filter>Header Files\General</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

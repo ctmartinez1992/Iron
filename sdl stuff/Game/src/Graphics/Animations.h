@@ -22,7 +22,7 @@
 class Animations {
 	/*************** Variables ***************/
 private:
-	//All animations stored by this class, will be associated to classes like Sprite
+	//All animations stored by this class, will be associated to classes like GameObject
 	std::vector<Animation*>			animations;
 
 	//Number of animations stored in the vector

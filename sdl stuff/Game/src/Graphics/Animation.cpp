@@ -7,7 +7,7 @@ Animation::Animation() : name(""), maxIndex(0), indexInc(1), currentFrame(0), cu
 	frames = { 0 };
 	currentFrame = frames[currentIndex];
 	maxIndex = frames.size() - 1;
-	timeRate = 1000.0 / frameRate;
+	timeRate = (float) (1000.0 / frameRate);
 }
 
 Animation::Animation(std::string name, std::vector<Uint16> frames, Uint16 frameRate, Sint16 indexInc, bool yoyo) : 
@@ -17,7 +17,7 @@ Animation::Animation(std::string name, std::vector<Uint16> frames, Uint16 frameR
 	this->frames = frames;
 	currentFrame = frames[currentIndex];
 	maxIndex = frames.size() - 1;
-	timeRate = 1000.0 / frameRate;
+	timeRate = (float) (1000.0 / frameRate);
 }
 
 Animation::~Animation() {
@@ -87,7 +87,7 @@ void Animation::setFrameRate(const Uint16 frameRate) {
 	}
 
 	this->frameRate = frameRate;
-	this->timeRate = 1000.0 / frameRate;
+	this->timeRate = (float) (1000.0 / frameRate);
 }
 
 Uint16 Animation::getFrameRate() const {

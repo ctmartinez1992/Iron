@@ -1,5 +1,6 @@
 #define _CRTDBG_MAP_ALLOC
 #include "Screen.h"
+#include "../General/GameObject.h"
 #include "Sprite.h"
 
 Screen*				Screen::_instance = 0;
@@ -33,6 +34,8 @@ Screen::~Screen() {
 	window = nullptr;
 	renderer = nullptr;
 
+	Log::s()->logInfo("Screen was destroyed");
+
 	//Invalidade singleton.
 	_instance = 0;
 }
@@ -47,6 +50,8 @@ Screen* Screen::getInstance() {
 bool Screen::initScreen() {
 	//Initialization flag.
 	bool success = true;
+
+	Log::s()->logInfo("Screen is being created...");
 
 	//Initialize SDL.
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -80,6 +85,10 @@ bool Screen::initScreen() {
 				}
 			}
 		}
+	}
+
+	if (success) {
+		Log::s()->logInfo("Screen was created successfully");
 	}
 
 	return success;
@@ -118,7 +127,7 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 
 void Screen::renderSprite(const Sprite* sprite) const {
 	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
-	SDL_Rect positionAndSize = { sprite->getPosition()->x, sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
+	SDL_Rect positionAndSize = { (int) sprite->getPosition()->x, (int) sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
 	SDL_Color* color = sprite->getColorMod();
 	if (SDL_SetTextureColorMod(sprite->texture, color->r, color->g, color->b) < 0) {
 		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));

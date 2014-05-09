@@ -14,6 +14,7 @@
     <None Include="res\texture07.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\General\GameObject.cpp" />
     <ClCompile Include="src\General\World.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\Animations.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\Util\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\General\GameObject.h" />
     <ClInclude Include="src\General\World.h" />
     <ClInclude Include="src\Graphics\Animation.h" />
     <ClInclude Include="src\Graphics\Animations.h" />

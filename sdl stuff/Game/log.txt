@@ -1,13 +1,18 @@
-[14:23:23]: [INFO] - Initializing...
-[14:23:23]: [DEBUG] - World was created
-[14:23:23]: [INFO] - Initialization was successfull
-[14:23:23]: [INFO] - Loading media...
-[14:23:23]: [DEBUG] - Sprite Sheet (Balls) was loaded
-[14:23:23]: [DEBUG] - Sprite (Sprite) was loaded
-[14:23:23]: [DEBUG] - Animation (cycle) was added
-[14:23:23]: [DEBUG] - Animation (cycle2) was added
-[14:23:23]: [INFO] - Media load was successfull
-[14:23:24]: [INFO] - Closing...
-[14:23:24]: [DEBUG] - Sprite (Ball) was UNloaded
-[14:23:24]: [DEBUG] - Sprite Sheet (Balls) was UNloaded
-[14:23:24]: [DEBUG] - World was destroyed
+[13:33:19]: [INFO] - Initializing...
+[13:33:19]: [INFO] - Screen is being created...
+[13:33:19]: [INFO] - Screen was created successfully
+[13:33:19]: [DEBUG] - World was created
+[13:33:19]: [INFO] - Initialization was successfull
+[13:33:19]: [INFO] - Loading media...
+[13:33:19]: [DEBUG] - Sprite Sheet (Balls) was loaded
+[13:33:19]: [DEBUG] - GameObject (Sprite) was loaded
+[13:33:19]: [DEBUG] - Sprite (Sprite) was loaded
+[13:33:19]: [DEBUG] - Animation (cycle) was added
+[13:33:19]: [DEBUG] - Animation (cycle2) was added
+[13:33:19]: [INFO] - Media load was successfull
+[13:33:20]: [INFO] - Closing...
+[13:33:20]: [DEBUG] - Sprite (Ball) was UNloaded
+[13:33:20]: [DEBUG] - GameObject (Ball) was UNloaded
+[13:33:20]: [DEBUG] - Sprite Sheet (Balls) was UNloaded
+[13:33:20]: [DEBUG] - World was destroyed
+[13:33:20]: [INFO] - Screen was destroyed

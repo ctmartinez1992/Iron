@@ -91,7 +91,7 @@ bool loadMedia() {
 	//Load a sprite from a sheet, clip it and throw some animations in
 	sprite = new Sprite(sheet);
 	SDL_Rect clip = { 0, 0, sheet->getSpriteWidth(), sheet->getSpriteHeight() };
-	sprite->loadSprite(200, 200, clip, true, true, 0);
+	sprite->load(200, 200, clip, true, true, 0);
 	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 7, 1);
 	sprite->animations->addAnimation("cycle2", { 0, 1, 2, 1, 3, 2, 1 }, 10, 1);
 	sprite->animations->play("cycle");
