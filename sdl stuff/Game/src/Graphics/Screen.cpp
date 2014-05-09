@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "../General/GameObject.h"
 #include "Sprite.h"
+#include "../Graphics/Geometry/GeometryDot.h"
 
 Screen*				Screen::_instance = 0;
 SDL_BlendMode		Screen::DEFAULT_BLEND_MODE = SDL_BLENDMODE_BLEND;
@@ -183,6 +184,10 @@ void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) co
 	if (SDL_RenderFillRect(renderer, fillRect) < 0) {
 		Log::s()->logError("An error occured when rendering a filled rect! SDL Error: " + std::string(SDL_GetError()));
 	}
+
+	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+	}
 }
 
 void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
@@ -193,15 +198,37 @@ void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) con
 	if (SDL_RenderDrawRect(renderer, drawRect) < 0) {
 		Log::s()->logError("An error occured when rendering an empty rect! SDL Error: " + std::string(SDL_GetError()));
 	}
+
+	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+	}
 }
 
-void Screen::renderPoint(const SDL_Point* point, const Colors color) const {
+void Screen::renderDot(const SDL_Point* dot, const Colors color) const {
 	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
 		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
 	}
 
-	if (SDL_RenderDrawPoint(renderer, point->x, point->y) < 0) {
-		Log::s()->logError("An error occured when rendering a point! SDL Error: " + std::string(SDL_GetError()));
+	if (SDL_RenderDrawPoint(renderer, dot->x, dot->y) < 0) {
+		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderGeometryDot(const GeometryDot* dot) const {
+	if (SDL_SetRenderDrawColor(renderer, dot->getColorMod()->r, dot->getColorMod()->g, dot->getColorMod()->b, dot->getColorMod()->a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawPoint(renderer, (int) dot->getPosition()->x, (int) dot->getPosition()->y) < 0) {
+		Log::s()->logError("An error occured when rendering a GeometryDot object! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
 	}
 }
 

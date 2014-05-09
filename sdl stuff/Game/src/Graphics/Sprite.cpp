@@ -69,7 +69,7 @@ void Sprite::render(Screen* screen) {
 	screen->renderSprite(this);
 }
 
-bool Sprite::load(float x, float y, SDL_Rect clip, bool useClip, bool useAnimation, double angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
+bool Sprite::load(float x, float y, SDL_Rect clip, bool useClip, bool useAnimation, float angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
 	GameObject::load(x, y, angle, rMod, gMod, bMod, alpha);
 
 	setSpriteClip(clip.x, clip.y, clip.w, clip.h);

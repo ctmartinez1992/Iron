@@ -21,6 +21,8 @@ protected:
 
 public:
 	//Pre-constructed colors
+	static const Colors			White;
+	static const Colors			Black;
 	static const Colors			Red;
 	static const Colors			Green;
 	static const Colors			Blue;

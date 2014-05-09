@@ -83,6 +83,9 @@
     <ClCompile Include="src\General\GameObject.cpp">
       <Filter>Source Files\General</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Geometry\GeometryDot.cpp">
+      <Filter>Source Files\Graphics\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics\Screen.h">
@@ -123,6 +126,9 @@
     </ClInclude>
     <ClInclude Include="src\General\GameObject.h">
       <Filter>Header Files\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Geometry\GeometryDot.h">
+      <Filter>Header Files\Graphics\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 #include "Colors.h"
 
+const Colors Colors::White = Colors(255, 255, 255, 255);
+const Colors Colors::Black = Colors(0, 0, 0, 255);
 const Colors Colors::Red = Colors(255, 0, 0, 255);
 const Colors Colors::Green = Colors(0, 255, 0, 255);
 const Colors Colors::Blue = Colors(0, 0, 255, 255);

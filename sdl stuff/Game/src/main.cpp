@@ -17,6 +17,7 @@
 #include "Graphics/Screen.h"
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/Geometry/GeometryDot.h"
 #include "Util\Log.h"
 
 //Screen dimension constants.
@@ -44,6 +45,16 @@ SpriteSheet* sheet = nullptr;
 //Sprite test
 Sprite* sprite = nullptr;
 
+//Dots
+GeometryDot* dot11 = nullptr;
+GeometryDot* dot12 = nullptr;
+GeometryDot* dot13 = nullptr;
+GeometryDot* dot14 = nullptr;
+GeometryDot* dot15 = nullptr;
+GeometryDot* dot2 = nullptr;
+GeometryDot* dot3 = nullptr;
+GeometryDot* dot4 = nullptr;
+
 //The screen.
 Screen* screen = nullptr;
 
@@ -60,6 +71,7 @@ bool init() {
 		successScreen = false;
 	} else {
 		successScreen = screen->initScreen();
+		screen->bg = Colors::White;
 	}
 
 	if(!successScreen) {
@@ -99,6 +111,34 @@ bool loadMedia() {
 
 	//Add the sprite to the world
 	world->addSprite(sprite);
+
+	//Load dots
+	dot11 = new GeometryDot("dot11");
+	dot11->load(20, 20, Colors::Blue);
+	dot12 = new GeometryDot("dot12");
+	dot12->load(21, 20, Colors::Blue);
+	dot13 = new GeometryDot("dot13");
+	dot13->load(22, 20, Colors::Blue);
+	dot14 = new GeometryDot("dot14");
+	dot14->load(23, 20, Colors::Blue);
+	dot15 = new GeometryDot("dot15");
+	dot15->load(24, 20, Colors::Blue);
+	dot2 = new GeometryDot("dot2");
+	dot2->load(20, 30, Colors::Red);
+	dot3 = new GeometryDot("dot3");
+	dot3->load(30, 20, Colors::Green);
+	dot4 = new GeometryDot("dot4");
+	dot4->load(30, 30, Colors::Black);
+
+	//Add dots to the world
+	world->addGeometry(dot11);
+	world->addGeometry(dot12);
+	world->addGeometry(dot13);
+	world->addGeometry(dot14);
+	world->addGeometry(dot15);
+	world->addGeometry(dot2);
+	world->addGeometry(dot3);
+	world->addGeometry(dot4);
 
 	return success;
 }

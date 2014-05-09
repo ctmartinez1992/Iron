@@ -73,7 +73,7 @@ public:
 	void					render(Screen* screen);
 
 	//Loads the sprite clip
-	bool					load(float x, float y, SDL_Rect clip, bool useClip = false, bool useAnimation = false, double angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+	bool					load(float x, float y, SDL_Rect clip, bool useClip = false, bool useAnimation = false, float angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
 
 	//Sets the position with the given values
 	void					setAnchor(const float x, const float y);

@@ -9,7 +9,13 @@ GameObject::GameObject() : name("GameObject"), angle(0)
 	colorMod = new SDL_Color();
 	flip = SDL_FLIP_NONE;
 
-	resetToDefaultValues();
+	position->x = 0;
+	position->y = 0;
+
+	colorMod->r = 255;
+	colorMod->g = 255;
+	colorMod->b = 255;
+	colorMod->a = 255;
 }
 
 GameObject::GameObject(const std::string name) : name(name), angle(0)
@@ -20,7 +26,13 @@ GameObject::GameObject(const std::string name) : name(name), angle(0)
 	colorMod = new SDL_Color();
 	flip = SDL_FLIP_NONE;
 
-	resetToDefaultValues();
+	position->x = 0;
+	position->y = 0;
+
+	colorMod->r = 255;
+	colorMod->g = 255;
+	colorMod->b = 255;
+	colorMod->a = 255;
 }
 
 GameObject::~GameObject() {
@@ -56,9 +68,20 @@ void GameObject::update() {
 void GameObject::render(Screen* screen) {
 }
 
-bool GameObject::load(float x, float y, double angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
+bool GameObject::load(float x, float y, float angle, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uint8 alpha) {
 	setPosition(x, y);
 	setColorMod(rMod, gMod, bMod, alpha);
+
+	this->angle = angle;
+
+	Log::s()->logDebug("GameObject (" + name + ") was loaded");
+
+	return true;
+}
+
+bool GameObject::load(float x, float y, float angle, Colors color) {
+	setPosition(x, y);
+	setColorMod(color.r, color.g, color.b, color.a);
 
 	this->angle = angle;
 

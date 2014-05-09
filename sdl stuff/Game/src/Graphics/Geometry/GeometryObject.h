@@ -14,6 +14,7 @@
 
 //OWN
 #include "../../General/GameObject.h"
+#include "../../Graphics/Colors.h"
 
 class Screen;
 
@@ -36,7 +37,7 @@ public:
 	/*************** Contructors & Destructors ***************/
 public:
 	GeometryObject();
-	GeometryObject(const Uint8 type);
+	GeometryObject(const std::string name, const Uint8 type);
 	virtual ~GeometryObject();
 
 	/*************** Methods ***************/
@@ -47,17 +48,20 @@ protected:
 	virtual void			resetToDefaultValues();
 
 public:
-	//Update the game object
+	//Update the geometry object
 	virtual void			update() = 0;
 
-	//Render the game object
+	//Render the geometry object
 	virtual void			render(Screen* screen) = 0;
 
-	//Loads the game object
-	virtual bool			load(float x, float y, double angle = 0, bool filled = false, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+	//Loads the geometry object
+	virtual bool			load(float x, float y, float angle = 0, bool filled = false, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+
+	//Loads the geometry object
+	virtual bool			load(float x, float y, float angle = 0, bool filled = false, Colors color = Colors::White);
 
 	//Sets the position with the given values
-	virtual void			setAnchor(const double x, const double y) = 0;
+	virtual void			setAnchor(const float x, const float y) = 0;
 };
 
 #endif

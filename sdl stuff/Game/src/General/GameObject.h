@@ -14,6 +14,7 @@
 
 //OWN
 #include "../Util/Vector2.h"
+#include "../Graphics/Colors.h"
 
 class Screen;
 
@@ -65,7 +66,10 @@ public:
 	virtual void			render(Screen* screen) = 0;
 
 	//Loads the game object
-	virtual bool			load(float x, float y, double angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+	virtual bool			load(float x, float y, float angle = 0, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+
+	//Loads the game object
+	virtual bool			load(float x, float y, float angle = 0, Colors color = Colors::White);
 
 	//Sets the position with the given values
 	void					setPosition(const float x, const float y);
