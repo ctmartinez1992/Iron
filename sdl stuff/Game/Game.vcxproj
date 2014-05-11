@@ -20,6 +20,7 @@
     <ClCompile Include="src\Graphics\Animations.cpp" />
     <ClCompile Include="src\Graphics\Colors.cpp" />
     <ClCompile Include="src\Graphics\Geometry\GeometryDot.cpp" />
+    <ClCompile Include="src\Graphics\Geometry\GeometryLine.cpp" />
     <ClCompile Include="src\Graphics\Geometry\GeometryObject.cpp" />
     <ClCompile Include="src\Graphics\Screen.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="src\Graphics\Animations.h" />
     <ClInclude Include="src\Graphics\Colors.h" />
     <ClInclude Include="src\Graphics\Geometry\GeometryDot.h" />
+    <ClInclude Include="src\Graphics\Geometry\GeometryLine.h" />
     <ClInclude Include="src\Graphics\Geometry\GeometryObject.h" />
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />

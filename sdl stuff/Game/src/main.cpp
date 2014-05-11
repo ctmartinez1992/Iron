@@ -18,6 +18,7 @@
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Geometry/GeometryDot.h"
+#include "Graphics/Geometry/GeometryLine.h"
 #include "Util\Log.h"
 
 //Screen dimension constants.
@@ -54,6 +55,11 @@ GeometryDot* dot15 = nullptr;
 GeometryDot* dot2 = nullptr;
 GeometryDot* dot3 = nullptr;
 GeometryDot* dot4 = nullptr;
+
+GeometryLine* line1 = nullptr;
+GeometryLine* line2 = nullptr;
+GeometryLine* line3 = nullptr;
+GeometryLine* line4 = nullptr;
 
 //The screen.
 Screen* screen = nullptr;
@@ -139,6 +145,22 @@ bool loadMedia() {
 	world->addGeometry(dot2);
 	world->addGeometry(dot3);
 	world->addGeometry(dot4);
+
+	//Load lines
+	line1 = new GeometryLine("Line1");
+	line1->load(60.0f, 60.0f, screen->width - 60.0f, screen->height - 60.0f, Colors::Blue);
+	line2 = new GeometryLine("Line2");
+	line2->load(screen->width - 60.0f, screen->height - 60.0f, 60.0f, screen->height - 60.0f, Colors::Red);
+	line3 = new GeometryLine("Line3");
+	line3->load(60.0f, 60.0f, 60.0f, screen->height - 60.0f, Colors::Green);
+	line4 = new GeometryLine("Line4");
+	line4->load(60.0f, 60.0f, screen->width - 60.0f, 60.0f, Colors::Black);
+
+	//Add lines to the world
+	world->addGeometry(line1);
+	world->addGeometry(line2);
+	world->addGeometry(line3);
+	world->addGeometry(line4);
 
 	return success;
 }

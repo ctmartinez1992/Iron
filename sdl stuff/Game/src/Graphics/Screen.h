@@ -21,6 +21,7 @@
 class GameObject;
 class Sprite;
 class GeometryDot;
+class GeometryLine;
 
 class Screen {
 	/*************** Variables ***************/
@@ -107,10 +108,16 @@ class Screen {
 		void					renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const;
 
 		//Renders a point to the screen.
-		void					renderDot(const SDL_Point* dot, const Colors color) const;
+		void					renderDot(const SDL_Point dot, const SDL_Color* color) const;
 
 		//Renders a GeometryDot object to the screen.
 		void					renderGeometryDot(const GeometryDot* dot) const;
+
+		//Renders a point to the screen.
+		void					renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const;
+
+		//Renders a GeometryDot object to the screen.
+		void					renderGeometryLine(const GeometryLine* line) const;
 
 		//Sets a viewport for the screen
 		void					setViewport(const SDL_Rect* viewport);

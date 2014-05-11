@@ -43,12 +43,7 @@ bool GeometryDot::load(float x, float y, Uint8 rMod, Uint8 gMod, Uint8 bMod, Uin
 }
 
 bool GeometryDot::load(float x, float y, Colors color) {
-	GeometryObject::load(x, y, 0, false, color.r, color.g, color.b, color.a);
-
-	Log::s()->logDebug("GeometryDot (" + name + ") was loaded");
-
-	this->loaded = true;
-	return loaded;
+	return this->load(x, y, color.r, color.g, color.b, color.a);
 }
 
 void GeometryDot::setAnchor(const float x, const float y) {

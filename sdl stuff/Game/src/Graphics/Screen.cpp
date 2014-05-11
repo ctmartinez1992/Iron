@@ -3,6 +3,7 @@
 #include "../General/GameObject.h"
 #include "Sprite.h"
 #include "../Graphics/Geometry/GeometryDot.h"
+#include "../Graphics/Geometry/GeometryLine.h"
 
 Screen*				Screen::_instance = 0;
 SDL_BlendMode		Screen::DEFAULT_BLEND_MODE = SDL_BLENDMODE_BLEND;
@@ -204,12 +205,12 @@ void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) con
 	}
 }
 
-void Screen::renderDot(const SDL_Point* dot, const Colors color) const {
-	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+void Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
+	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
 		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
 	}
 
-	if (SDL_RenderDrawPoint(renderer, dot->x, dot->y) < 0) {
+	if (SDL_RenderDrawPoint(renderer, dot.x, dot.y) < 0) {
 		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
 	}
 
@@ -219,17 +220,25 @@ void Screen::renderDot(const SDL_Point* dot, const Colors color) const {
 }
 
 void Screen::renderGeometryDot(const GeometryDot* dot) const {
-	if (SDL_SetRenderDrawColor(renderer, dot->getColorMod()->r, dot->getColorMod()->g, dot->getColorMod()->b, dot->getColorMod()->a) < 0) {
+	renderDot({ (int) dot->getPosition()->x, (int) dot->getPosition()->y }, dot->getColorMod());
+}
+
+void Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
+	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
 		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
 	}
 
-	if (SDL_RenderDrawPoint(renderer, (int) dot->getPosition()->x, (int) dot->getPosition()->y) < 0) {
-		Log::s()->logError("An error occured when rendering a GeometryDot object! SDL Error: " + std::string(SDL_GetError()));
+	if (SDL_RenderDrawLine(renderer, lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line! SDL Error: " + std::string(SDL_GetError()));
 	}
 
 	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
 		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
 	}
+}
+
+void Screen::renderGeometryLine(const GeometryLine* line) const {
+	renderLine({ (int) line->getPositionOrigin()->x, (int) line->getPositionOrigin()->y }, { (int) line->getPositionDestination()->x, (int) line->getPositionDestination()->y }, line->getColorMod());
 }
 
 void Screen::setViewport(const SDL_Rect* viewport) {
