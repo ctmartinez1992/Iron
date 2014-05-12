@@ -20,8 +20,11 @@ class Screen;
 class GeometryLine : public GeometryObject {
 	/*************** Variables ***************/
 private:
-	//The destination posiiton of the line
-	Vector2*				positionDestination;
+	//The position of the point in the world
+	Vector2*				position2;
+
+	//The position of the point in the world
+	Vector2*				position3;
 
 protected:
 

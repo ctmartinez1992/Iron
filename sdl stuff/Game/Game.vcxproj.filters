@@ -89,6 +89,9 @@
     <ClCompile Include="src\Graphics\Geometry\GeometryLine.cpp">
       <Filter>Source Files\Graphics\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Geometry\GeometryTriangle.cpp">
+      <Filter>Source Files\Graphics\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Graphics\Screen.h">
@@ -134,6 +137,9 @@
       <Filter>Header Files\Graphics\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Geometry\GeometryLine.h">
+      <Filter>Header Files\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Geometry\GeometryTriangle.h">
       <Filter>Header Files\Graphics\Geometry</Filter>
     </ClInclude>
   </ItemGroup>

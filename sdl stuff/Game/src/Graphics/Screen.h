@@ -119,6 +119,15 @@ class Screen {
 		//Renders a GeometryDot object to the screen.
 		void					renderGeometryLine(const GeometryLine* line) const;
 
+		//Renders the outline of a triangle to the screen.
+		void					renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
+
+		//Renders a filled triangle to the screen.
+		void					renderFilledTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
+
+		//Renders a GeometryTriangle object to the screen.
+		void					renderGeometryTriangle(const GeometryTriangle* line) const;
+
 		//Sets a viewport for the screen
 		void					setViewport(const SDL_Rect* viewport);
 
