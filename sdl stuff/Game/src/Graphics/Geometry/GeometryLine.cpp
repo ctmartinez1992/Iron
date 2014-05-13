@@ -1,13 +1,13 @@
 #include "GeometryLine.h"
 #include "../../Graphics/Screen.h"
 
-GeometryLine::GeometryLine() : GeometryObject("GeometryLine", 1)
+GeometryLine::GeometryLine() : GeometryObject("GeometryLine", 2)
 {
 	filled = false;
 	loaded = false;
 }
 
-GeometryLine::GeometryLine(const std::string name) : GeometryObject(name, 1)
+GeometryLine::GeometryLine(const std::string name) : GeometryObject(name, 2)
 {
 	filled = false;
 	loaded = false;
@@ -24,7 +24,7 @@ void GeometryLine::resetToDefaultValues() {
 	GeometryObject::resetToDefaultValues();
 
 	name = "GeometryLine";
-	type = 1;
+	type = 2;
 	filled = false;
 	loaded = false;
 }
@@ -56,6 +56,11 @@ void GeometryLine::setAnchor(const float x, const float y) {
 	fakeAnchor->y = 0;
 	realAnchor->x = 0;
 	realAnchor->y = 0;
+}
+
+void GeometryLine::setPositionAll(const float xO, const float yO, const float xD, const float yD) {
+	setPositionOrigin(xO, yO);
+	setPositionDestination(xD, yD);
 }
 
 void GeometryLine::setPositionOrigin(const float x, const float y) {

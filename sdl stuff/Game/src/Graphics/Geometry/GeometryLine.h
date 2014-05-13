@@ -56,6 +56,9 @@ public:
 	//Sets the position with the given values
 	virtual void			setAnchor(const float x, const float y);
 
+	//Sets the origin and destination position with the given values
+	void					setPositionAll(const float xO, const float yO, const float xD, const float yD);
+
 	//Sets the origin position with the given values
 	void					setPositionOrigin(const float x, const float y);
 

@@ -22,6 +22,7 @@ class GameObject;
 class Sprite;
 class GeometryDot;
 class GeometryLine;
+class GeometryTriangle;
 
 class Screen {
 	/*************** Variables ***************/

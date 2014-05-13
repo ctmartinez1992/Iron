@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "../Graphics/Geometry/GeometryDot.h"
 #include "../Graphics/Geometry/GeometryLine.h"
+#include "../Graphics/Geometry/GeometryTriangle.h"
 
 Screen*				Screen::_instance = 0;
 SDL_BlendMode		Screen::DEFAULT_BLEND_MODE = SDL_BLENDMODE_BLEND;
@@ -238,7 +239,33 @@ void Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestinat
 }
 
 void Screen::renderGeometryLine(const GeometryLine* line) const {
-	renderLine({ (int) line->getPositionOrigin()->x, (int) line->getPositionOrigin()->y }, { (int) line->getPositionDestination()->x, (int) line->getPositionDestination()->y }, line->getColorMod());
+	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
+}
+
+void Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
+	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderGeometryLine(const GeometryLine* line) const {
+	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
 }
 
 void Screen::setViewport(const SDL_Rect* viewport) {

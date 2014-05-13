@@ -17,13 +17,13 @@
 
 class Screen;
 
-class GeometryLine : public GeometryObject {
+class GeometryTriangle : public GeometryObject {
 	/*************** Variables ***************/
 private:
-	//The position of the point in the world
+	//The second point of the triangle
 	Vector2*				position2;
 
-	//The position of the point in the world
+	//The thrid point of the triangle
 	Vector2*				position3;
 
 protected:
@@ -32,9 +32,9 @@ public:
 
 	/*************** Contructors & Destructors ***************/
 public:
-	GeometryLine();
-	GeometryLine(const std::string name);
-	virtual ~GeometryLine();
+	GeometryTriangle();
+	GeometryTriangle(const std::string name);
+	virtual ~GeometryTriangle();
 
 	/*************** Methods ***************/
 private:
@@ -51,25 +51,34 @@ public:
 	virtual void			render(Screen* screen);
 
 	//Loads the line, x, y are the origin coordinate and x2, y2 are the destination coordinates
-	virtual bool			load(float x, float y, float x2, float y2, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
+	virtual bool			load(float x, float y, float x2, float y2, float x3, float y3, Uint8 rMod = 255, Uint8 gMod = 255, Uint8 bMod = 255, Uint8 alpha = 255);
 
 	//Loads the line
-	virtual bool			load(float x, float y, float x2, float y2, Colors color = Colors::White);
+	virtual bool			load(float x, float y, float x2, float y2, float x3, float y3, Colors color = Colors::White);
 
 	//Sets the position with the given values
 	virtual void			setAnchor(const float x, const float y);
 
-	//Sets the origin position with the given values
-	void					setPositionOrigin(const float x, const float y);
+	//Sets the first, second and third point of the triangle
+	void					setPositionAll(const float x1, const float y1, const float x2, const float y2, const float x3, const float y3);
 
-	//Gets the origin position
-	Vector2*				getPositionOrigin() const;
+	//Sets the first point of the triangle
+	void					setPosition1(const float x, const float y);
 
-	//Sets the destination position with the given values
-	void					setPositionDestination(const float x, const float y);
+	//Gets the first point of the triangle
+	Vector2*				getPosition1() const;
 
-	//Gets the destination position
-	Vector2*				getPositionDestination() const;
+	//Sets the second point of the triangle
+	void					setPosition2(const float x, const float y);
+
+	//Gets the second point of the triangle
+	Vector2*				getPosition2() const;
+
+	//Sets the third point of the triangle
+	void					setPosition3(const float x, const float y);
+
+	//Gets the third point of the triangle
+	Vector2*				getPosition3() const;
 };
 
 #endif
