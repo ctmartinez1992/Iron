@@ -43,6 +43,34 @@ Screen::~Screen() {
 	_instance = 0;
 }
 
+void Screen::setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const {
+	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
+		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (color->a < 255) {
+		if (SDL_SetRenderDrawBlendMode(renderer, blend) < 0) {
+			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+		}
+	}
+}
+
+void Screen::setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const {
+	if (SDL_SetTextureColorMod(texture, color->r, color->g, color->b) < 0) {
+		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (color->a < 255) {
+		if (SDL_SetTextureBlendMode(texture, blend) < 0) {
+			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
+		}
+
+		if (SDL_SetTextureAlphaMod(texture, color->a) < 0) {
+			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
+		}
+	}
+}
+
 Screen* Screen::getInstance() {
    if (!_instance) {
       _instance = new Screen;
@@ -98,6 +126,8 @@ bool Screen::initScreen() {
 }
 
 void Screen::clearScreen() {
+	SDL_Color bgColor = { bg.r, bg.g, bg.b, bg.a };
+	setColorAndBlendForRenderer(&bgColor, SDL_BLENDMODE_BLEND);
 	if (SDL_RenderClear(renderer) < 0) {
 		Log::s()->logError("An error occured when clearing the screen! SDL Error: " + std::string(SDL_GetError()));
 	}
@@ -128,146 +158,6 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	return newTexture;
 }
 
-void Screen::renderSprite(const Sprite* sprite) const {
-	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
-	SDL_Rect positionAndSize = { (int) sprite->getPosition()->x, (int) sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
-	SDL_Color* color = sprite->getColorMod();
-	if (SDL_SetTextureColorMod(sprite->texture, color->r, color->g, color->b) < 0) {
-		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (color->a < 255) {
-		if (SDL_SetTextureBlendMode(sprite->texture, DEFAULT_BLEND_MODE) < 0) {
-			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
-		}
-
-		if (SDL_SetTextureAlphaMod(sprite->texture, color->a) < 0) {
-			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
-		}
-	}
-
-	//Obtain clip
-	SDL_Rect* clip = (sprite->useClip) ? sprite->getSpriteClip() : nullptr;
-
-	//If it's animated, clip it properly
-	if (sprite->useAnimation) {
-		if (sprite->animations->currentAnimation != nullptr) {
-			clip->x = (sprite->animations->currentAnimation->getCurrentFrame() % sprite->sheet->getNRowsAndColumns()) * clip->w;
-			clip->y = (sprite->animations->currentAnimation->getCurrentFrame() / sprite->sheet->getNRowsAndColumns()) * clip->h;
-		}
-	}
-
-	//Render
-	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) < 0) {
-		Log::s()->logError("An error occured when rendering a sprite! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	//Restore color mod and alpha mod
-	if (SDL_SetTextureColorMod(sprite->texture, DEFAULT_COLOR_SCHEME.r, DEFAULT_COLOR_SCHEME.g, DEFAULT_COLOR_SCHEME.b) < 0) {
-		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (color->a < 255) {
-		if (SDL_SetTextureBlendMode(sprite->texture, SDL_BLENDMODE_BLEND) < 0) {
-			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
-		}
-
-		if (SDL_SetTextureAlphaMod(sprite->texture, DEFAULT_COLOR_SCHEME.a) < 0) {
-			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
-		}
-	}
-}
-
-void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const {
-	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
-		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderFillRect(renderer, fillRect) < 0) {
-		Log::s()->logError("An error occured when rendering a filled rect! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
-		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
-void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
-	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
-		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawRect(renderer, drawRect) < 0) {
-		Log::s()->logError("An error occured when rendering an empty rect! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
-		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
-void Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
-	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
-		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawPoint(renderer, dot.x, dot.y) < 0) {
-		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
-		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
-void Screen::renderGeometryDot(const GeometryDot* dot) const {
-	renderDot({ (int) dot->getPosition()->x, (int) dot->getPosition()->y }, dot->getColorMod());
-}
-
-void Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
-	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
-		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawLine(renderer, lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
-		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
-void Screen::renderGeometryLine(const GeometryLine* line) const {
-	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
-}
-
-void Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
-	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
-		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
-		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
-	}
-}
-
-void Screen::renderGeometryLine(const GeometryLine* line) const {
-	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
-}
-
 void Screen::setViewport(const SDL_Rect* viewport) {
 	if (SDL_RenderSetViewport(renderer, viewport) < 0) {
 		Log::s()->logError("An error occured when setting the viewport! SDL Error: " + std::string(SDL_GetError()));
@@ -285,3 +175,123 @@ void Screen::restoreNormalViewport() {
 	this->viewportWidth = width;
 	this->viewportHeight = height;
 }
+
+void Screen::renderSprite(const Sprite* sprite) const {
+	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
+	SDL_Rect positionAndSize = { (int) sprite->getPosition()->x, (int) sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
+
+	//Set the color mod, alpha mod and blend mode for the given texture
+	setColorAndBlendForTexture(sprite->texture, sprite->getColorMod(), SDL_BLENDMODE_BLEND);
+
+	//Obtain clip
+	SDL_Rect* clip = (sprite->useClip) ? sprite->getSpriteClip() : nullptr;
+
+	//If it's animated, clip it properly
+	if (sprite->useAnimation) {
+		if (sprite->animations->currentAnimation != nullptr) {
+			clip->x = (sprite->animations->currentAnimation->getCurrentFrame() % sprite->sheet->getNRowsAndColumns()) * clip->w;
+			clip->y = (sprite->animations->currentAnimation->getCurrentFrame() / sprite->sheet->getNRowsAndColumns()) * clip->h;
+		}
+	}
+
+	//Render
+	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) < 0) {
+		Log::s()->logError("An error occured when rendering a sprite! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
+	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	if (SDL_RenderDrawPoint(renderer, dot.x, dot.y) < 0) {
+		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderGeometryDot(const GeometryDot* dot) const {
+	renderDot({ (int) dot->getPosition()->x, (int) dot->getPosition()->y }, dot->getColorMod());
+}
+
+void Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
+	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	if (SDL_RenderDrawLine(renderer, lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderGeometryLine(const GeometryLine* line) const {
+	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
+}
+
+void Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
+	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawLine(renderer, point2.x, point2.y, point3.x, point3.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+
+	if (SDL_RenderDrawLine(renderer, point3.x, point3.y, point1.x, point1.y) < 0) {
+		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
+	}
+}
+
+void Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
+	renderDrawnTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y }, { (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y }, { (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+}
+
+//void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
+//	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+//		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//
+//	if (color->a < 255) {
+//		if (SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND) < 0) {
+//			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+//		}
+//	}
+//
+//	if (SDL_RenderDrawRect(renderer, drawRect) < 0) {
+//		Log::s()->logError("An error occured when rendering an empty rect! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//
+//	if (color->a < 255) {
+//		if (SDL_SetRenderDrawBlendMode(renderer, DEFAULT_BLEND_MODE) < 0) {
+//			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+//		}
+//	}
+//
+//	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+//		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//}
+//
+//void Screen::renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const {
+//	if (SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) < 0) {
+//		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//
+//	if (color->a < 255) {
+//		if (SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND) < 0) {
+//			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+//		}
+//	}
+//
+//	if (SDL_RenderFillRect(renderer, fillRect) < 0) {
+//		Log::s()->logError("An error occured when rendering a filled rect! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//
+//	if (color->a < 255) {
+//		if (SDL_SetRenderDrawBlendMode(renderer, DEFAULT_BLEND_MODE) < 0) {
+//			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+//		}
+//	}
+//
+//	if (SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a) < 0) {
+//		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
+//	}
+//}

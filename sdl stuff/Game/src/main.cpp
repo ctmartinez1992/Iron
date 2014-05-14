@@ -19,6 +19,7 @@
 #include "Graphics/Sprite.h"
 #include "Graphics/Geometry/GeometryDot.h"
 #include "Graphics/Geometry/GeometryLine.h"
+#include "Graphics/Geometry/GeometryTriangle.h"
 #include "Util\Log.h"
 
 //Screen dimension constants.
@@ -56,10 +57,15 @@ GeometryDot* dot2 = nullptr;
 GeometryDot* dot3 = nullptr;
 GeometryDot* dot4 = nullptr;
 
+//Lines
 GeometryLine* line1 = nullptr;
 GeometryLine* line2 = nullptr;
 GeometryLine* line3 = nullptr;
 GeometryLine* line4 = nullptr;
+
+//Triangles
+GeometryTriangle* tri1 = nullptr;
+GeometryTriangle* tri2 = nullptr;
 
 //The screen.
 Screen* screen = nullptr;
@@ -161,6 +167,16 @@ bool loadMedia() {
 	world->addGeometry(line2);
 	world->addGeometry(line3);
 	world->addGeometry(line4);
+
+	//Load triangles
+	tri1 = new GeometryTriangle("Triangle1");
+	tri1->load(700, 200, 750, 300, 650, 300, Colors::Red);
+	tri2 = new GeometryTriangle("Triangle2");
+	tri2->load(700, 250, 725, 300, 675, 300, Colors::Blue);
+
+	//Add triangles to the world
+	world->addGeometry(tri1);
+	world->addGeometry(tri2);
 
 	return success;
 }

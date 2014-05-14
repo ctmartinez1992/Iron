@@ -1,5 +1,5 @@
-#ifndef GEOMETRYLINE_H
-#define GEOMETRYLINE_H
+#ifndef GEOMETRYTRIANGLE_H
+#define GEOMETRYTRIANGLE_H
 
 #define _CRTDBG_MAP_ALLOC
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -23,7 +23,7 @@ private:
 	//The second point of the triangle
 	Vector2*				position2;
 
-	//The thrid point of the triangle
+	//The third point of the triangle
 	Vector2*				position3;
 
 protected:

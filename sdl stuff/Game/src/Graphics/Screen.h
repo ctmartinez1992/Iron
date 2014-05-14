@@ -80,6 +80,11 @@ class Screen {
 
 	/*************** Methods ***************/
 	private:
+		//Sets the color mod and the blend mode for the renderer
+		void					setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const;
+
+		//Sets the color mod and the blend mode for the renderer
+		void					setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const;
 
 	protected:
 
@@ -99,15 +104,21 @@ class Screen {
 		//Loads and returns a SDL_Texture pointer.
 		SDL_Texture*			loadTexture(const std::string path);
 
+		//Sets a viewport for the screen
+		void					setViewport(const SDL_Rect* viewport);
+
+		//Sets a viewport for the screen
+		void					restoreNormalViewport();
+
+		/********************************************************************************/
+		/******************************  SPRITE RENDERING  ******************************/
+		/********************************************************************************/
 		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
 		void					renderSprite(const Sprite* sprite) const;
 
-		//Renders a filled square to the screen.
-		void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;
-
-		//Renders a border-only square to the screen.
-		void					renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const;
-
+		/***********************************************************************************/
+		/******************************  PRIMITIVE RENDERING  ******************************/
+		/***********************************************************************************/
 		//Renders a point to the screen.
 		void					renderDot(const SDL_Point dot, const SDL_Color* color) const;
 
@@ -127,13 +138,13 @@ class Screen {
 		void					renderFilledTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
 
 		//Renders a GeometryTriangle object to the screen.
-		void					renderGeometryTriangle(const GeometryTriangle* line) const;
+		void					renderGeometryTriangle(const GeometryTriangle* triangle) const;
 
-		//Sets a viewport for the screen
-		void					setViewport(const SDL_Rect* viewport);
+		//Renders a border-only square to the screen.
+		//void					renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const;
 
-		//Sets a viewport for the screen
-		void					restoreNormalViewport();
+		//Renders a filled square to the screen.
+		//void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;
 };
 
 #endif

@@ -1,90 +1,102 @@
-[21:29:23]: [INFO] - Initializing...
-[21:29:23]: [INFO] - Screen is being created...
-[21:29:23]: [INFO] - Screen was created successfully
-[21:29:23]: [DEBUG] - World was created
-[21:29:23]: [INFO] - Initialization was successfull
-[21:29:23]: [INFO] - Loading media...
-[21:29:23]: [DEBUG] - Sprite Sheet (Balls) was loaded
-[21:29:23]: [DEBUG] - GameObject (Sprite) was loaded
-[21:29:23]: [DEBUG] - Sprite (Sprite) was loaded
-[21:29:23]: [DEBUG] - Animation (cycle) was added
-[21:29:23]: [DEBUG] - Animation (cycle2) was added
-[21:29:23]: [DEBUG] - GameObject (dot11) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot11) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot11) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot12) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot12) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot12) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot13) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot13) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot13) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot14) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot14) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot14) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot15) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot15) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot15) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot2) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot2) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot2) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot3) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot3) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot3) was loaded
-[21:29:23]: [DEBUG] - GameObject (dot4) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (dot4) was loaded
-[21:29:23]: [DEBUG] - GeometryDot (dot4) was loaded
-[21:29:23]: [DEBUG] - GameObject (Line1) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (Line1) was loaded
-[21:29:23]: [DEBUG] - GeometryLine (Line1) was loaded
-[21:29:23]: [DEBUG] - GameObject (Line2) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (Line2) was loaded
-[21:29:23]: [DEBUG] - GeometryLine (Line2) was loaded
-[21:29:23]: [DEBUG] - GameObject (Line3) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (Line3) was loaded
-[21:29:23]: [DEBUG] - GeometryLine (Line3) was loaded
-[21:29:23]: [DEBUG] - GameObject (Line4) was loaded
-[21:29:23]: [DEBUG] - GeometryObject (Line4) was loaded
-[21:29:23]: [DEBUG] - GeometryLine (Line4) was loaded
-[21:29:23]: [INFO] - Media load was successfull
-[21:29:31]: [INFO] - Closing...
-[21:29:31]: [DEBUG] - Sprite (Ball) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (Ball) was UNloaded
-[21:29:31]: [DEBUG] - Sprite Sheet (Balls) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot11) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot11) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot11) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot12) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot12) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot12) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot13) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot13) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot13) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot14) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot14) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot14) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot15) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot15) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot15) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot2) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot2) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot2) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot3) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot3) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot3) was UNloaded
-[21:29:31]: [DEBUG] - GeometryDot (dot4) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (dot4) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (dot4) was UNloaded
-[21:29:31]: [DEBUG] - GeometryLine (Line1) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (Line1) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (Line1) was UNloaded
-[21:29:31]: [DEBUG] - GeometryLine (Line2) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (Line2) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (Line2) was UNloaded
-[21:29:31]: [DEBUG] - GeometryLine (Line3) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (Line3) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (Line3) was UNloaded
-[21:29:31]: [DEBUG] - GeometryLine (Line4) was UNloaded
-[21:29:31]: [DEBUG] - GeometryObject (Line4) was UNloaded
-[21:29:31]: [DEBUG] - GameObject (Line4) was UNloaded
-[21:29:31]: [DEBUG] - World was destroyed
-[21:29:31]: [INFO] - Screen was destroyed
+[16:32:19]: [INFO] - Initializing...
+[16:32:19]: [INFO] - Screen is being created...
+[16:32:19]: [INFO] - Screen was created successfully
+[16:32:19]: [DEBUG] - World was created
+[16:32:19]: [INFO] - Initialization was successfull
+[16:32:19]: [INFO] - Loading media...
+[16:32:19]: [DEBUG] - Sprite Sheet (Balls) was loaded
+[16:32:19]: [DEBUG] - GameObject (Sprite) was loaded
+[16:32:19]: [DEBUG] - Sprite (Sprite) was loaded
+[16:32:19]: [DEBUG] - Animation (cycle) was added
+[16:32:19]: [DEBUG] - Animation (cycle2) was added
+[16:32:19]: [DEBUG] - GameObject (dot11) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot11) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot11) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot12) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot12) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot12) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot13) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot13) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot13) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot14) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot14) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot14) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot15) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot15) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot15) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot2) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot2) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot2) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot3) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot3) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot3) was loaded
+[16:32:19]: [DEBUG] - GameObject (dot4) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (dot4) was loaded
+[16:32:19]: [DEBUG] - GeometryDot (dot4) was loaded
+[16:32:19]: [DEBUG] - GameObject (Line1) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Line1) was loaded
+[16:32:19]: [DEBUG] - GeometryLine (Line1) was loaded
+[16:32:19]: [DEBUG] - GameObject (Line2) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Line2) was loaded
+[16:32:19]: [DEBUG] - GeometryLine (Line2) was loaded
+[16:32:19]: [DEBUG] - GameObject (Line3) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Line3) was loaded
+[16:32:19]: [DEBUG] - GeometryLine (Line3) was loaded
+[16:32:19]: [DEBUG] - GameObject (Line4) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Line4) was loaded
+[16:32:19]: [DEBUG] - GeometryLine (Line4) was loaded
+[16:32:19]: [DEBUG] - GameObject (Triangle1) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Triangle1) was loaded
+[16:32:19]: [DEBUG] - GeometryTriangle (Triangle1) was loaded
+[16:32:19]: [DEBUG] - GameObject (Triangle2) was loaded
+[16:32:19]: [DEBUG] - GeometryObject (Triangle2) was loaded
+[16:32:19]: [DEBUG] - GeometryTriangle (Triangle2) was loaded
+[16:32:19]: [INFO] - Media load was successfull
+[16:32:22]: [INFO] - Closing...
+[16:32:22]: [DEBUG] - Sprite (Ball) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Ball) was UNloaded
+[16:32:22]: [DEBUG] - Sprite Sheet (Balls) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot11) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot11) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot11) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot12) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot12) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot12) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot13) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot13) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot13) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot14) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot14) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot14) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot15) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot15) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot15) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot2) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot2) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot2) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot3) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot3) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot3) was UNloaded
+[16:32:22]: [DEBUG] - GeometryDot (dot4) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (dot4) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (dot4) was UNloaded
+[16:32:22]: [DEBUG] - GeometryLine (Line1) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Line1) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Line1) was UNloaded
+[16:32:22]: [DEBUG] - GeometryLine (Line2) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Line2) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Line2) was UNloaded
+[16:32:22]: [DEBUG] - GeometryLine (Line3) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Line3) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Line3) was UNloaded
+[16:32:22]: [DEBUG] - GeometryLine (Line4) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Line4) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Line4) was UNloaded
+[16:32:22]: [DEBUG] - GeometryTriangle (Triangle1) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Triangle1) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Triangle1) was UNloaded
+[16:32:22]: [DEBUG] - GeometryTriangle (Triangle2) was UNloaded
+[16:32:22]: [DEBUG] - GeometryObject (Triangle2) was UNloaded
+[16:32:22]: [DEBUG] - GameObject (Triangle2) was UNloaded
+[16:32:22]: [DEBUG] - World was destroyed
+[16:32:22]: [INFO] - Screen was destroyed
