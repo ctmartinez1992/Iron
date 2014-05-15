@@ -43,32 +43,41 @@ Screen::~Screen() {
 	_instance = 0;
 }
 
-void Screen::setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const {
+int Screen::setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const {
 	if (SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a) < 0) {
 		Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
 	}
 
 	if (color->a < 255) {
 		if (SDL_SetRenderDrawBlendMode(renderer, blend) < 0) {
 			Log::s()->logError("Unable to set the renderer blend mode! SDL Error: " + std::string(SDL_GetError()));
+			return -1;
 		}
 	}
+
+	return 0;
 }
 
-void Screen::setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const {
+int Screen::setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const {
 	if (SDL_SetTextureColorMod(texture, color->r, color->g, color->b) < 0) {
 		Log::s()->logError("Unable to set the texture color mod! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
 	}
 
 	if (color->a < 255) {
 		if (SDL_SetTextureBlendMode(texture, blend) < 0) {
 			Log::s()->logError("Unable to set the texture blend mode! SDL Error: " + std::string(SDL_GetError()));
+			return -1;
 		}
 
 		if (SDL_SetTextureAlphaMod(texture, color->a) < 0) {
 			Log::s()->logError("Unable to set the texture alpha mod! SDL Error: " + std::string(SDL_GetError()));
+			return -1;
 		}
 	}
+
+	return 0;
 }
 
 Screen* Screen::getInstance() {
@@ -176,12 +185,14 @@ void Screen::restoreNormalViewport() {
 	this->viewportHeight = height;
 }
 
-void Screen::renderSprite(const Sprite* sprite) const {
+int	Screen::renderSprite(const Sprite* sprite) const {
+	short result = 0;
+
 	//Create SDL_Rect with position and dimensions and assign color mod and alpha mod
 	SDL_Rect positionAndSize = { (int) sprite->getPosition()->x, (int) sprite->getPosition()->y, sprite->getSpriteClip()->w, sprite->getSpriteClip()->h };
 
 	//Set the color mod, alpha mod and blend mode for the given texture
-	setColorAndBlendForTexture(sprite->texture, sprite->getColorMod(), SDL_BLENDMODE_BLEND);
+	result = setColorAndBlendForTexture(sprite->texture, sprite->getColorMod(), SDL_BLENDMODE_BLEND);
 
 	//Obtain clip
 	SDL_Rect* clip = (sprite->useClip) ? sprite->getSpriteClip() : nullptr;
@@ -191,57 +202,97 @@ void Screen::renderSprite(const Sprite* sprite) const {
 		if (sprite->animations->currentAnimation != nullptr) {
 			clip->x = (sprite->animations->currentAnimation->getCurrentFrame() % sprite->sheet->getNRowsAndColumns()) * clip->w;
 			clip->y = (sprite->animations->currentAnimation->getCurrentFrame() / sprite->sheet->getNRowsAndColumns()) * clip->h;
+		} else {
+			Log::s()->logWarning("Sprite with the name (" + sprite->name + ") is set to use animations but has no current animation associated");
 		}
 	}
 
 	//Render
 	if (SDL_RenderCopyEx(renderer, sprite->texture, clip, &positionAndSize, sprite->angle, sprite->getAnchor(), sprite->flip) < 0) {
 		Log::s()->logError("An error occured when rendering a sprite! SDL Error: " + std::string(SDL_GetError()));
+		result = -1;
 	}
+
+	return result;
 }
 
-void Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
-	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+int	Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
+	short result = 0;
 
+	//Set the color mod and blend mode for the given renderer
+	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	//Render the dot
 	if (SDL_RenderDrawPoint(renderer, dot.x, dot.y) < 0) {
 		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
 	}
+
+	return result;
 }
 
-void Screen::renderGeometryDot(const GeometryDot* dot) const {
-	renderDot({ (int) dot->getPosition()->x, (int) dot->getPosition()->y }, dot->getColorMod());
+int	Screen::renderGeometryDot(const GeometryDot* dot) const {
+	//Call the renderDot function and pass the correct parameters
+	if (dot != nullptr) {
+		return renderDot({ (int)dot->getPosition()->x, (int)dot->getPosition()->y }, dot->getColorMod());
+	}
+
+	Log::s()->logWarning("RenderGeometryDot tried to render a dot but it failed because the GeometryDot object was NULL");
+	return -1;
 }
 
-void Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
-	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+int	Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
+	short result = 0;
 
+	//Set the color mod and blend mode for the given renderer
+	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	//Render the line
 	if (SDL_RenderDrawLine(renderer, lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y) < 0) {
 		Log::s()->logError("An error occured when rendering a line! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
 	}
+
+	return result;
 }
 
-void Screen::renderGeometryLine(const GeometryLine* line) const {
-	renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
+int	Screen::renderGeometryLine(const GeometryLine* line) const {
+	//Call the renderLine function and pass the correct parameters
+	if (line != nullptr) {
+		return renderLine({ (int)line->getPositionOrigin()->x, (int)line->getPositionOrigin()->y }, { (int)line->getPositionDestination()->x, (int)line->getPositionDestination()->y }, line->getColorMod());
+	}
+
+	Log::s()->logWarning("RenderGeometryLine tried to render a line but it failed because the GeometryLine object was NULL");
+	return -1;
 }
 
-void Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
-	setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+int Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {	
+	//Create the X and Y array with the points
+	Sint16 vx[3];
+	Sint16 vy[3];
 
-	if (SDL_RenderDrawLine(renderer, point1.x, point1.y, point2.x, point2.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
+	//Assign them
+	vx[0] = point1.x;
+	vx[1] = point2.x;
+	vx[2] = point3.x;
+	vy[0] = point1.y;
+	vy[1] = point2.y;
+	vy[2] = point3.y;
 
-	if (SDL_RenderDrawLine(renderer, point2.x, point2.y, point3.x, point3.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
-
-	if (SDL_RenderDrawLine(renderer, point3.x, point3.y, point1.x, point1.y) < 0) {
-		Log::s()->logError("An error occured when rendering a line for a triangle! SDL Error: " + std::string(SDL_GetError()));
-	}
+	//Call the renderPolygon function with the correct values
+	return renderPolygon(renderer, vx, vy, 3, color);
 }
 
-void Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
-	renderDrawnTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y }, { (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y }, { (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+int	Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
+	//Call the renderDrawnTriangle or renderFilledTriangle accordingly and pass the correct parameters
+	if (triangle != nullptr) {
+		return renderDrawnTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y },
+								   { (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y },
+								   { (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+	}
+
+	Log::s()->logWarning("RenderGeometryTriangle tried to render a triangle but it failed because the Geometrytriangle object was NULL");
+	return -1;
 }
 
 //void Screen::renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const {
@@ -295,3 +346,58 @@ void Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
 //		Log::s()->logError("An error occured when resetting the rendering color to the screens background color! SDL Error: " + std::string(SDL_GetError()));
 //	}
 //}
+
+int Screen::renderPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const {
+	//Temporary variables
+	short result = 0;
+	int extraPoint = 0;
+	SDL_Point* points;
+
+	//Check arraysand if n is above or equal to 3
+	if (xArray == NULL) {
+		Log::s()->logWarning("renderPolygon function received an empty X array");
+		return -1;
+	}
+
+	if (yArray == NULL) {
+		Log::s()->logWarning("renderPolygon function received an empty Y array");
+		return -1;
+	}
+
+	if (nPoints < 3) {
+		Log::s()->logWarning("renderPolygon function received an invalid nPoints value, it must be above 3 but, it was equal to " + (nPoints));
+		return -1;
+	}
+
+	//Create the array of points, a temporary array that holds all points that are going to be rendered
+	extraPoint = nPoints + 1;
+	points = new SDL_Point[extraPoint]();
+	if (points == nullptr)	{
+		Log::s()->logWarning("renderPolygon function had a problem creating the internal array of points");
+		return -1;
+	}
+
+	//Fill the array
+	for (int i = 0; i < nPoints; i++) {
+		points[i].x = xArray[i];
+		points[i].y = yArray[i];
+	}
+
+	//The extra point is used to close the polygon
+	points[nPoints].x = xArray[0];
+	points[nPoints].y = yArray[0];
+
+	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
+
+	//Render all the points
+	if (SDL_RenderDrawLines(renderer, points, extraPoint) < 0) {
+		Log::s()->logError("An error occured when rendering the lines of a polygon! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
+	}
+
+	//Free the malloced array of points
+	delete []points;
+	points = nullptr;
+
+	return result;
+}

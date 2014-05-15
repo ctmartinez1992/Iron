@@ -81,10 +81,10 @@ class Screen {
 	/*************** Methods ***************/
 	private:
 		//Sets the color mod and the blend mode for the renderer
-		void					setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const;
+		int 					setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const;
 
 		//Sets the color mod and the blend mode for the renderer
-		void					setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const;
+		int 					setColorAndBlendForTexture(SDL_Texture* texture, const SDL_Color* color, const SDL_BlendMode blend) const;
 
 	protected:
 
@@ -114,37 +114,48 @@ class Screen {
 		/******************************  SPRITE RENDERING  ******************************/
 		/********************************************************************************/
 		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
-		void					renderSprite(const Sprite* sprite) const;
+		int						renderSprite(const Sprite* sprite) const;
 
 		/***********************************************************************************/
 		/******************************  PRIMITIVE RENDERING  ******************************/
 		/***********************************************************************************/
 		//Renders a point to the screen.
-		void					renderDot(const SDL_Point dot, const SDL_Color* color) const;
+		int						renderDot(const SDL_Point dot, const SDL_Color* color) const;
 
 		//Renders a GeometryDot object to the screen.
-		void					renderGeometryDot(const GeometryDot* dot) const;
+		int						renderGeometryDot(const GeometryDot* dot) const;
 
 		//Renders a point to the screen.
-		void					renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const;
+		int						renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const;
 
 		//Renders a GeometryDot object to the screen.
-		void					renderGeometryLine(const GeometryLine* line) const;
+		int						renderGeometryLine(const GeometryLine* line) const;
 
 		//Renders the outline of a triangle to the screen.
-		void					renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
+		int						renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
 
 		//Renders a filled triangle to the screen.
-		void					renderFilledTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
+		int						renderFilledTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const;
 
 		//Renders a GeometryTriangle object to the screen.
-		void					renderGeometryTriangle(const GeometryTriangle* triangle) const;
+		int						renderGeometryTriangle(const GeometryTriangle* triangle) const;
 
 		//Renders a border-only square to the screen.
 		//void					renderDrawnSquare(const SDL_Rect* drawRect, const Colors color) const;
 
 		//Renders a filled square to the screen.
 		//void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;
+
+		/*!
+		\brief Render a polygon to the screen
+
+		\param renderer The renderer to draw on.
+		\param vx Vertex array containing X coordinates of the points of the polygon.
+		\param vy Vertex array containing Y coordinates of the points of the polygon.
+		\param n Number of points in the array. Minimum number is 3.
+		\param color the color for the polygon.
+		*/
+		int						renderPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const;
 };
 
 #endif
