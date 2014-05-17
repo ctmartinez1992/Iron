@@ -6,6 +6,8 @@
 #include "../Graphics/Geometry/GeometryLine.h"
 #include "../Graphics/Geometry/GeometryTriangle.h"
 
+int*				Screen::PRIMITIVE_POLYGON_INTEGERS;
+int					Screen::PRIMITIVE_POLYGON_INTEGERS_COUNT = 0;
 Screen*				Screen::_instance = 0;
 SDL_BlendMode		Screen::DEFAULT_BLEND_MODE = SDL_BLENDMODE_BLEND;
 SDL_Color			Screen::DEFAULT_COLOR_SCHEME = { 255, 255, 255, 255 };
@@ -31,7 +33,7 @@ Screen::Screen(const char* screenTitle, Uint16 width, Uint16 height) : screenTit
 }
 
 Screen::~Screen() {
-	//Destroy window.
+	//Destroy window
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = nullptr;
@@ -39,8 +41,18 @@ Screen::~Screen() {
 
 	Log::s()->logInfo("Screen was destroyed");
 
-	//Invalidade singleton.
+	//Invalidade singleton
 	_instance = 0;
+}
+
+/*!
+\brief Internal qsort callback used in renderFilledPolygon
+\param a Drawing context
+\param b Vertex array of x coordinates
+\returns Returns 0 if a == b, <0 if a<b or >0 if a>b
+*/
+int qsortCompareInt(const void* a, const void* b) {
+	return ((*(const int*)a) - (*(const int*)b));
 }
 
 int Screen::setColorAndBlendForRenderer(const SDL_Color* color, const SDL_BlendMode blend) const {
@@ -88,12 +100,12 @@ Screen* Screen::getInstance() {
 }
 
 bool Screen::initScreen() {
-	//Initialization flag.
+	//Initialization flag
 	bool success = true;
 
 	Log::s()->logInfo("Screen is being created...");
 
-	//Initialize SDL.
+	//Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 		success = false;
 	} else {
@@ -115,7 +127,10 @@ bool Screen::initScreen() {
 				success = false;
 			} else {
 				//Initialize renderer color
-				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				if (SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF) < 0) {
+					Log::s()->logError("An error occured when setting the rendering color! SDL Error: " + std::string(SDL_GetError()));
+					success = false;
+				}
 
 				//Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
@@ -216,19 +231,23 @@ int	Screen::renderSprite(const Sprite* sprite) const {
 	return result;
 }
 
-int	Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
+int	Screen::renderDot(const int x, const int y, const SDL_Color* color) const {
 	short result = 0;
 
 	//Set the color mod and blend mode for the given renderer
 	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
 
 	//Render the dot
-	if (SDL_RenderDrawPoint(renderer, dot.x, dot.y) < 0) {
+	if (SDL_RenderDrawPoint(renderer, x, y) < 0) {
 		Log::s()->logError("An error occured when rendering a dot! SDL Error: " + std::string(SDL_GetError()));
 		return -1;
 	}
 
 	return result;
+}
+
+int	Screen::renderDot(const SDL_Point dot, const SDL_Color* color) const {
+	return renderDot(dot.x, dot.y, color);
 }
 
 int	Screen::renderGeometryDot(const GeometryDot* dot) const {
@@ -241,19 +260,23 @@ int	Screen::renderGeometryDot(const GeometryDot* dot) const {
 	return -1;
 }
 
-int	Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
+int	Screen::renderLine(const int xO, const int yO, const int xD, const int yD, const SDL_Color* color) const {
 	short result = 0;
 
 	//Set the color mod and blend mode for the given renderer
 	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
 
 	//Render the line
-	if (SDL_RenderDrawLine(renderer, lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y) < 0) {
+	if (SDL_RenderDrawLine(renderer, xO, yO, xD, yD) < 0) {
 		Log::s()->logError("An error occured when rendering a line! SDL Error: " + std::string(SDL_GetError()));
 		return -1;
 	}
 
 	return result;
+}
+
+int	Screen::renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const {
+	return renderLine(lineOrigin.x, lineOrigin.y, lineDestination.x, lineDestination.y, color);
 }
 
 int	Screen::renderGeometryLine(const GeometryLine* line) const {
@@ -266,7 +289,7 @@ int	Screen::renderGeometryLine(const GeometryLine* line) const {
 	return -1;
 }
 
-int Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {	
+int Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
 	//Create the X and Y array with the points
 	Sint16 vx[3];
 	Sint16 vy[3];
@@ -279,16 +302,39 @@ int Screen::renderDrawnTriangle(const SDL_Point point1, const SDL_Point point2, 
 	vy[1] = point2.y;
 	vy[2] = point3.y;
 
-	//Call the renderPolygon function with the correct values
-	return renderPolygon(renderer, vx, vy, 3, color);
+	//Call the renderDrawnPolygon function with the correct values
+	return renderDrawnPolygon(renderer, vx, vy, 3, color);
+}
+
+int Screen::renderFilledTriangle(const SDL_Point point1, const SDL_Point point2, const SDL_Point point3, const SDL_Color* color) const {
+	//Create the X and Y array with the points
+	Sint16 vx[3];
+	Sint16 vy[3];
+
+	//Assign them
+	vx[0] = point1.x;
+	vx[1] = point2.x;
+	vx[2] = point3.x;
+	vy[0] = point1.y;
+	vy[1] = point2.y;
+	vy[2] = point3.y;
+
+	//Call the renderFilledPolygon function with the correct values
+	return renderFilledPolygon(renderer, vx, vy, 3, color);
 }
 
 int	Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
 	//Call the renderDrawnTriangle or renderFilledTriangle accordingly and pass the correct parameters
 	if (triangle != nullptr) {
-		return renderDrawnTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y },
-								   { (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y },
-								   { (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+		if (triangle->filled) {
+			return renderFilledTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y },
+										{ (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y },
+										{ (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+		} else {
+			return renderDrawnTriangle({ (int)triangle->getPosition1()->x, (int)triangle->getPosition1()->y },
+									   { (int)triangle->getPosition2()->x, (int)triangle->getPosition2()->y },
+									   { (int)triangle->getPosition3()->x, (int)triangle->getPosition3()->y }, triangle->getColorMod());
+		}
 	}
 
 	Log::s()->logWarning("RenderGeometryTriangle tried to render a triangle but it failed because the Geometrytriangle object was NULL");
@@ -347,57 +393,193 @@ int	Screen::renderGeometryTriangle(const GeometryTriangle* triangle) const {
 //	}
 //}
 
-int Screen::renderPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const {
+int Screen::renderDrawnPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const {
 	//Temporary variables
 	short result = 0;
 	int extraPoint = 0;
-	SDL_Point* points;
+	std::vector<SDL_Point> points;
 
-	//Check arraysand if n is above or equal to 3
+	//Check arrays and if nPoints is above or equal to 3, because polygons need at least 3 points
 	if (xArray == NULL) {
-		Log::s()->logWarning("renderPolygon function received an empty X array");
+		Log::s()->logWarning("renderDrawnPolygon function received an empty X array");
 		return -1;
 	}
 
 	if (yArray == NULL) {
-		Log::s()->logWarning("renderPolygon function received an empty Y array");
+		Log::s()->logWarning("renderDrawnPolygon function received an empty Y array");
 		return -1;
 	}
 
 	if (nPoints < 3) {
-		Log::s()->logWarning("renderPolygon function received an invalid nPoints value, it must be above 3 but, it was equal to " + (nPoints));
+		Log::s()->logWarning("renderDrawnPolygon function received an invalid nPoints value, it must be above 3 but, it was equal to " + (nPoints));
 		return -1;
 	}
 
 	//Create the array of points, a temporary array that holds all points that are going to be rendered
 	extraPoint = nPoints + 1;
-	points = new SDL_Point[extraPoint]();
-	if (points == nullptr)	{
-		Log::s()->logWarning("renderPolygon function had a problem creating the internal array of points");
-		return -1;
-	}
+	points.reserve(extraPoint);
+	//points = new SDL_Point[extraPoint]();
 
 	//Fill the array
 	for (int i = 0; i < nPoints; i++) {
-		points[i].x = xArray[i];
-		points[i].y = yArray[i];
+		points.push_back({ xArray[i], yArray[i] });
 	}
 
 	//The extra point is used to close the polygon
-	points[nPoints].x = xArray[0];
-	points[nPoints].y = yArray[0];
+	points.push_back({ xArray[0], yArray[0] });
 
 	result = setColorAndBlendForRenderer(color, SDL_BLENDMODE_BLEND);
 
 	//Render all the points
-	if (SDL_RenderDrawLines(renderer, points, extraPoint) < 0) {
+	if (SDL_RenderDrawLines(renderer, &points[0], extraPoint) < 0) {
 		Log::s()->logError("An error occured when rendering the lines of a polygon! SDL Error: " + std::string(SDL_GetError()));
 		return -1;
 	}
 
-	//Free the malloced array of points
-	delete []points;
-	points = nullptr;
-
 	return result;
+}
+
+int Screen::renderFilledPolygon(SDL_Renderer* renderer, const Sint16* vx, const Sint16* vy, int nPoints, const SDL_Color* color, int** polyInts, int* polyAllocated) const {
+	//Result of the function
+	short result;
+	
+	//Check arrays and if nPoints is above or equal to 3, because polygons need at least 3 points
+	if (vx == NULL) {
+		return -1;
+	}
+
+	if (vy == NULL) {
+		return -1;
+	}
+
+	if (nPoints < 3) {
+		return -1;
+	}
+
+	//Cached variables for the polygon build
+	int cachedPolygonIntsCount = 0;
+	int *cachedPolygonInts = NULL;
+	int *cachedPolygonIntsNew = NULL;
+
+	//Map the cached polygon values to use the global vlaues or the passed local values
+	if (polyInts == NULL || polyAllocated == NULL) {
+		cachedPolygonInts = PRIMITIVE_POLYGON_INTEGERS;
+		cachedPolygonIntsCount = PRIMITIVE_POLYGON_INTEGERS_COUNT;
+	} else {
+		cachedPolygonInts = *polyInts;
+		cachedPolygonIntsCount = *polyAllocated;
+	}
+
+	//If it's the first time, then it goes in here
+	if (!cachedPolygonInts) {
+		cachedPolygonInts = (int*) malloc(sizeof(int)* nPoints);
+		cachedPolygonIntsCount = nPoints;
+	} else {
+		//Allocate the array if a smaller one is needed
+		if (cachedPolygonIntsCount < nPoints) {
+			cachedPolygonIntsNew = (int*)realloc(cachedPolygonInts, sizeof(int)* nPoints);
+			if (!cachedPolygonIntsNew) {
+				cachedPolygonIntsCount = 0;
+			} else {
+				cachedPolygonInts = cachedPolygonIntsNew;
+				cachedPolygonIntsCount = nPoints;
+			}
+		}
+	}
+
+	//Recheck the array, leave if it's NULL
+	if (cachedPolygonInts == NULL) {
+		Log::s()->logWarning("Function renderFilledPolygon failed to update internal cached variables and cannot render the polygon");
+		return -1;
+	}
+
+	//Update the cached variables
+	if (polyInts == NULL || polyAllocated == NULL) {
+		PRIMITIVE_POLYGON_INTEGERS = cachedPolygonInts;
+		PRIMITIVE_POLYGON_INTEGERS_COUNT = cachedPolygonIntsCount;
+	} else {
+		*polyInts = cachedPolygonInts;
+		*polyAllocated = cachedPolygonIntsCount;
+	}
+
+	//Calculate the lowest and the highest y value (minimum and maximum)
+	int minY = vy[0];
+	int maxY = vy[0];
+	for (int i = 1; (i < nPoints); i++) {
+		if (vy[i] < minY) {
+			minY = vy[i];
+		} else if (vy[i] > maxY) {
+			maxY = vy[i];
+		}
+	}
+
+	//More temporary variables for the lines calculation
+	int xO;
+	int yO;
+	int xD;
+	int yD;
+	int xDrawO;
+	int xDrawD;
+
+	int ints;
+	int index1;
+	int index2;
+
+	int maxLimitInt = std::numeric_limits<Sint16>::max() + 1;
+	int maxLimitUnsignedInt = std::numeric_limits<Uint16>::max() + 1;
+
+	//Draw the polygon line by line
+	result = 0;
+	for (int y = minY; y <= maxY; y++) {
+		ints = 0;
+		for (int i = 0; (i < nPoints); i++) {
+			//Stops from getting a negative value
+			if (!i) {
+				index1 = nPoints - 1;
+				index2 = 0;
+			} else {
+				index1 = i - 1;
+				index2 = i;
+			}
+
+			yO = vy[index1];
+			yD = vy[index2];
+
+			//Decide x values based on y values
+			if (yO < yD) {
+				xO = vx[index1];
+				xD = vx[index2];
+			} else if (yO > yD) {
+				yD = vy[index1];
+				yO = vy[index2];
+				xD = vx[index1];
+				xO = vx[index2];
+			} else {
+				continue;
+			}
+
+			if (((y >= yO) && (y < yD)) || ((y == maxY) && (y > yO) && (y <= yD))) {
+				cachedPolygonInts[ints++] = ((maxLimitUnsignedInt * (y - yO)) / (yD - yO)) * (xD - xO) + (maxLimitUnsignedInt * xO);
+			}
+		}
+
+		//Quick Sort the polygon values
+		qsort(cachedPolygonInts, ints, sizeof(int), qsortCompareInt);
+
+		for (int i = 0; i < ints; i += 2) {
+			xDrawO = cachedPolygonInts[i] + 1;
+			xDrawO = (xDrawO >> 16) + ((xDrawO & maxLimitInt) >> 15);
+			xDrawD = cachedPolygonInts[i + 1] - 1;
+			xDrawD = (xDrawD >> 16) + ((xDrawD & maxLimitInt) >> 15);
+			result |= renderLine(xDrawO, y, xDrawD, y, color);
+		}
+	}
+
+	//Deallocate cached values
+	if (!cachedPolygonInts) {
+		free(cachedPolygonInts);
+		cachedPolygonInts = NULL;
+	}
+
+	return (result);
 }

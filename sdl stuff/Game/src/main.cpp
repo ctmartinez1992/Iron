@@ -116,7 +116,7 @@ bool loadMedia() {
 	sprite = new Sprite(sheet);
 	SDL_Rect clip = { 0, 0, sheet->getSpriteWidth(), sheet->getSpriteHeight() };
 	sprite->load(200, 200, clip, true, true, 0);
-	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 7, 1);
+	sprite->animations->addAnimation("cycle", { 0, 1, 2, 3 }, 10, 1);
 	sprite->animations->addAnimation("cycle2", { 0, 1, 2, 1, 3, 2, 1 }, 10, 1);
 	sprite->animations->play("cycle");
 	sprite->name = "Ball";
@@ -173,6 +173,7 @@ bool loadMedia() {
 	tri1->load(700, 200, 750, 300, 650, 300, Colors::Red);
 	tri2 = new GeometryTriangle("Triangle2");
 	tri2->load(700, 250, 725, 300, 675, 300, Colors::Blue);
+	tri2->filled = true;
 
 	//Add triangles to the world
 	world->addGeometry(tri1);

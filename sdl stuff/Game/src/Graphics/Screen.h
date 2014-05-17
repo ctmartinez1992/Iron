@@ -12,6 +12,7 @@
 //C++
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 //OWN
 #include "Colors.h"
@@ -37,6 +38,15 @@ class Screen {
 		bool					init;
 
 	protected:
+		/*!
+		\brief Global alternative vertex array that is used when a certain parameters is NULL, see renderFilledPolygon
+		*/
+		static int*				PRIMITIVE_POLYGON_INTEGERS;
+
+		/*!
+		\brief Flag indicating the amount of integers allocated, see renderFilledPolygon
+		*/
+		static int				PRIMITIVE_POLYGON_INTEGERS_COUNT;
 
 	public:
 		//Singleton.
@@ -119,11 +129,18 @@ class Screen {
 		/***********************************************************************************/
 		/******************************  PRIMITIVE RENDERING  ******************************/
 		/***********************************************************************************/
+
+		//Renders a point to the screen.
+		int						renderDot(const int x, const int y, const SDL_Color* color) const;
+
 		//Renders a point to the screen.
 		int						renderDot(const SDL_Point dot, const SDL_Color* color) const;
 
 		//Renders a GeometryDot object to the screen.
 		int						renderGeometryDot(const GeometryDot* dot) const;
+
+		//Renders a point to the screen.
+		int						renderLine(const int xO, const int yO, const int xD, const int yD, const SDL_Color* color) const;
 
 		//Renders a point to the screen.
 		int						renderLine(const SDL_Point lineOrigin, const SDL_Point lineDestination, const SDL_Color* color) const;
@@ -147,15 +164,32 @@ class Screen {
 		//void					renderFilledSquare(const SDL_Rect* fillRect, const Colors color) const;
 
 		/*!
-		\brief Render a polygon to the screen
-
-		\param renderer The renderer to draw on.
-		\param vx Vertex array containing X coordinates of the points of the polygon.
-		\param vy Vertex array containing Y coordinates of the points of the polygon.
-		\param n Number of points in the array. Minimum number is 3.
-		\param color the color for the polygon.
+		\brief Render a (colored with alpha) drawn polygon to the screen
+		\param renderer The renderer to draw on
+		\param xArray Vertex array containing X coordinates of the points of the polygon
+		\param yArray Vertex array containing Y coordinates of the points of the polygon
+		\param nPoints Number of points in the array. Minimum number is 3
+		\param color the color for the polygon
+		\returns Returns 0 on success, -1 on failure
 		*/
-		int						renderPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const;
+		int						renderDrawnPolygon(SDL_Renderer* renderer, const Sint16* xArray, const Sint16* yArray, int nPoints, const SDL_Color* color) const;
+
+		/*!
+		\brief Render a (colored with alpha) filled polygon to the screen
+		\param renderer The renderer to draw on
+		\param vx Vertex array containing X coordinates of the points of the filled polygon
+		\param vy Vertex array containing Y coordinates of the points of the filled polygon
+		\param n Number of points in the vertex array. Minimum number is 3
+		\param r The red value of the filled polygon to draw
+		\param g The green value of the filled polygon to draw
+		\param b The blue value of the filled polygon to draw
+		\param a The alpha value of the filled polygon to draw
+		\param polyInts (OPTIONAL) - Preallocated, temporary vertex array used for sorting vertices. Required for multithreaded operation; set to NULL otherwise. Required for multithreading
+		\param polyAllocated (OPTIONAL) - Flag indicating if temporary vertex array was allocated. Required for multithreaded operation; set to NULL otherwise. Required for multithreading
+		\returns Returns 0 on success, -1 on failure
+		TODO: change mallocs and reallocs and the cached variables to std::vector
+		*/
+		int						renderFilledPolygon(SDL_Renderer* renderer, const Sint16* vx, const Sint16* vy, int n, const SDL_Color* color, int** polyInts = NULL, int* polyAllocated = NULL) const;
 };
 
 #endif
