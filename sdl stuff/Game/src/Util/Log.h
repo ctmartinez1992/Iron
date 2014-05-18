@@ -53,8 +53,8 @@ private:
 	//Don't implement
 	Log(Log const&);
 
-	//Overused function
-	void							log(const std::string type, const std::string& message);
+	//Overused function, logs the given message with the given type
+	inline void						log(const std::string type, const std::string& message);
 	
 protected:
 

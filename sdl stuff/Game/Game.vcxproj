@@ -27,7 +27,6 @@
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Util\FrameRate.cpp" />
     <ClCompile Include="src\Util\Log.cpp" />
     <ClCompile Include="src\Util\Math.cpp" />
     <ClCompile Include="src\Util\Timer.cpp" />
@@ -46,7 +45,6 @@
     <ClInclude Include="src\Graphics\Screen.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />
     <ClInclude Include="src\Graphics\SpriteSheet.h" />
-    <ClInclude Include="src\Util\FrameRate.h" />
     <ClInclude Include="src\Util\Log.h" />
     <ClInclude Include="src\Util\Math.h" />
     <ClInclude Include="src\Util\Singleton.h" />

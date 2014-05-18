@@ -15,6 +15,7 @@
 //OWN
 #include "General/World.h"
 #include "Graphics/Screen.h"
+//#include "Graphics/Text/TTFText.h"
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Geometry/GeometryDot.h"
@@ -40,6 +41,9 @@ void render();
 
 //Frees media and shuts down SDL.
 void close();
+
+//TTFText test
+//TTFText* text = nullptr;
 
 //SpriteSheet test
 SpriteSheet* sheet = nullptr;
@@ -100,6 +104,10 @@ bool init() {
 bool loadMedia() {
 	//Loading success flag.
 	bool success = true;
+
+	//Load a TTFText
+	//text = new TTFText(screen);
+	//text->load();
 
 	//Load a SpriteSheet
 	sheet = new SpriteSheet(screen->renderer);
@@ -183,15 +191,21 @@ bool loadMedia() {
 }
 
 void close() {
-	//Quit SDL subsystems.
-	IMG_Quit();
-	SDL_Quit();
-
-	//Clear our classes.
+	//Clear our classes
+	//delete text;
+	//text = nullptr;
 	delete world;
 	world = nullptr;
 	delete screen;
 	screen = nullptr;
+
+	//Go away pesky fonts
+	//Fonts::freeFonts();
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	//TTF_Quit();
+	SDL_Quit();
 
 	//Close the log
 	Log::s()->close();
@@ -199,12 +213,15 @@ void close() {
 
 void update() {
 	world->update();
-	sprite->angle += 0.22;
+	sprite->angle += 0.2;
 }
 
 void render() {
 	//Clear screen
 	screen->clearScreen();
+
+	//Render the text;
+	//text->render();
 
 	//Render world stuff
 	world->render();

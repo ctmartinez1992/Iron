@@ -14,5 +14,14 @@ Colors::Colors(unsigned char r, unsigned char g, unsigned char b, unsigned char 
 {
 }
 
+Colors::Colors(const Colors& color) : r(color.r), g(color.g), b(color.b), a(color.a)
+{
+}
+
 Colors::~Colors() {
+}
+
+SDL_Color Colors::toSDLColor() {
+	SDL_Color sdlColor = { r, g, b, a };
+	return sdlColor;
 }

@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Util">
       <UniqueIdentifier>{1a0accd3-45e6-4bd1-8049-723767f3f7d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Text">
+      <UniqueIdentifier>{61c0c48f-23f6-4457-8f1d-57ee646264f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Text">
+      <UniqueIdentifier>{05fae205-e464-479e-9063-3e210885836f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\texture07.png">
@@ -92,9 +98,6 @@
     <ClCompile Include="src\Graphics\Geometry\GeometryTriangle.cpp">
       <Filter>Source Files\Graphics\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="src\Util\FrameRate.cpp">
-      <Filter>Source Files\Util</Filter>
-    </ClCompile>
     <ClCompile Include="src\Util\Timer.cpp">
       <Filter>Source Files\Util</Filter>
     </ClCompile>
@@ -147,9 +150,6 @@
     </ClInclude>
     <ClInclude Include="src\Graphics\Geometry\GeometryTriangle.h">
       <Filter>Header Files\Graphics\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Util\FrameRate.h">
-      <Filter>Header Files\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\Util\Timer.h">
       <Filter>Header Files\Util</Filter>

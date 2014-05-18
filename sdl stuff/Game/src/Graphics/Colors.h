@@ -37,6 +37,7 @@ public:
 public:
 	Colors();
 	Colors(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	Colors(const Colors& color);
 	~Colors();
 
 	/*************** Methods ***************/
@@ -45,6 +46,7 @@ private:
 protected:
 
 public:
+	SDL_Color					toSDLColor();
 };
 
 #endif

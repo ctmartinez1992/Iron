@@ -8,6 +8,7 @@
 //SDL
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 //C++
 #include <stdio.h>
@@ -16,10 +17,12 @@
 
 //OWN
 #include "Colors.h"
+#include "Fonts.h"
 #include "SpriteSheet.h"
 #include "../Util/Log.h"
 
 class GameObject;
+//class TTFText;
 class Sprite;
 class GeometryDot;
 class GeometryLine;
@@ -114,16 +117,25 @@ class Screen {
 		//Loads and returns a SDL_Texture pointer.
 		SDL_Texture*			loadTexture(const std::string path);
 
+		//Loads the text and returns a SDL_Texture pointer to the text texture.
+		//SDL_Texture*			loadTextTexture(const std::string text, const Fonts font);
+
 		//Sets a viewport for the screen
 		void					setViewport(const SDL_Rect* viewport);
 
 		//Sets a viewport for the screen
 		void					restoreNormalViewport();
+		
+		/******************************************************************************/
+		/******************************  TEXT RENDERING  ******************************/
+		/******************************************************************************/
+		//Renders a TTFText (see class) to the screen
+		//int						renderTTFText(const TTFText* text) const;
 
 		/********************************************************************************/
 		/******************************  SPRITE RENDERING  ******************************/
 		/********************************************************************************/
-		//Renders a Sprite (see class) at the given position to the screen (with no clipping). Optionally, you can pass a sheet clip, a color mod a alpha mod and if it's animated
+		//Renders a Sprite (see class) to the screen
 		int						renderSprite(const Sprite* sprite) const;
 
 		/***********************************************************************************/

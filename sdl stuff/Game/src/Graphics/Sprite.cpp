@@ -28,6 +28,7 @@ Sprite::~Sprite() {
 	delete clip;
 	clip = nullptr;
 	sheet = nullptr;
+	SDL_DestroyTexture(texture);
 	texture = nullptr;
 	loaded = nullptr;
 

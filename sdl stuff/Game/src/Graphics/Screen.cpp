@@ -1,6 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include "Screen.h"
 #include "../General/GameObject.h"
+//#include "Text/TTFText.h"
 #include "Sprite.h"
 #include "../Graphics/Geometry/GeometryDot.h"
 #include "../Graphics/Geometry/GeometryLine.h"
@@ -138,6 +139,9 @@ bool Screen::initScreen() {
 					Log::s()->logError("SDL_image could not initialize! SDL_image Error: " + std::string(IMG_GetError()));
 					success = false;
 				}
+
+				//Initialized TTF loading
+				//Screen does not load TTF, it is done in Fonts class due to timing issues
 			}
 		}
 	}
@@ -168,8 +172,7 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == nullptr) {
 		Log::s()->logError("Unable to load image " + path + "! SDL_image Error : " + std::string(IMG_GetError()));
-	}
-	else {
+	} else {
 		//Create texture from surface pixels.
 		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		if (newTexture == nullptr) {
@@ -181,6 +184,32 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 
 	return newTexture;
 }
+
+//SDL_Texture* Screen::loadTextTexture(const std::string text, const Fonts font) {
+//	extern int textWidth;
+//	extern int textHeight;
+//	SDL_Texture* newTexture = nullptr;
+//
+//	//Render text surface
+//	SDL_Surface* textSurface = TTF_RenderText_Solid(font.font, text.c_str(), font.color->toSDLColor());
+//	if (textSurface == NULL) {
+//		Log::s()->logError("Unable to render text surface! SDL_ttf Error: " + std::string(TTF_GetError()));
+//	} else {
+//		//Create texture from surface pixels
+//		newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+//		if (newTexture == NULL) {
+//			Log::s()->logError("Unable to create texture from text texture! SDL Error: " + std::string(SDL_GetError()));
+//		} else {
+//			//Get image dimensions
+//			textWidth = textSurface->w;
+//			textHeight = textSurface->h;
+//		}
+//
+//		SDL_FreeSurface(textSurface);
+//	}
+//
+//	return newTexture;
+//}
 
 void Screen::setViewport(const SDL_Rect* viewport) {
 	if (SDL_RenderSetViewport(renderer, viewport) < 0) {
@@ -199,6 +228,16 @@ void Screen::restoreNormalViewport() {
 	this->viewportWidth = width;
 	this->viewportHeight = height;
 }
+
+//int Screen::renderTTFText(const TTFText* text) const {
+//	//Set rendering space and render to screen
+//	SDL_Rect renderQuad = { 10, 10, text->textWidth, text->textHeight };
+//
+//	//Render to screen
+//	SDL_RenderCopyEx(renderer, text->textTexture, NULL, &renderQuad, 0, NULL, SDL_FLIP_NONE);
+//
+//	return 0;
+//}
 
 int	Screen::renderSprite(const Sprite* sprite) const {
 	short result = 0;
