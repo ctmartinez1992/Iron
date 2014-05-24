@@ -16,8 +16,6 @@
 
 //OWN
 
-//Use [INFO], [WARNING], [ERROR], [DEBUG] accordingly, no point in wasting time implementing it
-
 class Log {	
 	/*************** Variables ***************/
 private:

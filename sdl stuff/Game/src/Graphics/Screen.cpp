@@ -185,31 +185,29 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	return newTexture;
 }
 
-//SDL_Texture* Screen::loadTextTexture(const std::string text, const Fonts font) {
-//	extern int textWidth;
-//	extern int textHeight;
-//	SDL_Texture* newTexture = nullptr;
-//
-//	//Render text surface
-//	SDL_Surface* textSurface = TTF_RenderText_Solid(font.font, text.c_str(), font.color->toSDLColor());
-//	if (textSurface == NULL) {
-//		Log::s()->logError("Unable to render text surface! SDL_ttf Error: " + std::string(TTF_GetError()));
-//	} else {
-//		//Create texture from surface pixels
-//		newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-//		if (newTexture == NULL) {
-//			Log::s()->logError("Unable to create texture from text texture! SDL Error: " + std::string(SDL_GetError()));
-//		} else {
-//			//Get image dimensions
-//			textWidth = textSurface->w;
-//			textHeight = textSurface->h;
-//		}
-//
-//		SDL_FreeSurface(textSurface);
-//	}
-//
-//	return newTexture;
-//}
+SDL_Texture* Screen::loadTextTexture(const std::string text, Font font, int* width, int* height) {
+	SDL_Texture* newTexture = nullptr;
+
+	//Render text surface
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font.font, text.c_str(), font.color->toSDLColor());
+	if (textSurface == NULL) {
+		Log::s()->logError("Unable to render text surface! SDL_ttf Error: " + std::string(TTF_GetError()));
+	} else {
+		//Create texture from surface pixels
+		newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+		if (newTexture == NULL) {
+			Log::s()->logError("Unable to create texture from text texture! SDL Error: " + std::string(SDL_GetError()));
+		} else {
+			//Get image dimensions
+			width = &textSurface->w;
+			height = &textSurface->h;
+		}
+
+		SDL_FreeSurface(textSurface);
+	}
+
+	return newTexture;
+}
 
 void Screen::setViewport(const SDL_Rect* viewport) {
 	if (SDL_RenderSetViewport(renderer, viewport) < 0) {

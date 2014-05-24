@@ -19,6 +19,7 @@
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\Animations.cpp" />
     <ClCompile Include="src\Graphics\Colors.cpp" />
+    <ClCompile Include="src\Graphics\FontManager.cpp" />
     <ClCompile Include="src\Graphics\Geometry\GeometryDot.cpp" />
     <ClCompile Include="src\Graphics\Geometry\GeometryLine.cpp" />
     <ClCompile Include="src\Graphics\Geometry\GeometryObject.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="src\Graphics\Animation.h" />
     <ClInclude Include="src\Graphics\Animations.h" />
     <ClInclude Include="src\Graphics\Colors.h" />
+    <ClInclude Include="src\Graphics\FontManager.h" />
     <ClInclude Include="src\Graphics\Geometry\GeometryDot.h" />
     <ClInclude Include="src\Graphics\Geometry\GeometryLine.h" />
     <ClInclude Include="src\Graphics\Geometry\GeometryObject.h" />

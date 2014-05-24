@@ -118,7 +118,7 @@ class Screen {
 		SDL_Texture*			loadTexture(const std::string path);
 
 		//Loads the text and returns a SDL_Texture pointer to the text texture.
-		//SDL_Texture*			loadTextTexture(const std::string text, const Fonts font);
+		SDL_Texture*			loadTextTexture(const std::string text, const Font font, int* width, int* height);
 
 		//Sets a viewport for the screen
 		void					setViewport(const SDL_Rect* viewport);

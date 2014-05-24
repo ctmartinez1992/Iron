@@ -1,5 +1,5 @@
-#ifndef FONTS_H
-#define FONTS_H
+#ifndef FONT_H
+#define FONT_H
 
 #define _CRTDBG_MAP_ALLOC
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -17,16 +17,13 @@
 #include "../Util/Log.h"
 #include "Colors.h"
 
-class Fonts {
+class Font {
 	/*************** Variables ***************/
 private:
 
 protected:
 
 public:
-	//Pre-constructed colors
-	static const Fonts			Lazy;
-
 	/*!
 	\brief a TTF_Font variable that holds the loaded font
 	*/
@@ -50,9 +47,9 @@ public:
 	/*************** Contructors & Destructors ***************/
 public:
 	//TODO change this class to be a singleton and not static as it is
-	Fonts();
-	Fonts(std::string path, Uint8 size, Colors color);
-	~Fonts();
+	Font();
+	Font(std::string path, Uint8 size, Colors color);
+	~Font();
 
 	/*************** Methods ***************/
 private:
@@ -60,7 +57,6 @@ private:
 protected:
 
 public:
-	static void					freeFonts();
 };
 
 #endif
