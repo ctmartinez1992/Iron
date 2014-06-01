@@ -13,59 +13,10 @@
 #include <map>
 
 //OWN
-#include "../Util/Log.h"v
+#include "../Util/Log.h"
+#include "Font.h"
 #include "Screen.h"
 #include "Colors.h"
-
-/*!
-\brief Font struct holds the values necessary to control a font
-*/
-struct Font {
-
-	Font(const std::string id, const std::string path, const Colors* color, const Uint8 size) : font(nullptr), color(), id(id), path(path), size(size), width(0), height(0)
-	{
-		//Lose constness, assign the color
-		this->color = const_cast<Colors*>(color); 
-		
-		//Open the font
-		font = TTF_OpenFont(path.c_str(), size);
-		if (font == NULL) {
-			font = nullptr;
-			Log::s()->logError("The font with the id [" + id + "] and path [" + path + "] failed to be loaded! TTF Error: " + std::string(TTF_GetError()));
-		}
-	}
-
-	/*!
-	\brief a TTF_Font variable that holds the loaded font
-	*/
-	TTF_Font*							font;
-
-	/*!
-	\brief The color of the font
-	*/
-	Colors*								color;
-
-	/*!
-	\brief Uniquely identifies the font
-	*/
-	std::string							id;
-
-	/*!
-	\brief The path to the font
-	*/
-	std::string							path;
-
-	/*!
-	\brief The size of the font
-	*/
-	Uint8								size;
-
-	/*!
-	\brief Width and height of the font text
-	*/
-	Uint16								width;
-	Uint16								height;
-};
 
 /*!
 \brief FontManager manages all the fonts in the game, all fonts are represented by the Font struct. Custom fonts must be added to the map of fonts in order for them to be used.
@@ -86,12 +37,15 @@ private:
 protected:
 
 public:
-	std::map<std::string, Font*>		fonts;
+	/*!
+	\brief All of the fonts are stored in here, the key is the identifier and the value is the font
+	*/
+	std::map<std::string, struct Font*>	fonts;
 
 	/*!
 	\brief Currently used font for text rendering
 	*/
-	Font*								currentFont;
+	struct Font*						currentFont;
 
 	/*!
 	\brief Amount of added fonts
@@ -126,7 +80,20 @@ public:
 	\param path The path to the font's ttf file
 	\param color Pointer to a Colors static object, will render the text with the given color
 	\param size The size of the font
+	\return Returns 0 if successful, -1 is there was an error
 	*/
 	int									addFont(const std::string id, const std::string path, const Colors* color = &Colors::Black, const Uint8 size = 20);
+
+	/*!
+	\brief Sets the currentFont variable to an existent font in the fonts map
+	\param id Identifies the font that is going to be used
+	\return Returns 0 if font exists, -1 is the font does not exist
+	*/
+	int									useFont(const std::string id);
+
+	/*!
+	\brief Closes the font manager
+	*/
+	void								close();
 };
 #endif

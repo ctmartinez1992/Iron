@@ -1,5 +1,7 @@
 #include "FontManager.h"
 
+FontManager*	FontManager::_s = nullptr;
+
 FontManager::FontManager() : screen(nullptr), fonts(), currentFont(nullptr), nFonts(0)
 {
 }
@@ -8,16 +10,24 @@ FontManager::FontManager(Screen* screen) : screen(screen), fonts(), currentFont(
 {
 }
 
-FontManager::~FontManager()
-{
-	screen = nullptr;
+FontManager::~FontManager() {
+	for (std::map<std::string, Font*>::iterator iterator = fonts.begin(); iterator != fonts.end(); ++iterator) {
+		delete (*iterator).second;
+	}
+
+	fonts.clear();
 	currentFont = nullptr;
+	screen = nullptr;
 	nFonts = 0;
+
+	Log::s()->logInfo("FontManager was destroyed");
 }
 
 FontManager* FontManager::s(){
-	if (_s == nullptr){
+	if (_s == nullptr) {
+		Log::s()->logInfo("FontManager is being created");
 		_s = new FontManager();
+		Log::s()->logInfo("FontManager was created");
 	}
 
 	return _s;
@@ -32,8 +42,7 @@ int FontManager::addFont(const std::string id, const std::string path, const Col
 		} else {
 			Log::s()->logInfo("SDL_ttf was initialized");
 		}
-	}
-	else {
+	} else {
 		Log::s()->logDebug("SDL_ttf is already initialized, no need to do it again");
 	}
 
@@ -50,8 +59,26 @@ int FontManager::addFont(const std::string id, const std::string path, const Col
 		return -1;
 	}
 
-	//Load the text texture
-	textTexture = screen->loadTextTexture("The quick brown fox jumps over the lazy dog", Fonts::Lazy);
+	//TODO Check for repeated ids when creating a new font
+	//Add the font to the map
+	fonts[font->id] = font;
 
-	Log::s()->logDebug("The font with the id [" + id + "] and path [" + path + "] was loaded");
+	Log::s()->logDebug("A Font object with the id [" + id + "] and path [" + path + "] was loaded");
+
+	return 0;
+}
+
+int FontManager::useFont(const std::string id) {
+	if (fonts.count(id) != 0) {
+		currentFont = fonts.at(id);
+		return 0;
+	} else {
+		Log::s()->logWarning("The font with the id [" + id + "] does not exist in the fonts map and therefore cannot be assigned to currentFont");
+		return -1;
+	}
+}
+
+void FontManager::close() {
+	delete _s;
+	_s = nullptr;
 }

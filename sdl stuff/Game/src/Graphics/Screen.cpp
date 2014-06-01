@@ -1,7 +1,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include "Screen.h"
 #include "../General/GameObject.h"
-//#include "Text/TTFText.h"
+#include "Text/TTFText.h"
 #include "Sprite.h"
 #include "../Graphics/Geometry/GeometryDot.h"
 #include "../Graphics/Geometry/GeometryLine.h"
@@ -104,7 +104,7 @@ bool Screen::initScreen() {
 	//Initialization flag
 	bool success = true;
 
-	Log::s()->logInfo("Screen is being created...");
+	Log::s()->logInfo("Screen is being initialized...");
 
 	//Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -112,7 +112,7 @@ bool Screen::initScreen() {
 	} else {
 		//Set texture filtering to linear
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
-			Log::s()->logWarning("Linear texture filtering not enabled!");
+			Log::s()->logWarning("Linear texture filtering not enabled! SDL Error: " + std::string(SDL_GetError()));
 		}
 
 		//Create window
@@ -147,7 +147,7 @@ bool Screen::initScreen() {
 	}
 
 	if (success) {
-		Log::s()->logInfo("Screen was created successfully");
+		Log::s()->logInfo("Screen was initialized successfully");
 	}
 
 	return success;
@@ -185,13 +185,13 @@ SDL_Texture* Screen::loadTexture(const std::string path) {
 	return newTexture;
 }
 
-SDL_Texture* Screen::loadTextTexture(const std::string text, Font font, int* width, int* height) {
+SDL_Texture* Screen::loadTextTexture(const std::string text, Font* font, int* width, int* height) {
 	SDL_Texture* newTexture = nullptr;
 
 	//Render text surface
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font.font, text.c_str(), font.color->toSDLColor());
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font->font, text.c_str(), font->color->toSDLColor());
 	if (textSurface == NULL) {
-		Log::s()->logError("Unable to render text surface! SDL_ttf Error: " + std::string(TTF_GetError()));
+		Log::s()->logError("Unable to render text surface! (at loadTextTexture) SDL_ttf Error: " + std::string(TTF_GetError()));
 	} else {
 		//Create texture from surface pixels
 		newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
@@ -199,8 +199,8 @@ SDL_Texture* Screen::loadTextTexture(const std::string text, Font font, int* wid
 			Log::s()->logError("Unable to create texture from text texture! SDL Error: " + std::string(SDL_GetError()));
 		} else {
 			//Get image dimensions
-			width = &textSurface->w;
-			height = &textSurface->h;
+			*width = textSurface->w;
+			*height = textSurface->h;
 		}
 
 		SDL_FreeSurface(textSurface);
@@ -227,15 +227,18 @@ void Screen::restoreNormalViewport() {
 	this->viewportHeight = height;
 }
 
-//int Screen::renderTTFText(const TTFText* text) const {
-//	//Set rendering space and render to screen
-//	SDL_Rect renderQuad = { 10, 10, text->textWidth, text->textHeight };
-//
-//	//Render to screen
-//	SDL_RenderCopyEx(renderer, text->textTexture, NULL, &renderQuad, 0, NULL, SDL_FLIP_NONE);
-//
-//	return 0;
-//}
+int Screen::renderTTFText(const TTFText* text) const {
+	//Set rendering space and render to screen
+	SDL_Rect renderQuad = { 10, 10, text->width, text->height };
+
+	//Render to screen
+	if (SDL_RenderCopyEx(renderer, text->texture, NULL, &renderQuad, 0, NULL, SDL_FLIP_NONE) < 0) {
+		Log::s()->logError("An error occured when rendering a TTFText! SDL Error: " + std::string(SDL_GetError()));
+		return -1;
+	}
+
+	return 0;
+}
 
 int	Screen::renderSprite(const Sprite* sprite) const {
 	short result = 0;
@@ -476,6 +479,7 @@ int Screen::renderDrawnPolygon(SDL_Renderer* renderer, const Sint16* xArray, con
 	return result;
 }
 
+//TODO Need to be changed to use std vector or something better then allocs
 int Screen::renderFilledPolygon(SDL_Renderer* renderer, const Sint16* vx, const Sint16* vy, int nPoints, const SDL_Color* color, int** polyInts, int* polyAllocated) const {
 	//Result of the function
 	short result;

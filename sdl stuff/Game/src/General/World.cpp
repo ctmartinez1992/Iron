@@ -7,7 +7,6 @@ World::World() : sheets(), sprites(), geometry()
 World::World(Screen* screen) : sheets(), sprites(), geometry()
 {
 	this->screen = screen;
-	Log::s()->logDebug("World was created");
 }
 
 World::~World() {
@@ -31,7 +30,7 @@ World::~World() {
 
 	screen = nullptr;
 
-	Log::s()->logDebug("World was destroyed");
+	Log::s()->logInfo("World was destroyed");
 }
 
 void World::updateSprites() {

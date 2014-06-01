@@ -14,16 +14,21 @@
 #include <string>
 
 //OWN
-#include "../Fonts.h"
+#include "../FontManager.h"
 
 class Screen;
 
 class TTFText {
 	/*************** Variables ***************/
 private:
+	/*!
+	\brief Text that is going to be rendered
+	*/
+	std::string				text;
 
 protected:
 
+	//TODO add position
 public:
 	/*!
 	\brief Pointer to the screen
@@ -31,15 +36,15 @@ public:
 	Screen*					screen;
 
 	/*!
-	\brief The texture holds the text parts that need to be rendered
+	\brief Holds the texture of the loaded font
 	*/
-	SDL_Texture*			textTexture;
+	SDL_Texture*			texture;
 
 	/*!
-	\brief Text texture width and height
+	\brief Width and height of the text
 	*/
-	int						textWidth;
-	int						textHeight;
+	int						width;
+	int						height;
 
 	/*************** Contructors & Destructors ***************/
 public:

@@ -15,13 +15,16 @@
 //OWN
 #include "General/World.h"
 #include "Graphics/Screen.h"
-//#include "Graphics/Text/TTFText.h"
+#include "Graphics/FontManager.h"
+#include "Graphics/Text/TTFText.h"
 #include "Graphics/SpriteSheet.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Geometry/GeometryDot.h"
 #include "Graphics/Geometry/GeometryLine.h"
 #include "Graphics/Geometry/GeometryTriangle.h"
 #include "Util\Log.h"
+
+//Organizar os logs, por os INFO nos sitios corretos e por debug nos sitios corretos, ha algumas confusoes
 
 //Screen dimension constants.
 const int SCREEN_WIDTH = 640;
@@ -43,7 +46,7 @@ void render();
 void close();
 
 //TTFText test
-//TTFText* text = nullptr;
+TTFText* text = nullptr;
 
 //SpriteSheet test
 SpriteSheet* sheet = nullptr;
@@ -82,8 +85,8 @@ bool init() {
 	bool successScreen = true;
 
 	//Try to initialize the Screen class.
-	if(screen == nullptr) {
-		printf("The Screen class can't be initialized... It's nullptr\n");
+	if (screen == nullptr) {
+		Log::s()->logError("The Screen class can't be initialized... It's nullptr");
 		successScreen = false;
 	} else {
 		successScreen = screen->initScreen();
@@ -95,7 +98,9 @@ bool init() {
 	}
 
 	//Create the world class
+	Log::s()->logInfo("World is being created");
 	world = new World(screen);
+	Log::s()->logInfo("World was created");
 
 	//Everything went fine.
 	return true;
@@ -105,9 +110,13 @@ bool loadMedia() {
 	//Loading success flag.
 	bool success = true;
 
+	//Load a font
+	FontManager::s()->addFont("ugly", "res/lazy.ttf");
+	FontManager::s()->useFont("ugly");
+
 	//Load a TTFText
-	//text = new TTFText(screen);
-	//text->load();
+	text = new TTFText(screen);
+	text->load();
 
 	//Load a SpriteSheet
 	sheet = new SpriteSheet(screen->renderer);
@@ -192,20 +201,20 @@ bool loadMedia() {
 
 void close() {
 	//Clear our classes
-	//delete text;
-	//text = nullptr;
+	delete text;
+	text = nullptr;
 	delete world;
 	world = nullptr;
 	delete screen;
 	screen = nullptr;
 
-	//Go away pesky fonts
-	//Fonts::freeFonts();
-
 	//Quit SDL subsystems
 	IMG_Quit();
 	//TTF_Quit();
 	SDL_Quit();
+
+	//Close the Font Manager
+	FontManager::s()->close();
 
 	//Close the log
 	Log::s()->close();
@@ -220,16 +229,20 @@ void render() {
 	//Clear screen
 	screen->clearScreen();
 
-	//Render the text;
-	//text->render();
-
 	//Render world stuff
 	world->render();
+
+	//Render the text
+	text->render();
 }
 
 int main(int argc, char* args[]) {
+	Log::s()->logInfo("Starting...");
+
 	//Initialize main components.
-	screen = new Screen("Game v0.002", 800, 600);
+	Log::s()->logInfo("Screen is being created");
+	screen = new Screen("Game v0.003", 800, 600);
+	Log::s()->logInfo("Screen was created");
 
 	//Start up SDL and create window.
 	Log::s()->logInfo("Initializing...");
@@ -243,7 +256,7 @@ int main(int argc, char* args[]) {
 		if(!loadMedia()) {
 			printf("Failed to load media!\n");
 		} else {
-			Log::s()->logInfo("Media load was successfull");
+			Log::s()->logInfo("Loading media was successfull");
 
 			//Main loop flag
 			bool quit = false;
@@ -336,6 +349,8 @@ int main(int argc, char* args[]) {
 			}
 		}
 	}
+
+	//TODO Add better logs, to divide into font loading, sprite loading, etc.
 
 	//Free resources and close SDL
 	Log::s()->logInfo("Closing...");

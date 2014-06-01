@@ -16,13 +16,13 @@
 #include <vector>
 
 //OWN
-#include "Colors.h"
-#include "Fonts.h"
-#include "SpriteSheet.h"
 #include "../Util/Log.h"
+#include "SpriteSheet.h"
+#include "Font.h"
+#include "Colors.h"
 
 class GameObject;
-//class TTFText;
+class TTFText;
 class Sprite;
 class GeometryDot;
 class GeometryLine;
@@ -118,7 +118,7 @@ class Screen {
 		SDL_Texture*			loadTexture(const std::string path);
 
 		//Loads the text and returns a SDL_Texture pointer to the text texture.
-		SDL_Texture*			loadTextTexture(const std::string text, const Font font, int* width, int* height);
+		SDL_Texture*			loadTextTexture(const std::string text, Font* font, int* width, int* height);
 
 		//Sets a viewport for the screen
 		void					setViewport(const SDL_Rect* viewport);
@@ -130,7 +130,7 @@ class Screen {
 		/******************************  TEXT RENDERING  ******************************/
 		/******************************************************************************/
 		//Renders a TTFText (see class) to the screen
-		//int						renderTTFText(const TTFText* text) const;
+		int						renderTTFText(const TTFText* text) const;
 
 		/********************************************************************************/
 		/******************************  SPRITE RENDERING  ******************************/
