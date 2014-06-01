@@ -1,10 +1,41 @@
+//Possible platforms for the game engine
+#define IRON_SWORD_PLATFORM_WIN32 1
+#define IRON_SWORD_PLATFORM_LINUX 2
+#define IRON_SWORD_PLATFORM_APPLE 3
+
+//Determine the platform the game will run on
+#if defined(__WIN32__) || defined(_WIN32) || defined (WIN32)
+#define IRON_SWORD_PLATFORM IRON_SWORD_PLATFORM_WIN32
+#elif defined( __APPLE_CC__)
+#define IRON_SWORD_PLATFORM IRON_SWORD_PLATFORM_APPLE
+#else
+#define IRON_SWORD_PLATFORM IRON_SWORD_PLATFORM_LINUX
+#endif
+
+//Version [Major Update.Feature/s Are Added.Important Fixes.Internal Code Fixing(Refactor, External libraries, Asset Stuff, Comments, etc.)]
+#define IRON_SWORD_VERSION "Iron Sword (0.0.0.1)"
+
 //C++
 #define _CRTDBG_MAP_ALLOC
+#include <map>
+#include <list>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <cmath>
+#include <string>
+#include <vector>
+#include <time.h>
 #include <stdio.h>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <assert.h>
+#include <stdint.h>
+#include <string.h>
 #include <stdlib.h>
 #include <crtdbg.h>
-#include <iostream>
-#include <string>
+#include <stdexcept>
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
 
@@ -24,25 +55,25 @@
 #include "Graphics/Geometry/GeometryTriangle.h"
 #include "Util\Log.h"
 
-//Organizar os logs, por os INFO nos sitios corretos e por debug nos sitios corretos, ha algumas confusoes
+//TODO Organizar os logs, por os INFO nos sitios corretos e por debug nos sitios corretos, ha algumas confusoes
 
-//Screen dimension constants.
+//Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-//Starts up SDL and creates window.
+//Starts up SDL and creates window
 bool init();
 
-//Loads media.
+//Loads media
 bool loadMedia();
 
-//Updates everything.
+//Updates everything
 void update();
 
-//Renders everything.
+//Renders everything
 void render();
 
-//Frees media and shuts down SDL.
+//Frees media and shuts down SDL
 void close();
 
 //TTFText test
@@ -74,17 +105,17 @@ GeometryLine* line4 = nullptr;
 GeometryTriangle* tri1 = nullptr;
 GeometryTriangle* tri2 = nullptr;
 
-//The screen.
+//The screen
 Screen* screen = nullptr;
 
 //The World, handles everything
 World* world = nullptr;
 
 bool init() {
-	//Checks if the screen was initialized.
+	//Checks if the screen was initialized
 	bool successScreen = true;
 
-	//Try to initialize the Screen class.
+	//Try to initialize the Screen class
 	if (screen == nullptr) {
 		Log::s()->logError("The Screen class can't be initialized... It's nullptr");
 		successScreen = false;
@@ -102,12 +133,12 @@ bool init() {
 	world = new World(screen);
 	Log::s()->logInfo("World was created");
 
-	//Everything went fine.
+	//Everything went fine
 	return true;
 }
 
 bool loadMedia() {
-	//Loading success flag.
+	//Loading success flag
 	bool success = true;
 
 	//Load a font
@@ -239,12 +270,12 @@ void render() {
 int main(int argc, char* args[]) {
 	Log::s()->logInfo("Starting...");
 
-	//Initialize main components.
+	//Initialize main components
 	Log::s()->logInfo("Screen is being created");
-	screen = new Screen("Game v0.003", 800, 600);
+	screen = new Screen(IRON_SWORD_VERSION, 800, 600);
 	Log::s()->logInfo("Screen was created");
 
-	//Start up SDL and create window.
+	//Start up SDL and create window
 	Log::s()->logInfo("Initializing...");
 	if(!init())	{
 		printf("Failed to initialize!\n");
