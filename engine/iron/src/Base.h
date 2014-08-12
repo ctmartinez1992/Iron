@@ -30,8 +30,8 @@
 #include <typeinfo>
 #include <vector>
 
-//Log feature
-#include "Util/Log.h"
+//Util
+#include "Log.h"
 
 //Assert macros
 #ifdef _DEBUG

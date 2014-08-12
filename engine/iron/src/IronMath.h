@@ -23,7 +23,9 @@ namespace iron {
 		static const float	MATH_PIX2;			/*!< Double Pi value. */
 
 		/****************************** Contructors & Destructors ******************************/
-	public:		
+	public:
+
+	private:
 
 		/****************************** Methods ******************************/
 	private:

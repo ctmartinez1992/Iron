@@ -88,4 +88,10 @@ namespace iron {
 		divide(x);
 		return *this;
 	}
+
+	inline float Vector2::operator[](unsigned i) const {
+		if (i == 0)
+			return x;
+		return y;
+	}
 }

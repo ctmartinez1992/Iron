@@ -133,6 +133,11 @@ namespace iron {
 		dst->x /= denominator;
 		dst->y /= denominator;
 	}
+	
+	void Vector2::addScaledVector(const Vector2& vector, float scale) {
+		x += vector.x * scale;
+		y += vector.y * scale;
+	}
 
 	float Vector2::length() const {
 		return sqrt((x * x) + (y * y));
