@@ -1,5 +1,5 @@
-#ifndef PARTICLE_H_
-#define PARTICLE_H_
+#ifndef IRON_PHYSICS_PARTICLE_H_
+#define IRON_PHYSICS_PARTICLE_H_
 
 #include "Vector3.h"
 
@@ -8,35 +8,38 @@ namespace iron {
 	/*! \brief A simple object with some properties that is simulated in this physics system.
 	*
 	*  A particle is composed by a position, velocity and acceleration variables mainly;
-	*  forces and impulses can be applied to it and offers a set of methods.
+	*  forces and impulses can be applied to the particle.
 	*/
 	class Particle {
 		/****************************** Variables ******************************/
 	private:
 
 	protected:
-		Vector3				position;			/*!< The linear position of the particle in the world. */
+		Vector3			position;		/*!< The linear position of the particle in the world. */
+		
+		Vector3			velocity;		/*!< The linear velocity of the particle in the world. */
 
-		Vector3				velocity;			/*!< The linear velocity of the particle in the world. */
+		Vector3			acceleration;	/*!< The acceleration of the particle. */
 
-		Vector3				acceleration;		/*!< The acceleration of the particle. */
-
-		Vector3				force;				/*!< The force that is always applied and zeroed each integration. */
+		Vector3			force;			/*!< The force is always applied and zeroed each integration. */
 
 		/**
 		* The amount of damping applied to the linear motion. This variable controls how much
-		* velocity is left after each update. If it's 0, velocity is reduced to 0 (no motion with no force applied);
-		* If it's 1, velocity is not reduced at all (no damping). Values near 1 are optimal for no drag simulation.
+		* velocity is left after each update. If it's 0, velocity is reduced to 0 (no motion with 
+		* no force applied); If it's 1, velocity is not reduced at all (no damping). Values near 1
+		* are optimal for no drag simulation.
 		*/
-		float				damp;
+		float			damp;
 
 		/**
+		* //TODO Fix the formula in this cooment, it's not showing right.
+		*
 		* The inverse of the mass of this particle. This variable is mostly used in the calculation of
-		* the acceleration represented by the formula: a=\frac{1}{m)}f Since the inverse of the mass is
-		* used more than the "regular" form, we'll store the inverse instead. this also allows to control
-		* immovable particles (infinite mass) instead of void particles (zero mass).
+		* the acceleration represented by the formula: \f[a=\frac{1}{m)}f\f] Since the inverse of the
+		* mass is used more than the "regular" form, we'll store the inverse instead. this also allows
+		* to control immovable particles (infinite mass) instead of void particles (zero mass).
 		*/
-		float				inverseMass;
+		float			inverseMass;
 
 	public:
 
@@ -63,8 +66,8 @@ namespace iron {
 	public:
 		/**
 		* Integrates this particle forward in time by the given duration. Basically, this function
-		* updates the particle's linear position, calculates the acceleration and velocity, "adds" the damp
-		* value and zeros the forces.
+		* updates the particle's linear position, calculates the acceleration and velocity, "adds" the 
+		* damp value and zeros the forces.
 		*/
 		void integration(float duration);
 
@@ -74,6 +77,11 @@ namespace iron {
 		* @param force The force to be applied.
 		*/
 		void addForce(const Vector3& force);
+
+		/**
+		* Zeroes the force variable.
+		*/
+		void clearForce();
 
 		/**
 		* Sets the position of this particle with the given Vector3 object values.
@@ -147,7 +155,7 @@ namespace iron {
 		/**
 		* Sets the damp of this particle.
 		*
-		* @param x The new damp value.
+		* @param damp The new damp value.
 		*/
 		void setDamp(const float damp);
 

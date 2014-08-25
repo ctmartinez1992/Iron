@@ -86,7 +86,8 @@ namespace iron {
 
 	void Vector2::add(const Vector2& v1, const Vector2& v2, Vector2* dst) {
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
@@ -106,7 +107,8 @@ namespace iron {
 
 	void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* dst) {
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
@@ -169,7 +171,8 @@ namespace iron {
 
 	void Vector2::normalize(const Vector2& vector, Vector2* dst) {
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
@@ -199,7 +202,8 @@ namespace iron {
 
 	void Vector2::normalize(Vector2* dst) const	{
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
@@ -224,12 +228,14 @@ namespace iron {
 
 	void Vector2::lerp(const Vector2& start, const Vector2& end, float value, Vector2* dst) {
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
 		if ((value < 0.0f || value > 1.0f)) {
-			iron::Log::s()->logError("The interpolation fraction value must be between 0 and 1, including.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logError("The interpolation fraction value must be between 0 and 1 (including).", 
+				__LINE__, std::string(__FUNCTION__), std::string(__FILE__));
 			return;
 		}
 
@@ -251,7 +257,8 @@ namespace iron {
 
 	void Vector2::lerp(const Vector2& end, float value) {
 		if ((value < 0.0f || value > 1.0f)) {
-			iron::Log::s()->logError("The interpolation fraction value must be between 0 and 1, including.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logError("The interpolation fraction value must be between 0 and 1 (including)", 
+				__LINE__, std::string(__FUNCTION__), std::string(__FILE__));
 			return;
 		}
 
@@ -269,14 +276,18 @@ namespace iron {
 		y = value1 * y + value * end.y;
 	}
 
-	void Vector2::clamp(const Vector2& vector, const float minX, const float minY, const float maxX, const float maxY, Vector2* dst) {
+	void Vector2::clamp(const Vector2& vector, const float minX, const float minY, const float maxX, 
+		const float maxY, Vector2* dst) 
+	{
 		if (dst == nullptr) {
-			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
+				std::string(__FILE__));
 			return;
 		}
 
 		if ((minX > maxX || minY > maxY)) {
-			iron::Log::s()->logWarning("The minimum values have to be inferior to the maximum values.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("The minimum values have to be inferior to the maximum values.", 
+				__LINE__, std::string(__FUNCTION__), std::string(__FILE__));
 			return;
 		}
 
@@ -302,7 +313,8 @@ namespace iron {
 
 	void Vector2::clamp(const float minX, const float minY, const float maxX, const float maxY) {
 		if ((minX > maxX || minY > maxY)) {
-			iron::Log::s()->logWarning("The minimum values have to be inferior to the maximum values.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logWarning("The minimum values have to be inferior to the maximum values.", 
+				__LINE__, std::string(__FUNCTION__), std::string(__FILE__));
 			return;
 		}
 

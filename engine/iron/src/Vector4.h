@@ -1,58 +1,63 @@
-#ifndef IRON_MATH_VECTOR2_H_
-#define IRON_MATH_VECTOR2_H_
+#ifndef IRON_MATH_VECTOR4_H_
+#define IRON_MATH_VECTOR4_H_
 
 #include "IronMath.h"
 
 namespace iron {
 
-	/*! \brief Defines a floating point vector with 2 coordinates.
-	*
-	*  Defines a floating point vector with 2 coordinates along with a set of helpful functions.
+	/*! \brief Defines a floating point vector with 4 coordinates.
+	*  //TODO Have to do this class, incomplete both header and cpp.
+	*  Defines a floating point vector with 4 coordinates along with a set of helpful functions.
 	*/
-	class Vector2 {
+	class Vector4 {
 		/****************************** Variables ******************************/
 	private:
 
 	protected:
 
 	public:
-		float			x;		/*!< X coordinate. */
-		float			y;		/*!< Y coordinate. */
+		float					x;			/*!< X coordinate. */
+		float					y;			/*!< Y coordinate. */
+		float					z;			/*!< Z coordinate. */
+		float					w;			/*!< W coordinate. */
+
+		//const static Vector4	GRAVITY;	/*!< Y value set to the gravity constant. */
 
 		/****************************** Contructors & Destructors ******************************/
 	public:
 		/**
-		* Constructs a new 2D vector with coordinates initialized to 0 value.
+		* Constructs a new 4D vector with coordinates initialized to 0 value.
 		*/
-		Vector2();
+		Vector4();
 
 		/**
-		* Constructs a new 2D vector with coordinates initialized to the given float values.
+		* Constructs a new 4D vector with coordinates initialized to the given float values.
 		*
 		* @param x X coordinate.
 		* @param y Y coordinate.
+		* @param z Z coordinate.
 		*/
-		explicit Vector2(const float x, const float y);
+		explicit Vector4(const float x, const float y, const float z);
 
 		/**
-		* Constructs a new 2D vector based on the direction between the given vectors.
+		* Constructs a new 4D vector based on the direction between the given vectors.
 		*
 		* @param p1 First point.
 		* @param p2 Second point.
 		*/
-		Vector2(const Vector2& p1, const Vector2& p2);
+		Vector4(const Vector4& p1, const Vector4& p2);
 
 		/**
-		* Constructs a new 2D vector that is a copy of the given vector.
+		* Constructs a new 4D vector that is a copy of the given vector.
 		*
 		* @param vector Vector to copy.
 		*/
-		Vector2(const Vector2& vector);
+		Vector4(const Vector4& vector);
 
 		/**
 		* Destructor.
 		*/
-		~Vector2();
+		~Vector4();
 
 	private:
 
@@ -63,54 +68,68 @@ namespace iron {
 
 	public:
 		/**
-		* Returns a 2D vector with coordinates set to the 0 value.
+		* Returns a 4D vector with coordinates set to the 0 value.
 		*
-		* @return 2D vector with coordinates set to the 0 value.
+		* @return 4D vector with coordinates set to the 0 value.
 		*/
-		static const Vector2& zero();
+		static const Vector4& zero();
 
 		/**
-		* Returns a 2D vector with coordinates set to the 1 value. Stands for "Positive One".
+		* Returns a 4D vector with coordinates set to the 1 value. Stands for "Positive One".
 		*
-		* @return 2D vector with coordinates set to the 1 value.
+		* @return 4D vector with coordinates set to the 1 value.
 		*/
-		static const Vector2& pOne();
+		static const Vector4& pOne();
 
 		/**
-		* Returns a 2D vector with coordinates set to the -1 value. Stands for "Negative One".
+		* Returns a 4D vector with coordinates set to the -1 value. Stands for "Negative One".
 		*
-		* @return 2D vector with coordinates set to the -1 value.
+		* @return 4D vector with coordinates set to the -1 value.
 		*/
-		static const Vector2& nOne();
+		static const Vector4& nOne();
 
 		/**
-		* Returns a 2D vector set along the positive x axis. Stands for "Positive X".
+		* Returns a 4D vector set along the positive x axis. Stands for "Positive X".
 		*
-		* @return 2D vector set along the positive x axis.
+		* @return 4D vector set along the positive x axis.
 		*/
-		static const Vector2& pX();
+		static const Vector4& pX();
 
 		/**
-		* Returns a 2D vector set along the negative x axis. Stands for "Negative X".
+		* Returns a 4D vector set along the negative x axis. Stands for "Negative X".
 		*
-		* @return 2D vector set along the negative x axis.
+		* @return 4D vector set along the negative x axis.
 		*/
-		static const Vector2& nX();
+		static const Vector4& nX();
 
 		/**
-		* Returns a 2D vector set along the positive y axis. Stands for "Positive Y".
+		* Returns a 4D vector set along the positive y axis. Stands for "Positive Y".
 		*
-		* @return 2D vector set along the positive y axis.
+		* @return 4D vector set along the positive y axis.
 		*/
-		static const Vector2& pY();
+		static const Vector4& pY();
 
 		/**
-		* Returns a 2D vector set along the negative y axis. Stands for "Negative Y".
+		* Returns a 4D vector set along the negative y axis. Stands for "Negative Y".
 		*
-		* @return 2D vector set along the negative y axis.
+		* @return 4D vector set along the negative y axis.
 		*/
-		static const Vector2& nY();
-		
+		static const Vector4& nY();
+
+		/**
+		* Returns a 4D vector set along the positive z axis. Stands for "Positive Z".
+		*
+		* @return 4D vector set along the positive z axis.
+		*/
+		static const Vector4& pZ();
+
+		/**
+		* Returns a 4D vector set along the negative z axis. Stands for "Negative Z".
+		*
+		* @return 4D vector set along the negative z axis.
+		*/
+		static const Vector4& nZ();
+
 		/**
 		* Tells if the vector coordinates are set to the value 0.
 		*
@@ -148,48 +167,50 @@ namespace iron {
 		*
 		* @param x The value to be added to the x coordinate.
 		* @param y The value to be added to the y coordinate.
+		* @param z The value to be added to the z coordinate.
 		*/
-		void add(const float x, const float y);
+		void add(const float x, const float y, const float z);
 
 		/**
 		* Adds the elements of the given vector to this one.
 		*
 		* @param vector The vector to add.
 		*/
-		void add(const Vector2& vector);
+		void add(const Vector4& vector);
 
 		/**
-		* Adds the given vectors and stores the result in the dst.
+		* Adds the given vectors and stores the result in dst.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
 		* @param dst The vector that stores the result.
 		*/
-		static void add(const Vector2& v1, const Vector2& v2, Vector2* dst);
+		static void add(const Vector4& v1, const Vector4& v2, Vector4* dst);
 
 		/**
 		* Subtracts the given float values to this vector.
 		*
 		* @param x The value to be subtracted to the x coordinate.
 		* @param y The value to be subtracted to the y coordinate.
+		* @param z The value to be subtracted to the z coordinate.
 		*/
-		void subtract(const float x, const float y);
+		void subtract(const float x, const float y, const float z);
 
 		/**
 		* Subtracts the elements of the given vector to this one.
 		*
 		* @param vector The vector to subtract.
 		*/
-		void subtract(const Vector2& vector);
+		void subtract(const Vector4& vector);
 
 		/**
-		* Subtracts the given vectors and stores the result in the dst.
+		* Subtracts the given vectors and stores the result in dst.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
 		* @param dst The vector that stores the result.
 		*/
-		static void subtract(const Vector2& v1, const Vector2& v2, Vector2* dst);
+		static void subtract(const Vector4& v1, const Vector4& v2, Vector4* dst);
 
 		/**
 		* Scales the coordinates in this vector by the given float value.
@@ -199,12 +220,13 @@ namespace iron {
 		void scale(const float scalar);
 
 		/**
-		* Scales the coordinates in this vector by the given float value and stores the result in dst.
+		* Scales the coordinates in this vector by the given float value and stores the result in
+		* dst.
 		*
 		* @param scalar The scalar value.
 		* @param dst The vector that stores the result.
 		*/
-		void scale(const float scalar, Vector2* dst) const;
+		void scale(const float scalar, Vector4* dst) const;
 
 		/**
 		* Divides the coordinates in this vector by the given float value.
@@ -219,7 +241,7 @@ namespace iron {
 		* @param denominator The denominator value.
 		* @param dst The vector that stores the result.
 		*/
-		void divide(const float denominator, Vector2* dst) const;
+		void divide(const float denominator, Vector4* dst) const;
 
 		/**
 		* Adds the given vector to this, scaled by the given amount.
@@ -227,7 +249,7 @@ namespace iron {
 		* @param vector The vector to add.
 		* @param scale The value that scales the given vector.
 		*/
-		void addScaledVector(const Vector2& vector, float scale);
+		void addScaledVector(const Vector4& vector, float scale);
 
 		/**
 		* Calculates the length of this vector.
@@ -255,7 +277,7 @@ namespace iron {
 		*
 		* @see distanceSquared
 		*/
-		float distance(const Vector2& vector) const;
+		float distance(const Vector4& vector) const;
 
 		/**
 		* Calculates the squared distance between this vector and the given vector.
@@ -265,7 +287,7 @@ namespace iron {
 		*
 		* @see distance
 		*/
-		float distanceSquared(const Vector2& vector) const;
+		float distanceSquared(const Vector4& vector) const;
 
 		/**
 		* Calculates the dot product between the given vectors.
@@ -274,7 +296,7 @@ namespace iron {
 		* @param v2 The second vector.
 		* @return The dot product between the given vectors.
 		*/
-		static float dot(const Vector2& v1, const Vector2& v2);
+		static float dot(const Vector4& v1, const Vector4& v2);
 
 		/**
 		* Calculates the dot product between this vector and the given vector.
@@ -282,7 +304,24 @@ namespace iron {
 		* @param vector The vector used in the calculation of the dot product.
 		* @return The dot product.
 		*/
-		float dot(const Vector2& vector) const;
+		float dot(const Vector4& vector) const;
+
+		/**
+		* Calculates the cross product between the given vectors.
+		*
+		* @param v1 The first vector.
+		* @param v2 The second vector.
+		* @param dst The cross product between the given vectors.
+		*/
+		static void cross(const Vector4& v1, const Vector4& v2, Vector4* dst);
+
+		/**
+		* Calculates the cross product between this vector and the given vector. Stores the result in
+		* this vector.
+		*
+		* @param vector The vector used in the calculation of the cross product.
+		*/
+		void cross(const Vector4& vector);
 
 		/**
 		* Normalizes the given vector and stores the result in dst.
@@ -290,40 +329,21 @@ namespace iron {
 		* @param vector The vector with the values.
 		* @param dst The vector that will store the result.
 		*/
-		static void normalize(const Vector2& vector, Vector2* dst);
+		static void normalize(const Vector4& vector, Vector4* dst);
 
 		/**
 		* Normalizes this vector and stores the result in this vector.
 		*
 		* @return This vector with the result of the normalization.
 		*/
-		Vector2& normalize();
+		Vector4& normalize();
 
 		/**
 		* Normalizes this vector and stores the result in the dst.
 		*
 		* @return The result of the normalization in dst.
 		*/
-		void normalize(Vector2* dst) const;
-
-		/**
-		* Calculates the linear interpolation between 2 given vectors and stores in dst.
-		*
-		* @param start Start vector.
-		* @param end End vector.
-		* @param value Value to interpolate by.
-		* @param dst The vector to store the result.
-		*/
-		static void lerp(const Vector2& start, const Vector2& end, float value, Vector2* dst);
-
-		/**
-		* Calculates the linear interpolation between this vector and the given vector and stores the
-		* result in this vector, the start vector is this.
-		*
-		* @param end End vector.
-		* @param value Value to interpolate by.
-		*/
-		void lerp(const Vector2& end, float value);
+		void normalize(Vector4* dst) const;
 
 		/**
 		* Clamps the given vector within the given minX, minY, maxX and maxY values and stores the
@@ -332,12 +352,14 @@ namespace iron {
 		* @param vector The vector to clamp.
 		* @param minX The minimum x value.
 		* @param minY The minimum y value.
+		* @param minZ The minimum y value.
 		* @param maxX The maximum x value.
 		* @param maxY The maximum y value.
-		* @param dst A pointer to a Vector2 object to store the result in.
+		* @param maxZ The maximum y value.
+		* @param dst A pointer to a Vector4 object to store the result in.
 		*/
-		static void clamp(const Vector2& vector, const float minX, const float minY, const float maxX, 
-			const float maxY, Vector2* dst);
+		static void clamp(const Vector4& vector, const float minX, const float minY, const float minZ, 
+			const float maxX, const float maxY, const float maxZ, Vector4* dst);
 
 		/**
 		* Clamps the given vector within the given min and max values and stores the result in dst.
@@ -345,9 +367,9 @@ namespace iron {
 		* @param vector The vector to clamp.
 		* @param min The minimum value.
 		* @param max The maximum value.
-		* @param dst A pointer to a Vector2 object to store the result in.
+		* @param dst A pointer to a Vector4 object to store the result in.
 		*/
-		static void clamp(const Vector2& vector, const Vector2& min, const Vector2& max, Vector2* dst);
+		static void clamp(const Vector4& vector, const Vector4& min, const Vector4& max, Vector4* dst);
 
 		/**
 		* Clamps this vector within the given minX, minY, maxX and maxY values and stores the result in
@@ -355,10 +377,13 @@ namespace iron {
 		*
 		* @param minX The minimum x value.
 		* @param minY The minimum y value.
+		* @param minZ The minimum y value.
 		* @param maxX The maximum x value.
 		* @param maxY The maximum y value.
+		* @param maxZ The maximum y value.
 		*/
-		void clamp(const float minX, const float minY, const float maxX, const float maxY);
+		void clamp(const float minX, const float minY, const float minZ, const float maxX, 
+			const float maxY, const float maxZ);
 
 		/**
 		* Clamps this vector within the given min and max values and stores the result in this vector.
@@ -366,26 +391,7 @@ namespace iron {
 		* @param min The minimum value.
 		* @param max The maximum value.
 		*/
-		void clamp(const Vector2& min, const Vector2& max);
-
-		/**
-		* Rotate this vector by the given angle (radians) around the given coordinates, it's basically
-		* a pivot.
-		*
-		* @param pointX The x coordinate of the point.
-		* @param pointY The y coordinate of the point.
-		* @param angle The angle (radians).
-		*/
-		void rotate(const float pointX, const float pointY, float angle);
-
-		/**
-		* Rotate this vector by the given angle (radians) around the given point (Vector2), it's
-		* basically a pivot.
-		*
-		* @param point The point (Vector2).
-		* @param angle The angle (radians).
-		*/
-		void rotate(const Vector2& point, float angle);
+		void clamp(const Vector4& min, const Vector4& max);
 
 		/**
 		* Sets the elements of this vector to the given int values. It never initializes them, only
@@ -393,8 +399,9 @@ namespace iron {
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
+		* @param z The new z coordinate.
 		*/
-		void set(const int x, const int y);
+		void set(const int x, const int y, const int z);
 
 		/**
 		* Sets the elements of this vector to the given float values. It never initializes them, only
@@ -402,8 +409,9 @@ namespace iron {
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
+		* @param z The new z coordinate.
 		*/
-		void set(const float x, const float y);
+		void set(const float x, const float y, const float z);
 
 		/**
 		* Sets the elements of this vector to the given double values. It never initializes them, only
@@ -411,8 +419,9 @@ namespace iron {
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
+		* @param z The new z coordinate.
 		*/
-		void set(const double x, const double y);
+		void set(const double x, const double y, const double z);
 
 		/**
 		* Sets this vector to the directional vector between the given points. It never initializes
@@ -421,7 +430,7 @@ namespace iron {
 		* @param p1 The first point.
 		* @param p2 The second point.
 		*/
-		void set(const Vector2& p1, const Vector2& p2);
+		void set(const Vector4& p1, const Vector4& p2);
 
 		/**
 		* Copies the elements of the given vector to this vector. It never initializes them, only
@@ -429,9 +438,9 @@ namespace iron {
 		*
 		* @param vector The vector to copy.
 		*/
-		void set(const Vector2& vector);
+		void set(const Vector4& vector);
 
-	/****************************** Operators Overloading ******************************/
+		/****************************** Operators Overloading ******************************/
 	private:
 
 	protected:
@@ -443,7 +452,7 @@ namespace iron {
 		* @param vector The vector to read its coordinates.
 		* @return This vector with a new set of values.
 		*/
-		inline const Vector2 operator=(const Vector2& vector);
+		inline const Vector4 operator=(const Vector4& vector);
 
 		/**
 		* Determines if this vector is equal to the given vector.
@@ -451,7 +460,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is equal to the given vector, false if not.
 		*/
-		inline bool operator==(const Vector2& vector) const;
+		inline bool operator==(const Vector4& vector) const;
 
 		/**
 		* Determines if this vector is not equal to the given vector.
@@ -459,7 +468,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is not equal to the given vector, false if not.
 		*/
-		inline bool operator!=(const Vector2& vector) const;
+		inline bool operator!=(const Vector4& vector) const;
 
 		/**
 		* Determines if this vector is below the given vector.
@@ -467,7 +476,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is below the given vector, false if not.
 		*/
-		inline bool operator<(const Vector2& vector) const;
+		inline bool operator<(const Vector4& vector) const;
 
 		/**
 		* Determines if this vector is below or equal to the given vector.
@@ -475,7 +484,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is below or equal to the given vector, false if not.
 		*/
-		inline bool operator<=(const Vector2& vector) const;
+		inline bool operator<=(const Vector4& vector) const;
 
 		/**
 		* Determines if this vector is above the given vector.
@@ -483,7 +492,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is above the given vector, false if not.
 		*/
-		inline bool operator>(const Vector2& vector) const;
+		inline bool operator>(const Vector4& vector) const;
 
 		/**
 		* Determines if this vector is above or equal to the given vector.
@@ -491,7 +500,7 @@ namespace iron {
 		* @param vector The vector to compare against.
 		* @return True if this vector is above or equal to the given vector, false if not.
 		*/
-		inline bool operator>=(const Vector2& vector) const;
+		inline bool operator>=(const Vector4& vector) const;
 
 		/**
 		* Calculates the sum of this vector with the given vector. This vector and the given one remain
@@ -500,7 +509,7 @@ namespace iron {
 		* @param vector The vector to add.
 		* @return The vector with the result of the addition.
 		*/
-		inline const Vector2 operator+(const Vector2& vector) const;
+		inline const Vector4 operator+(const Vector4& vector) const;
 
 		/**
 		* Adds the given vector to this vector.
@@ -508,7 +517,7 @@ namespace iron {
 		* @param vector The vector to add.
 		* @return This vector with the result of the addition.
 		*/
-		inline Vector2& operator+=(const Vector2& vector);
+		inline Vector4& operator+=(const Vector4& vector);
 
 		/**
 		* Calculates the subtraction of this vector with the given vector. This vector and the given
@@ -517,7 +526,7 @@ namespace iron {
 		* @param vector The vector to subtract.
 		* @return The vector with the result of the subtraction.
 		*/
-		inline const Vector2 operator-(const Vector2& vector) const;
+		inline const Vector4 operator-(const Vector4& vector) const;
 
 		/**
 		* Subtracts the given vector to this vector.
@@ -525,14 +534,14 @@ namespace iron {
 		* @param vector The vector to add.
 		* @return This vector with the result of the subtraction.
 		*/
-		inline Vector2& operator-=(const Vector2& vector);
+		inline Vector4& operator-=(const Vector4& vector);
 
 		/**
 		* Calculates the negation of this vector. This vector remains unchanged.
 		*
 		* @return This vector negated.
 		*/
-		inline const Vector2 operator-() const;
+		inline const Vector4 operator-() const;
 
 		/**
 		* Calculates the scalar product of this vector with the given value. This vector remains
@@ -541,7 +550,7 @@ namespace iron {
 		* @param x The value used to scale.
 		* @return The scaled vector.
 		*/
-		inline const Vector2 operator*(const float x) const;
+		inline const Vector4 operator*(const float x) const;
 
 		/**
 		* Calculates the scalar product of this vector with the given value.
@@ -549,7 +558,7 @@ namespace iron {
 		* @param x The value used to scale.
 		* @return This vector with the result of the scaling.
 		*/
-		inline Vector2& operator*=(const float x);
+		inline Vector4& operator*=(const float x);
 
 		/**
 		* Calculates the division between this vector values and the given value. This vector remains
@@ -558,7 +567,7 @@ namespace iron {
 		* @param x the value used to divide.
 		* @return The divided vector.
 		*/
-		inline const Vector2 operator/(const float x) const;
+		inline const Vector4 operator/(const float x) const;
 
 		/**
 		* Calculates the division between this vector with the given value.
@@ -566,7 +575,7 @@ namespace iron {
 		* @param x The value used to divide.
 		* @return This vector with the result of the division.
 		*/
-		inline Vector2& operator/=(const float x);
+		inline Vector4& operator/=(const float x);
 
 		/**
 		* Ensures array accessibility with square brackets.
@@ -574,10 +583,10 @@ namespace iron {
 		* @param i The index to search the "array".
 		* @return The value at the position.
 		*/
-		inline float operator[](unsigned i) const;
+		inline float& operator[](int i);
 	};
 }
 
-#include "Vector2.inl"
+#include "Vector4.inl"
 
 #endif

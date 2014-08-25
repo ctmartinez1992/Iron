@@ -14,11 +14,17 @@ namespace iron {
 	{
 	}
 
+	Log::Log(const Log&)
+	{
+	}
+
 	Log::~Log()
 	{
 	}
 
-	void Log::log(const std::string& type, const std::string& message, const long& line, const std::string& function, const std::string& file) {
+	void Log::log(const std::string& type, const std::string& message, const long& line, 
+		const std::string& function, const std::string& file) 
+	{
 		//Get the current time
 		time_t t = time(0);
 		tm *cT = new tm();
@@ -46,7 +52,9 @@ namespace iron {
 		return _s;
 	}
 
-	void Log::logDebug(const std::string& message, const long& line, const std::string& function, const std::string& file) {
+	void Log::logDebug(const std::string& message, const long& line, const std::string& function, 
+		const std::string& file) 
+	{
 		if (!showDebug) {
 			return;
 		}
@@ -54,7 +62,9 @@ namespace iron {
 		log("[DEBUG]", message, line, function, file);
 	}
 
-	void Log::logInfo(const std::string& message, const long& line, const std::string& function, const std::string& file) {
+	void Log::logInfo(const std::string& message, const long& line, const std::string& function, 
+		const std::string& file) 
+	{
 		if (!showInfo) {
 			return;
 		}
@@ -62,7 +72,9 @@ namespace iron {
 		log("[INFO]", message, line, function, file);
 	}
 
-	void Log::logError(const std::string& message, const long& line, const std::string& function, const std::string& file) {
+	void Log::logError(const std::string& message, const long& line, const std::string& function, 
+		const std::string& file) 
+	{
 		if (!showError) {
 			return;
 		}
@@ -70,7 +82,9 @@ namespace iron {
 		log("[ERROR]", message, line, function, file);
 	}
 
-	void Log::logWarning(const std::string& message, const long& line, const std::string& function, const std::string& file) {
+	void Log::logWarning(const std::string& message, const long& line, const std::string& function, 
+		const std::string& file) 
+	{
 		if (!showWarning) {
 			return;
 		}

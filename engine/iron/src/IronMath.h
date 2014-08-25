@@ -1,5 +1,5 @@
-#ifndef IRONMATH_H_
-#define IRONMATH_H_
+#ifndef IRON_MATH_IRONMATH_H_
+#define IRON_MATH_IRONMATH_H_
 
 namespace iron {
 
@@ -14,7 +14,7 @@ namespace iron {
 	protected:
 
 	public:
-		static const float	MATH_FLOAT_MIN;		/*!< Value close to zero, used to check if a number is dangerously close to zero. */
+		static const float	MATH_FLOAT_MIN;		/*!< Value close to zero. */
 		static const float	MATH_LOG2E;			/*!< Base 2 logarithm of e. */
 		static const float	MATH_LOG10E;		/*!< Base 10 logarithm of e. */
 		static const float	MATH_PI;			/*!< Pi value. */

@@ -1,5 +1,5 @@
-#ifndef VECTOR3_H_
-#define VECTOR3_H_
+#ifndef IRON_MATH_VECTOR3_H_
+#define IRON_MATH_VECTOR3_H_
 
 #include "IronMath.h"
 
@@ -21,8 +21,12 @@ namespace iron {
 		float					z;			/*!< Z coordinate. */
 
 		const static Vector3	GRAVITY;	/*!< Y value set to the gravity constant. */
-		const static Vector3	UP;			/*!< Up vector. */
+		const static Vector3	LEFT;		/*!< Left vector. */
 		const static Vector3	RIGHT;		/*!< Right vector. */
+		const static Vector3	UP;			/*!< Up vector. */
+		const static Vector3	DOWN;		/*!< Down vector. */
+		const static Vector3	FRONT;		/*!< Front vector. */
+		const static Vector3	BACK;		/*!< Back vector. */
 
 		/****************************** Contructors & Destructors ******************************/
 	public:
@@ -180,7 +184,7 @@ namespace iron {
 		void add(const Vector3& vector);
 
 		/**
-		* Adds the given vectors and stores the result in the third parameter.
+		* Adds the given vectors and stores the result in dst.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
@@ -205,7 +209,7 @@ namespace iron {
 		void subtract(const Vector3& vector);
 
 		/**
-		* Subtracts the given vectors and stores the result in the third parameter.
+		* Subtracts the given vectors and stores the result in dst.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
@@ -221,7 +225,8 @@ namespace iron {
 		void scale(const float scalar);
 
 		/**
-		* Scales the coordinates in this vector by the given float value and stores the result in dst (pointer to a Vector3 object).
+		* Scales the coordinates in this vector by the given float value and stores the result in
+		* dst.
 		*
 		* @param scalar The scalar value.
 		* @param dst The vector that stores the result.
@@ -236,7 +241,7 @@ namespace iron {
 		void divide(const float denominator);
 
 		/**
-		* Divides the coordinates in this vector by the given float value and stores the result in dst (pointer to a Vector3 object).
+		* Divides the coordinates in this vector by the given float value and stores the result in dst.
 		*
 		* @param denominator The denominator value.
 		* @param dst The vector that stores the result.
@@ -316,14 +321,15 @@ namespace iron {
 		static void cross(const Vector3& v1, const Vector3& v2, Vector3* dst);
 
 		/**
-		* Calculates the cross product between this vector and the given vector. Stores the result in this vector.
+		* Calculates the cross product between this vector and the given vector. Stores the result in
+		* this vector.
 		*
 		* @param vector The vector used in the calculation of the cross product.
 		*/
 		void cross(const Vector3& vector);
 
 		/**
-		* Normalizes the given vector and stores the result in dst (pointer to a Vector3 object).
+		* Normalizes the given vector and stores the result in dst.
 		*
 		* @param vector The vector with the values.
 		* @param dst The vector that will store the result.
@@ -338,14 +344,15 @@ namespace iron {
 		Vector3& normalize();
 
 		/**
-		* Normalizes this vector and stores the result in the dst (pointer to a Vector3 object).
+		* Normalizes this vector and stores the result in the dst.
 		*
 		* @return The result of the normalization in dst.
 		*/
 		void normalize(Vector3* dst) const;
 
 		/**
-		* Clamps the given vector within the given minX, minY, maxX and maxY values and stores the result in dst (pointer to a Vector3 object).
+		* Clamps the given vector within the given minX, minY, maxX and maxY values and stores the
+		* result in dst.
 		*
 		* @param vector The vector to clamp.
 		* @param minX The minimum x value.
@@ -356,10 +363,11 @@ namespace iron {
 		* @param maxZ The maximum y value.
 		* @param dst A pointer to a Vector3 object to store the result in.
 		*/
-		static void clamp(const Vector3& vector, const float minX, const float minY, const float minZ, const float maxX, const float maxY, const float maxZ, Vector3* dst);
+		static void clamp(const Vector3& vector, const float minX, const float minY, const float minZ, 
+			const float maxX, const float maxY, const float maxZ, Vector3* dst);
 
 		/**
-		* Clamps the given vector within the given min and max values and stores the result in dst (pointer to a Vector3 object).
+		* Clamps the given vector within the given min and max values and stores the result in dst.
 		*
 		* @param vector The vector to clamp.
 		* @param min The minimum value.
@@ -369,7 +377,8 @@ namespace iron {
 		static void clamp(const Vector3& vector, const Vector3& min, const Vector3& max, Vector3* dst);
 
 		/**
-		* Clamps this vector within the given minX, minY, maxX and maxY values and stores the result in this vector.
+		* Clamps this vector within the given minX, minY, maxX and maxY values and stores the result in
+		* this vector.
 		*
 		* @param minX The minimum x value.
 		* @param minY The minimum y value.
@@ -378,7 +387,8 @@ namespace iron {
 		* @param maxY The maximum y value.
 		* @param maxZ The maximum y value.
 		*/
-		void clamp(const float minX, const float minY, const float minZ, const float maxX, const float maxY, const float maxZ);
+		void clamp(const float minX, const float minY, const float minZ, const float maxX, 
+			const float maxY, const float maxZ);
 
 		/**
 		* Clamps this vector within the given min and max values and stores the result in this vector.
@@ -389,7 +399,8 @@ namespace iron {
 		void clamp(const Vector3& min, const Vector3& max);
 
 		/**
-		* Sets the elements of this vector to the given int values. It never initializes them, only assigns.
+		* Sets the elements of this vector to the given int values. It never initializes them, only
+		* assigns.
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
@@ -398,7 +409,8 @@ namespace iron {
 		void set(const int x, const int y, const int z);
 
 		/**
-		* Sets the elements of this vector to the given float values. It never initializes them, only assigns.
+		* Sets the elements of this vector to the given float values. It never initializes them, only
+		* assigns.
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
@@ -407,7 +419,8 @@ namespace iron {
 		void set(const float x, const float y, const float z);
 
 		/**
-		* Sets the elements of this vector to the given double values. It never initializes them, only assigns.
+		* Sets the elements of this vector to the given double values. It never initializes them, only
+		* assigns.
 		*
 		* @param x The new x coordinate.
 		* @param y The new y coordinate.
@@ -416,7 +429,8 @@ namespace iron {
 		void set(const double x, const double y, const double z);
 
 		/**
-		* Sets this vector to the directional vector between the given points. It never initializes them, only assigns.
+		* Sets this vector to the directional vector between the given points. It never initializes
+		* them, only assigns.
 		*
 		* @param p1 The first point.
 		* @param p2 The second point.
@@ -424,7 +438,8 @@ namespace iron {
 		void set(const Vector3& p1, const Vector3& p2);
 
 		/**
-		* Copies the elements of the given vector to this vector. It never initializes them, only assigns.
+		* Copies the elements of the given vector to this vector. It never initializes them, only
+		* assigns.
 		*
 		* @param vector The vector to copy.
 		*/
@@ -493,7 +508,8 @@ namespace iron {
 		inline bool operator>=(const Vector3& vector) const;
 
 		/**
-		* Calculates the sum of this vector with the given vector. This vector and the given one remain unchanged.
+		* Calculates the sum of this vector with the given vector. This vector and the given one remain
+		* unchanged.
 		*
 		* @param vector The vector to add.
 		* @return The vector with the result of the addition.
@@ -509,7 +525,8 @@ namespace iron {
 		inline Vector3& operator+=(const Vector3& vector);
 
 		/**
-		* Calculates the subtraction of this vector with the given vector. This vector and the given one remain unchanged.
+		* Calculates the subtraction of this vector with the given vector. This vector and the given
+		* one remain unchanged.
 		*
 		* @param vector The vector to subtract.
 		* @return The vector with the result of the subtraction.
@@ -532,7 +549,8 @@ namespace iron {
 		inline const Vector3 operator-() const;
 
 		/**
-		* Calculates the scalar product of this vector with the given value. This vector remains unchanged.
+		* Calculates the scalar product of this vector with the given value. This vector remains
+		* unchanged.
 		*
 		* @param x The value used to scale.
 		* @return The scaled vector.
@@ -548,7 +566,8 @@ namespace iron {
 		inline Vector3& operator*=(const float x);
 
 		/**
-		* Calculates the division between this vector values and the given value. This vector remains unchanged.
+		* Calculates the division between this vector values and the given value. This vector remains
+		* unchanged.
 		*
 		* @param x the value used to divide.
 		* @return The divided vector.
@@ -569,7 +588,7 @@ namespace iron {
 		* @param i The index to search the "array".
 		* @return The value at the position.
 		*/
-		inline float operator[](unsigned i) const;
+		inline float& operator[](int i);
 	};
 }
 

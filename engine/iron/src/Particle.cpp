@@ -4,7 +4,8 @@
 namespace iron {
 
 	Particle::Particle()
-		: position(Vector3()), velocity(Vector3()), acceleration(Vector3()), force(Vector3()), damp(0.0f), inverseMass(0.0f)
+		: position(Vector3()), velocity(Vector3()), acceleration(Vector3()), force(Vector3()), 
+		damp(0.0f), inverseMass(0.0f)
 	{}
 
 	Particle::~Particle() {
@@ -16,7 +17,8 @@ namespace iron {
 		}
 
 		if (duration <= 0.0f) {
-			iron::Log::s()->logError("The duration value must be superior to 0.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logError("The duration value must be superior to 0.", __LINE__, 
+				std::string(__FUNCTION__), std::string(__FILE__));
 		}
 
 		position.addScaledVector(velocity, duration);
@@ -24,11 +26,15 @@ namespace iron {
 		resultingAcc.addScaledVector(force, inverseMass);
 		velocity.addScaledVector(resultingAcc, duration);
 		velocity *= powf(damp, duration);
-		force.zero();
+		clearForce();
 	}
 
 	void Particle::addForce(const Vector3& force) {
 		this->force.add(force);
+	}
+
+	void Particle::clearForce() {
+		force.set(0, 0, 0);
 	}
 	
 	void Particle::setPosition(const Vector3& position)	{
@@ -77,7 +83,8 @@ namespace iron {
 
 	void Particle::setMass(const float mass) {
 		if (mass == 0) {
-			iron::Log::s()->logError("When setting the mass, it can never be 0. Otherwise, the universe will explode.", __LINE__, std::string(__FUNCTION__), std::string(__FILE__));
+			iron::Log::s()->logError("When setting the mass, it can never be 0. Otherwise, the universe will explode.", 
+				__LINE__, std::string(__FUNCTION__), std::string(__FILE__));
 		}
 
 		inverseMass = ((float)1.0) / mass;

@@ -1,2 +1,0 @@
-[18:10:19]:[4]:[main]:[main.cpp] ~ [WARNING] - Test.
-[18:10:19]:[89]:[iron::Vector2::add]:[vector2.cpp] ~ [WARNING] - NULL ptr was passed.
