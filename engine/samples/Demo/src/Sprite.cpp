@@ -1,4 +1,6 @@
 #include "Sprite.h"
+#include "Vertex.h"
+#include <cstddef>
 
 Sprite::Sprite() : vboID(0), x(0), y(0), w(0), h(0)
 {
@@ -21,27 +23,44 @@ void Sprite::init(float x, float y, float w, float h) {
     }
 
     //6 vertices, each vertex has 2 floats (X,Y).
-    float vertexData[12];
+    Vertex vertexData[6];
 
     //First Triangle
-    vertexData[0] = x + w;
-    vertexData[1] = y + h;
+    vertexData[0].position.x = x + w;
+    vertexData[0].position.y = y + h;
 
-    vertexData[2] = x;
-    vertexData[3] = y + h;
+	vertexData[1].position.x = x;
+	vertexData[1].position.y = y + h;
 
-    vertexData[4] = x;
-    vertexData[5] = y;
+	vertexData[2].position.x = x;
+	vertexData[2].position.y = y;
 
     //Second Triangle
-    vertexData[6] = x;
-    vertexData[7] = y;
+	vertexData[3].position.x = x;
+	vertexData[3].position.y = y;
 
-    vertexData[8] = x + w;
-    vertexData[9] = y;
+	vertexData[4].position.x = x + w;
+	vertexData[4].position.y = y;
 
-    vertexData[10] = x + w;
-    vertexData[11] = y + h;
+	vertexData[5].position.x = x + w;
+	vertexData[5].position.y = y + h;
+
+	for (int i = 0; i < 6; i++) {
+		vertexData[i].color.r = 255;
+		vertexData[i].color.g = 25;
+		vertexData[i].color.b = 55;
+		vertexData[i].color.a = 255;
+	}
+
+	vertexData[1].color.r = 0;
+	vertexData[1].color.g = 255;
+	vertexData[1].color.b = 55;
+	vertexData[1].color.a = 255;
+
+	vertexData[4].color.r = 255;
+	vertexData[4].color.g = 200;
+	vertexData[4].color.b = 0;
+	vertexData[4].color.a = 255;
 
     //Tell opengl to bind our vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -63,7 +82,9 @@ void Sprite::render() {
 
     //Point opengl to the data in our VBO. We will learn
     //more on this later
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	//Color attrib pointer
+	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
 
     //Draw the 6 vertices to the screen
     glDrawArrays(GL_TRIANGLES, 0, 6);

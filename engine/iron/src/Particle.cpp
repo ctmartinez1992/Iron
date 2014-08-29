@@ -45,8 +45,14 @@ namespace iron {
 		position.set(x, y, z);
 	}
 
-	const Vector3& Particle::getPosition() const {
-		return position;
+	const void Particle::getPosition(Vector3* dst) const {
+		if (dst == nullptr) {
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
+				std::string(__FILE__));
+			return;
+		}
+
+		dst->set(position);
 	}
 	
 	void Particle::setVelocity(const Vector3& velocity)	{
@@ -57,8 +63,14 @@ namespace iron {
 		velocity.set(x, y, z);
 	}
 
-	const Vector3& Particle::getVelocity() const {
-		return velocity;
+	const void Particle::getVelocity(Vector3* dst) const {
+		if (dst == nullptr) {
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
+				std::string(__FILE__));
+			return;
+		}
+		
+		dst->set(velocity);
 	}
 
 	void Particle::setAcceleration(const Vector3& acceleration) {
@@ -69,8 +81,14 @@ namespace iron {
 		acceleration.set(x, y, z);
 	}
 
-	const Vector3& Particle::getAcceleration() const {
-		return acceleration;
+	const void Particle::getAcceleration(Vector3* dst) const {
+		if (dst == nullptr) {
+			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
+				std::string(__FILE__));
+			return;
+		}
+
+		dst->set(acceleration);
 	}
 
 	void Particle::setDamp(const float damp) {
