@@ -1,8 +1,9 @@
+#include <iostream>
 #include "MainGame.h"
 
-int main(int argc, char *argv[]) {
-	MainGame g;
-	g.run();
+int main(int argc, char** argv) {
+    MainGame mainGame;
+    mainGame.run();
 
-	return 0;
+    return 0;
 }

@@ -28,9 +28,9 @@ namespace iron {
 	}
 
 	void Quaternion::slerp(float x1, float y1, float z1, float w1, float x2, float y2, float z2,
-		float w2, float c, float* dstx, float* dsty, float* dstz, float* dstw)
+		float w2, float c, float* ptrx, float* ptry, float* ptrz, float* ptrw)
 	{
-		if (dstx == nullptr || dsty == nullptr || dstz == nullptr || dstw == nullptr) {
+		if (ptrx == nullptr || ptry == nullptr || ptrz == nullptr || ptrw == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -43,16 +43,16 @@ namespace iron {
 		}
 
 		if (c == 0.0f) {
-			*dstx = x1;	*dsty = y1;	*dstz = z1;	*dstw = w1;
+			*ptrx = x1;	*ptry = y1;	*ptrz = z1;	*ptrw = w1;
 			return;
 		}
 		else if (c == 1.0f) {
-			*dstx = x2;	*dsty = y2;	*dstz = z2;	*dstw = w2;
+			*ptrx = x2;	*ptry = y2;	*ptrz = z2;	*ptrw = w2;
 			return;
 		}
 
 		if (x1 == x2 && y1 == y2 && z1 == z2 && w1 == w2) {
-			*dstx = x1;	*dsty = y1;	*dstz = z1;	*dstw = w1;
+			*ptrx = x1;	*ptry = y1;	*ptrz = z1;	*ptrw = w1;
 			return;
 		}
 
@@ -94,11 +94,11 @@ namespace iron {
 		float z = a * z1 + b * z2; float w = a * w1 + b * w2;
 
 		f1 = (1.5f - (0.5f * ((w * w) + (x * x) + (y * y) + (z * z))));
-		*dstw = w * f1;	*dstx = x * f1;	*dsty = y * f1;	*dstz = z * f1;
+		*ptrw = w * f1;	*ptrx = x * f1;	*ptry = y * f1;	*ptrz = z * f1;
 	}
 
-	void Quaternion::lerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* dst) {
-		if (dst == nullptr) {
+	void Quaternion::lerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -111,39 +111,39 @@ namespace iron {
 		}
 
 		if (c == 0.0f) {
-			dst->set(q1);
+			ptr->set(q1);
 			return;
 		} else if (c == 1.0f) {
-			dst->set(q2);
+			ptr->set(q2);
 			return;
 		}
 
 		float nc = 1.0f - c;
 
-		dst->x = nc * q1.x + c * q2.x; dst->y = nc * q1.y + c * q2.y;
-		dst->z = nc * q1.z + c * q2.z; dst->w = nc * q1.w + c * q2.w;
+		ptr->x = nc * q1.x + c * q2.x; ptr->y = nc * q1.y + c * q2.y;
+		ptr->z = nc * q1.z + c * q2.z; ptr->w = nc * q1.w + c * q2.w;
 	}
 
 	void Quaternion::lerp(const Quaternion& q, const float c) {
 		lerp(*this, q, c, this);
 	}
 
-	void Quaternion::slerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* dst) {
-		if (dst == nullptr) {
+	void Quaternion::slerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		slerp(q1.x, q1.y, q1.z, q1.w, q2.x, q2.y, q2.z, q2.w, c, &dst->x, &dst->y, &dst->z, &dst->w);
+		slerp(q1.x, q1.y, q1.z, q1.w, q2.x, q2.y, q2.z, q2.w, c, &ptr->x, &ptr->y, &ptr->z, &ptr->w);
 	}
 
 	void Quaternion::slerp(const Quaternion& q, const float c) {
 		slerp(x, y, z, w, q.x, q.y, q.z, q.w, c, &x, &y, &z, &w);
 	}
 
-	void Quaternion::multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* dst) {
-		if (dst == nullptr) {
+	void Quaternion::multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -154,15 +154,15 @@ namespace iron {
 		float z = (q1.w * q2.z) + (q1.x * q2.y) - (q1.y * q2.x) + (q1.z * q2.w);
 		float w = (q1.w * q2.w) - (q1.x * q2.x) - (q1.y * q2.y) - (q1.z * q2.z);
 
-		dst->x = x;	dst->y = y;	dst->z = z;	dst->w = w;
+		ptr->x = x;	ptr->y = y;	ptr->z = z;	ptr->w = w;
 	}
 
 	void Quaternion::multiply(const Quaternion& q) {
 		multiply(*this, q, this);
 	}
 
-	bool Quaternion::invert(const Quaternion& q, Quaternion* dst) {
-		if (dst == nullptr) {
+	bool Quaternion::invert(const Quaternion& q, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return false;
@@ -170,7 +170,7 @@ namespace iron {
 
 		float p = ((q.x * q.x) + (q.y * q.y) + (q.z * q.z) + (q.w * q.w));
 		if (p == 1.0f) {
-			dst->x = -q.x; dst->y = -q.y; dst->z = -q.z; dst->w = q.w;
+			ptr->x = -q.x; ptr->y = -q.y; ptr->z = -q.z; ptr->w = q.w;
 			return true;
 		}
 
@@ -179,7 +179,7 @@ namespace iron {
 		}
 
 		float ip = 1.0f / p;
-		dst->x = -q.x * ip; dst->y = -q.y * ip; dst->z = -q.z * ip; dst->w = q.w * ip;
+		ptr->x = -q.x * ip; ptr->y = -q.y * ip; ptr->z = -q.z * ip; ptr->w = q.w * ip;
 
 		return true;
 	}
@@ -188,29 +188,29 @@ namespace iron {
 		return invert(*this, this);
 	}
 
-	void Quaternion::conjugate(const Quaternion& q, Quaternion* dst) {
-		if (dst == nullptr) {
+	void Quaternion::conjugate(const Quaternion& q, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = -q.x; dst->y = -q.y; dst->z = -q.z; dst->w = q.w;
+		ptr->x = -q.x; ptr->y = -q.y; ptr->z = -q.z; ptr->w = q.w;
 	}
 
 	void Quaternion::conjugate() {
 		conjugate(*this, this);
 	}
 
-	void Quaternion::normalize(const Quaternion& q, Quaternion* dst) {
-		if (dst == nullptr) {
+	void Quaternion::normalize(const Quaternion& q, Quaternion* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		if (&q != dst) {
-			dst->x = q.x; dst->y = q.y; dst->z = q.z; dst->w = q.w;
+		if (&q != ptr) {
+			ptr->x = q.x; ptr->y = q.y; ptr->z = q.z; ptr->w = q.w;
 		}
 
 		float p = ((q.x * q.x) + (q.y * q.y) + (q.z * q.z) + (q.w * q.w));
@@ -225,7 +225,7 @@ namespace iron {
 		}
 
 		float isp = 1.0f / sp;
-		dst->x *= isp; dst->y *= isp; dst->z *= isp; dst->w *= isp;
+		ptr->x *= isp; ptr->y *= isp; ptr->z *= isp; ptr->w *= isp;
 	}
 
 	void Quaternion::normalize() {
@@ -270,24 +270,24 @@ namespace iron {
 	}
 
 
-	/*void Quaternion::createFromRotationMatrix(const Matrix& m, Quaternion* dst)
+	/*void Quaternion::createFromRotationMatrix(const Matrix& m, Quaternion* ptr)
 	{
-		m.getRotation(dst);
+		m.getRotation(ptr);
 	}
 
-	void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternion* dst)
+	void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternion* ptr)
 	{
-		GP_ASSERT(dst);
+		GP_ASSERT(ptr);
 
 		float halfAngle = angle * 0.5f;
 		float sinHalfAngle = sinf(halfAngle);
 
 		Vector3 normal(axis);
 		normal.normalize();
-		dst->x = normal.x * sinHalfAngle;
-		dst->y = normal.y * sinHalfAngle;
-		dst->z = normal.z * sinHalfAngle;
-		dst->w = cosf(halfAngle);
+		ptr->x = normal.x * sinHalfAngle;
+		ptr->y = normal.y * sinHalfAngle;
+		ptr->z = normal.z * sinHalfAngle;
+		ptr->w = cosf(halfAngle);
 	}
 
 	float Quaternion::toAxisAngle(Vector3* axis) const

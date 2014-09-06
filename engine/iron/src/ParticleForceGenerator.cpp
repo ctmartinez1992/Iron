@@ -195,4 +195,76 @@ namespace iron {
 		force *= -magnitude;
 		p->addForce(force);
 	}
+
+	/****************************************************************************/
+	/****************************** ForceStiffSpring ****************************/
+	/****************************************************************************/
+
+	ForceStiffSpring::ForceStiffSpring(Vector3* a, const float d, const float c) :
+		anchor(a), damp(d), constant(c)
+	{
+	}
+
+	ForceStiffSpring::~ForceStiffSpring() {
+	}
+
+	void ForceStiffSpring::update(Particle* p, const float d) {
+		if (!p->hasFiniteMass()) {
+			return;
+		}
+
+		//Relative position between anchor and particle.
+		Vector3 position;
+		position.set(p->position);
+		position -= *anchor;
+
+		//Calculate the constants and check they are in bounds.
+		float springConstant = (0.5f * sqrt((4.0f * constant) - (damp * damp)));
+		if (springConstant == 0.0f) {
+			return;
+		}
+
+		Vector3 c = ((position * (damp / (2.0f * springConstant))) + 
+			(p->velocity * (1.0f / springConstant)));
+
+		//The target position.
+		Vector3 target = ((position * cos(springConstant * d)) + (c * sin(springConstant * d)));
+		target *= exp((-0.5f * d * damp));
+
+		//The acceleration force.
+		Vector3 force = (target - position) * (1.0f / (d * d)) - p->velocity * (1.0f / d);
+		p->addForce(force * p->getMass());
+	}
+
+	/****************************************************************************/
+	/******************************* ForceBuoyancy ******************************/
+	/****************************************************************************/
+
+	ForceBuoyancy::ForceBuoyancy(const float v, const float dl, const float lh, const float ld) :
+		volume(v), depthLimit(dl), liquidHeight(lh), liquidDensity(ld)
+	{
+	}
+
+	ForceBuoyancy::~ForceBuoyancy() {
+	}
+
+	void ForceBuoyancy::update(Particle* p, const float d) {
+		//Get current y position (depth).
+		float depth = p->position.y;
+		if (depth >= (liquidHeight + depthLimit)) {
+			//Not inside the liquid.
+			return;
+		}
+		else if (depth <= (liquidHeight - depthLimit)) {
+			//This is maximum depth.
+			Vector3 force(0, (liquidDensity * volume), 0);
+			p->addForce(force);
+			return;
+		}
+		else {
+			//Between outer edge and depth limit.
+			Vector3 force(0, (liquidDensity * volume * ((depth - depthLimit - liquidHeight) / 2) * depthLimit), 0);
+			p->addForce(force);
+		}
+	}
 }

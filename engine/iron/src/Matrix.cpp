@@ -33,15 +33,15 @@ namespace iron {
 	{
 	}
 
-	void Matrix::lookAt(const Vector3& eye, const Vector3& point, const Vector3& up, Matrix* dst) {
-		lookAt(eye.x, eye.y, eye.z, point.x, point.y, point.z, up.x, up.y, up.z, dst);
+	void Matrix::lookAt(const Vector3& eye, const Vector3& point, const Vector3& up, Matrix* ptr) {
+		lookAt(eye.x, eye.y, eye.z, point.x, point.y, point.z, up.x, up.y, up.z, ptr);
 	}
 
 	void Matrix::lookAt(const float eyeX, const float eyeY, const float eyeZ,
 		const float pointX, const float pointY, const float pointZ,
-		const float upX, const float upY, const float upZ, Matrix* dst)
+		const float upX, const float upY, const float upZ, Matrix* ptr)
 	{
-		if (dst == nullptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -65,28 +65,28 @@ namespace iron {
 		Vector3::cross(z, x, &y);
 		y.normalize();
 
-		dst->m[0] = x.x;
-		dst->m[1] = y.x;
-		dst->m[2] = z.x;
-		dst->m[3] = 0.0f;
-		dst->m[4] = x.y;
-		dst->m[5] = y.y;
-		dst->m[6] = z.y;
-		dst->m[7] = 0.0f;
-		dst->m[8] = x.z;
-		dst->m[9] = y.z;
-		dst->m[10] = z.z;
-		dst->m[11] = 0.0f;
-		dst->m[12] = -Vector3::dot(x, e);
-		dst->m[13] = -Vector3::dot(y, e);
-		dst->m[14] = -Vector3::dot(z, e);
-		dst->m[15] = 1.0f;
+		ptr->m[0] = x.x;
+		ptr->m[1] = y.x;
+		ptr->m[2] = z.x;
+		ptr->m[3] = 0.0f;
+		ptr->m[4] = x.y;
+		ptr->m[5] = y.y;
+		ptr->m[6] = z.y;
+		ptr->m[7] = 0.0f;
+		ptr->m[8] = x.z;
+		ptr->m[9] = y.z;
+		ptr->m[10] = z.z;
+		ptr->m[11] = 0.0f;
+		ptr->m[12] = -Vector3::dot(x, e);
+		ptr->m[13] = -Vector3::dot(y, e);
+		ptr->m[14] = -Vector3::dot(z, e);
+		ptr->m[15] = 1.0f;
 	}
 
 	void Matrix::orthographic(const float w, const float h, const float zNear, const float zFar,
-		Matrix* dst) 
+		Matrix* ptr) 
 	{
-		if (dst == nullptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -111,21 +111,21 @@ namespace iron {
 		float u = hH;
 		float d = -hH;
 
-		memset(dst->m, 0, ((size_t)MATRIX_SIZE));
+		memset(ptr->m, 0, ((size_t)MATRIX_SIZE));
 
-		dst->m[0] = (2 / (r - l));
-		dst->m[5] = (2 / (u - d));
-		dst->m[10] = (1 / (zNear - zFar));
-		dst->m[12] = ((l + r) / (l - r));
-		dst->m[13] = ((u + d) / (d - u));
-		dst->m[14] = (zNear / (zNear - zFar));
-		dst->m[15] = 1;
+		ptr->m[0] = (2 / (r - l));
+		ptr->m[5] = (2 / (u - d));
+		ptr->m[10] = (1 / (zNear - zFar));
+		ptr->m[12] = ((l + r) / (l - r));
+		ptr->m[13] = ((u + d) / (d - u));
+		ptr->m[14] = (zNear / (zNear - zFar));
+		ptr->m[15] = 1;
 	}
 	
 	void Matrix::perspective(const float fov, const float aspect, const float zNear, 
-		const float zFar, Matrix* dst)
+		const float zFar, Matrix* ptr)
 	{
-		if (dst == nullptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -156,39 +156,39 @@ namespace iron {
 		float d = std::tan(t);
 		float id = 1.0f / d;
 
-		memset(dst->m, 0, ((size_t)MATRIX_SIZE));
+		memset(ptr->m, 0, ((size_t)MATRIX_SIZE));
 
-		dst->m[0] = ((1.0f / aspect) * id);
-		dst->m[5] = id;
-		dst->m[10] = ((-(zFar + zNear)) * iz);
-		dst->m[11] = -1.0f;
-		dst->m[14] = ((-2.0f * zFar) * (zNear * iz));
+		ptr->m[0] = ((1.0f / aspect) * id);
+		ptr->m[5] = id;
+		ptr->m[10] = ((-(zFar + zNear)) * iz);
+		ptr->m[11] = -1.0f;
+		ptr->m[14] = ((-2.0f * zFar) * (zNear * iz));
 	}
 
-	void Matrix::translate(const float x, const float y, const float z, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::translate(const float x, const float y, const float z, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		multiply(*this, Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1), dst);
+		multiply(*this, Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1), ptr);
 	}
 
 	void Matrix::translate(const float x, const float y, const float z) {
 		multiply(Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1));
 	}
 
-	void Matrix::translate(const Vector3& t, Matrix* dst) {
-		translate(t.x, t.y, t.z, dst);
+	void Matrix::translate(const Vector3& t, Matrix* ptr) {
+		translate(t.x, t.y, t.z, ptr);
 	}
 
 	void Matrix::translate(const Vector3& t) {
 		multiply(Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, t.x, t.y, t.z, 1));
 	}
 
-	void Matrix::rotate(const Quaternion& q, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::rotate(const Quaternion& q, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -202,21 +202,21 @@ namespace iron {
 		float xyy = q.x * yy; float xzz = q.x * zz; float yzz = q.y * zz;
 		float wxx = q.w * xx; float wyy = q.w * yy; float wzz = q.w * zz;
 
-		dst->setIdentity();
+		ptr->setIdentity();
 
-		dst->m[0] -= yyy - zzz;	dst->m[1] = xyy + wzz; dst->m[2] = xzz - wyy;
-		dst->m[4] = xyy - wzz; dst->m[5] -= xxx - zzz; dst->m[6] = yzz + wxx;
-		dst->m[8] = xzz + wyy; dst->m[9] = yzz - wxx; dst->m[10] -= xxx - yyy;
+		ptr->m[0] -= yyy - zzz;	ptr->m[1] = xyy + wzz; ptr->m[2] = xzz - wyy;
+		ptr->m[4] = xyy - wzz; ptr->m[5] -= xxx - zzz; ptr->m[6] = yzz + wxx;
+		ptr->m[8] = xzz + wyy; ptr->m[9] = yzz - wxx; ptr->m[10] -= xxx - yyy;
 
-		multiply(*this, r, dst);
+		multiply(*this, r, ptr);
 	}
 
 	void Matrix::rotate(const Quaternion& q) {
 		rotate(q, this);
 	}
 
-	void Matrix::rotate(const Vector3& axis, const float a, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::rotate(const Vector3& axis, const float a, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -242,21 +242,21 @@ namespace iron {
 		float icxy = icx * y; float icxz = icx * z; float icyz = icy * z;
 		float sx = s * x; float sy = s * y;	float sz = s * z;
 
-		dst->setIdentity();
+		ptr->setIdentity();
 
-		dst->m[0] = (c + (icx * x)); dst->m[1] = icxy + sz; dst->m[2] = icxz - sy;
-		dst->m[4] = icxy - sz; dst->m[5] = (c + (icy * y)); dst->m[6] = icyz + sx;
-		dst->m[8] = icxz + sy; dst->m[9] = icyz - sx; dst->m[10] = (c + (icz * z));
+		ptr->m[0] = (c + (icx * x)); ptr->m[1] = icxy + sz; ptr->m[2] = icxz - sy;
+		ptr->m[4] = icxy - sz; ptr->m[5] = (c + (icy * y)); ptr->m[6] = icyz + sx;
+		ptr->m[8] = icxz + sy; ptr->m[9] = icyz - sx; ptr->m[10] = (c + (icz * z));
 
-		multiply(*this, r, dst);
+		multiply(*this, r, ptr);
 	}
 
 	void Matrix::rotate(const Vector3& axis, const float a) {
 		rotate(axis, a, this);
 	}
 
-	void Matrix::rotateX(const float a, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::rotateX(const float a, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -267,15 +267,15 @@ namespace iron {
 
 		Matrix r = Matrix(1, 0, 0, 0, 0, c, s, 0, 0, -s, -c, 0, 0, 0, 0, 1);
 
-		multiply(*this, r, dst);
+		multiply(*this, r, ptr);
 	}
 
 	void Matrix::rotateX(const float a) {
 		rotateX(a, this);
 	}
 
-	void Matrix::rotateY(const float a, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::rotateY(const float a, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -286,15 +286,15 @@ namespace iron {
 
 		Matrix r = Matrix(c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1);
 		
-		multiply(*this, r, dst);
+		multiply(*this, r, ptr);
 	}
 
 	void Matrix::rotateY(const float a) {
 		rotateY(a, this);
 	}
 
-	void Matrix::rotateZ(const float a, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::rotateZ(const float a, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
@@ -305,62 +305,62 @@ namespace iron {
 
 		Matrix r = Matrix(c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
-		multiply(*this, r, dst);
+		multiply(*this, r, ptr);
 	}
 
 	void Matrix::rotateZ(const float a) {
 		rotateZ(a, this);
 	}
 
-	void Matrix::scale(const float s, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::scale(const float s, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->setIdentity();
-		dst->m[0] = s; dst->m[5] = s; dst->m[10] = s;
+		ptr->setIdentity();
+		ptr->m[0] = s; ptr->m[5] = s; ptr->m[10] = s;
 	}
 
 	void Matrix::scale(const float s) {
 		scale(s, this);
 	}
 
-	void Matrix::scale(const float x, const float y, const float z, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::scale(const float x, const float y, const float z, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->setIdentity();
-		dst->m[0] = x; dst->m[5] = y; dst->m[10] = z;
+		ptr->setIdentity();
+		ptr->m[0] = x; ptr->m[5] = y; ptr->m[10] = z;
 	}
 
 	void Matrix::scale(const float x, const float y, const float z) {
 		scale(x, y, z, this);
 	}
 
-	void Matrix::scale(const Vector3& s, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::scale(const Vector3& s, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 		
-		dst->setIdentity();
-		dst->m[0] = s.x; dst->m[5] = s.y; dst->m[10] = s.z;
+		ptr->setIdentity();
+		ptr->m[0] = s.x; ptr->m[5] = s.y; ptr->m[10] = s.z;
 	}
 
 	void Matrix::scale(const Vector3& s) {
 		scale(s, this);
 	}
 
-	bool Matrix::getTranslate(Vector3* dst) const {
-		dst->x = m[12];
-		dst->y = m[13];
-		dst->z = m[14];
+	bool Matrix::getTranslate(Vector3* ptr) const {
+		ptr->x = m[12];
+		ptr->y = m[13];
+		ptr->z = m[14];
 
 		return true;
 	}
@@ -370,24 +370,24 @@ namespace iron {
 	//TOU AQUI
 	//TOU AQUI
 	//TOU AQUI
-	bool Matrix::getRotate(Quaternion* dst) const {
+	bool Matrix::getRotate(Quaternion* ptr) const {
 		//return decompose(NULL, rotation, NULL);
 		return false;
 	}
 
-	bool Matrix::getScale(Vector3* dst) const {
+	bool Matrix::getScale(Vector3* ptr) const {
 		Vector3 x(m[0], m[1], m[2]); 
 		Vector3 y(m[4], m[5], m[6]);	
 		Vector3 z(m[8], m[9], m[10]);
 
-		dst->x = x.length();			
-		dst->y = y.length();			
-		dst->z = z.length();
+		ptr->x = x.length();			
+		ptr->y = y.length();			
+		ptr->z = z.length();
 
 		return true;
 	}
 
-	//bool Matrix::separate(Vector3* dstt, Quaternion* dstr, Vector3* dsts) const {
+	//bool Matrix::separate(Vector3* ptrt, Quaternion* ptrr, Vector3* ptrs) const {
 
 	//	// Nothing left to do.
 	//	if (rotation == NULL)
@@ -459,102 +459,102 @@ namespace iron {
 	//	return true;
 	//}
 
-	void Matrix::upVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::upVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = m[4]; dst->y = m[5]; dst->z = m[6];
+		ptr->x = m[4]; ptr->y = m[5]; ptr->z = m[6];
 	}
 
-	void Matrix::downVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::downVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
 
-		dst->x = -m[4]; dst->y = -m[5]; dst->z = -m[6];
+		ptr->x = -m[4]; ptr->y = -m[5]; ptr->z = -m[6];
 	}
 
-	void Matrix::leftVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::leftVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = -m[0]; dst->y = -m[1]; dst->z = -m[2];
+		ptr->x = -m[0]; ptr->y = -m[1]; ptr->z = -m[2];
 	}
 
-	void Matrix::rightVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::rightVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = m[0]; dst->y = m[1]; dst->z = m[2];
+		ptr->x = m[0]; ptr->y = m[1]; ptr->z = m[2];
 	}
 
-	void Matrix::frontVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::frontVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = -m[8]; dst->y = -m[9]; dst->z = -m[10];
+		ptr->x = -m[8]; ptr->y = -m[9]; ptr->z = -m[10];
 	}
 
-	void Matrix::backVector(Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::backVector(Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = m[8]; dst->y = m[9]; dst->z = m[10];
+		ptr->x = m[8]; ptr->y = m[9]; ptr->z = m[10];
 	}
 
-	void Matrix::transformPoint(const Vector3& p, Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::transformPoint(const Vector3& p, Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = ((p.x * m[0]) + (p.y * m[4]) + (p.z * m[8]) + (1.0f * m[12]));
-		dst->y = ((p.x * m[1]) + (p.y * m[5]) + (p.z * m[9]) + (1.0f * m[13]));
-		dst->z = ((p.x * m[2]) + (p.y * m[6]) + (p.z * m[10]) + (1.0f * m[14]));
+		ptr->x = ((p.x * m[0]) + (p.y * m[4]) + (p.z * m[8]) + (1.0f * m[12]));
+		ptr->y = ((p.x * m[1]) + (p.y * m[5]) + (p.z * m[9]) + (1.0f * m[13]));
+		ptr->z = ((p.x * m[2]) + (p.y * m[6]) + (p.z * m[10]) + (1.0f * m[14]));
 	}
 
-	void Matrix::transformVector(const Vector3& v, Vector3* dst) const {
-		if (dst == nullptr) {
+	void Matrix::transformVector(const Vector3& v, Vector3* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 		
-		dst->x = ((v.x * m[0]) + (v.y * m[4]) + (v.z * m[8]) + (0.0f * m[12]));
-		dst->y = ((v.x * m[1]) + (v.y * m[5]) + (v.z * m[9]) + (0.0f * m[13]));
-		dst->z = ((v.x * m[2]) + (v.y * m[6]) + (v.z * m[10]) + (0.0f * m[14]));
+		ptr->x = ((v.x * m[0]) + (v.y * m[4]) + (v.z * m[8]) + (0.0f * m[12]));
+		ptr->y = ((v.x * m[1]) + (v.y * m[5]) + (v.z * m[9]) + (0.0f * m[13]));
+		ptr->z = ((v.x * m[2]) + (v.y * m[6]) + (v.z * m[10]) + (0.0f * m[14]));
 	}
 
-	void Matrix::transformVector(const Vector4& v, Vector4* dst) const	{
-		if (dst == nullptr) {
+	void Matrix::transformVector(const Vector4& v, Vector4* ptr) const	{
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = ((v.x * m[0]) + (v.y * m[4]) + (v.z * m[8]) + (v.w * m[12]));
-		dst->y = ((v.x * m[1]) + (v.y * m[5]) + (v.z * m[9]) + (v.w * m[13]));
-		dst->z = ((v.x * m[2]) + (v.y * m[6]) + (v.z * m[10]) + (v.w * m[14]));
-		dst->w = ((v.x * m[3]) + (v.y * m[7]) + (v.z * m[11]) + (v.w * m[15]));
+		ptr->x = ((v.x * m[0]) + (v.y * m[4]) + (v.z * m[8]) + (v.w * m[12]));
+		ptr->y = ((v.x * m[1]) + (v.y * m[5]) + (v.z * m[9]) + (v.w * m[13]));
+		ptr->z = ((v.x * m[2]) + (v.y * m[6]) + (v.z * m[10]) + (v.w * m[14]));
+		ptr->w = ((v.x * m[3]) + (v.y * m[7]) + (v.z * m[11]) + (v.w * m[15]));
 	}
 	
 	void Matrix::add(const float s) {
@@ -564,42 +564,42 @@ namespace iron {
 		m[12] += s; m[13] += s; m[14] += s; m[15] += s;
 	}
 
-	void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->m[0] = m1.m[0] + m2.m[0]; dst->m[1] = m1.m[1] + m2.m[1];
-		dst->m[2] = m1.m[2] + m2.m[2]; dst->m[3] = m1.m[3] + m2.m[3];
-		dst->m[4] = m1.m[4] + m2.m[4]; dst->m[5] = m1.m[5] + m2.m[5];
-		dst->m[6] = m1.m[6] + m2.m[6]; dst->m[7] = m1.m[7] + m2.m[7];
-		dst->m[8] = m1.m[8] + m2.m[8]; dst->m[9] = m1.m[9] + m2.m[9];
-		dst->m[10] = m1.m[10] + m2.m[10]; dst->m[11] = m1.m[11] + m2.m[11];
-		dst->m[12] = m1.m[12] + m2.m[12]; dst->m[13] = m1.m[13] + m2.m[13];
-		dst->m[14] = m1.m[14] + m2.m[14]; dst->m[15] = m1.m[15] + m2.m[15];
+		ptr->m[0] = m1.m[0] + m2.m[0]; ptr->m[1] = m1.m[1] + m2.m[1];
+		ptr->m[2] = m1.m[2] + m2.m[2]; ptr->m[3] = m1.m[3] + m2.m[3];
+		ptr->m[4] = m1.m[4] + m2.m[4]; ptr->m[5] = m1.m[5] + m2.m[5];
+		ptr->m[6] = m1.m[6] + m2.m[6]; ptr->m[7] = m1.m[7] + m2.m[7];
+		ptr->m[8] = m1.m[8] + m2.m[8]; ptr->m[9] = m1.m[9] + m2.m[9];
+		ptr->m[10] = m1.m[10] + m2.m[10]; ptr->m[11] = m1.m[11] + m2.m[11];
+		ptr->m[12] = m1.m[12] + m2.m[12]; ptr->m[13] = m1.m[13] + m2.m[13];
+		ptr->m[14] = m1.m[14] + m2.m[14]; ptr->m[15] = m1.m[15] + m2.m[15];
 	}
 
 	void Matrix::add(const Matrix& m) {
 		add(*this, m, this);
 	}
 
-	void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->m[0] = m1.m[0] - m2.m[0]; dst->m[1] = m1.m[1] - m2.m[1];
-		dst->m[2] = m1.m[2] - m2.m[2]; dst->m[3] = m1.m[3] - m2.m[3];
-		dst->m[4] = m1.m[4] - m2.m[4]; dst->m[5] = m1.m[5] - m2.m[5];
-		dst->m[6] = m1.m[6] - m2.m[6]; dst->m[7] = m1.m[7] - m2.m[7];
-		dst->m[8] = m1.m[8] - m2.m[8]; dst->m[9] = m1.m[9] - m2.m[9];
-		dst->m[10] = m1.m[10] - m2.m[10]; dst->m[11] = m1.m[11] - m2.m[11];
-		dst->m[12] = m1.m[12] - m2.m[12]; dst->m[13] = m1.m[13] - m2.m[13];
-		dst->m[14] = m1.m[14] - m2.m[14]; dst->m[15] = m1.m[15] - m2.m[15];
+		ptr->m[0] = m1.m[0] - m2.m[0]; ptr->m[1] = m1.m[1] - m2.m[1];
+		ptr->m[2] = m1.m[2] - m2.m[2]; ptr->m[3] = m1.m[3] - m2.m[3];
+		ptr->m[4] = m1.m[4] - m2.m[4]; ptr->m[5] = m1.m[5] - m2.m[5];
+		ptr->m[6] = m1.m[6] - m2.m[6]; ptr->m[7] = m1.m[7] - m2.m[7];
+		ptr->m[8] = m1.m[8] - m2.m[8]; ptr->m[9] = m1.m[9] - m2.m[9];
+		ptr->m[10] = m1.m[10] - m2.m[10]; ptr->m[11] = m1.m[11] - m2.m[11];
+		ptr->m[12] = m1.m[12] - m2.m[12]; ptr->m[13] = m1.m[13] - m2.m[13];
+		ptr->m[14] = m1.m[14] - m2.m[14]; ptr->m[15] = m1.m[15] - m2.m[15];
 	}
 
 	void Matrix::subtract(const Matrix& m) {
@@ -613,47 +613,47 @@ namespace iron {
 		m[12] *= s; m[13] *= s; m[14] *= s; m[15] *= s;
 	}
 
-	void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst) {
-		if (dst == nullptr) {
+	void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 		
-		dst->m[0] = ((m1.m[0] * m2.m[0]) + (m1.m[4] * m2.m[1]) +
+		ptr->m[0] = ((m1.m[0] * m2.m[0]) + (m1.m[4] * m2.m[1]) +
 			(m1.m[8] * m2.m[2]) + (m1.m[12] * m2.m[3]));
-		dst->m[1] = ((m1.m[1] * m2.m[0]) + (m1.m[5] * m2.m[1]) + 
+		ptr->m[1] = ((m1.m[1] * m2.m[0]) + (m1.m[5] * m2.m[1]) + 
 			(m1.m[9] * m2.m[2]) + (m1.m[13] * m2.m[3]));
-		dst->m[2] = ((m1.m[2] * m2.m[0]) + (m1.m[6] * m2.m[1]) + 
+		ptr->m[2] = ((m1.m[2] * m2.m[0]) + (m1.m[6] * m2.m[1]) + 
 			(m1.m[10] * m2.m[2]) + (m1.m[14] * m2.m[3]));
-		dst->m[3] = ((m1.m[3] * m2.m[0]) + (m1.m[7] * m2.m[1]) + 
+		ptr->m[3] = ((m1.m[3] * m2.m[0]) + (m1.m[7] * m2.m[1]) + 
 			(m1.m[11] * m2.m[2]) + (m1.m[15] * m2.m[3]));
 
-		dst->m[4] = ((m1.m[0] * m2.m[4]) + (m1.m[4] * m2.m[5]) + 
+		ptr->m[4] = ((m1.m[0] * m2.m[4]) + (m1.m[4] * m2.m[5]) + 
 			(m1.m[8] * m2.m[6]) + (m1.m[12] * m2.m[7]));
-		dst->m[5] = ((m1.m[1] * m2.m[4]) + (m1.m[5] * m2.m[5]) + 
+		ptr->m[5] = ((m1.m[1] * m2.m[4]) + (m1.m[5] * m2.m[5]) + 
 			(m1.m[9] * m2.m[6]) + (m1.m[13] * m2.m[7]));
-		dst->m[6] = ((m1.m[2] * m2.m[4]) + (m1.m[6] * m2.m[5]) + 
+		ptr->m[6] = ((m1.m[2] * m2.m[4]) + (m1.m[6] * m2.m[5]) + 
 			(m1.m[10] * m2.m[6]) + (m1.m[14] * m2.m[7]));
-		dst->m[7] = ((m1.m[3] * m2.m[4]) + (m1.m[7] * m2.m[5]) + 
+		ptr->m[7] = ((m1.m[3] * m2.m[4]) + (m1.m[7] * m2.m[5]) + 
 			(m1.m[11] * m2.m[6]) + (m1.m[15] * m2.m[7]));
 
-		dst->m[8] = ((m1.m[0] * m2.m[8]) + (m1.m[4] * m2.m[9]) + 
+		ptr->m[8] = ((m1.m[0] * m2.m[8]) + (m1.m[4] * m2.m[9]) + 
 			(m1.m[8] * m2.m[10]) + (m1.m[12] * m2.m[11]));
-		dst->m[9] = ((m1.m[1] * m2.m[8]) + (m1.m[5] * m2.m[9]) + 
+		ptr->m[9] = ((m1.m[1] * m2.m[8]) + (m1.m[5] * m2.m[9]) + 
 			(m1.m[9] * m2.m[10]) + (m1.m[13] * m2.m[11]));
-		dst->m[10] = ((m1.m[2] * m2.m[8]) + (m1.m[6] * m2.m[9]) + 
+		ptr->m[10] = ((m1.m[2] * m2.m[8]) + (m1.m[6] * m2.m[9]) + 
 			(m1.m[10] * m2.m[10]) + (m1.m[14] * m2.m[11]));
-		dst->m[11] = ((m1.m[3] * m2.m[8]) + (m1.m[7] * m2.m[9]) + 
+		ptr->m[11] = ((m1.m[3] * m2.m[8]) + (m1.m[7] * m2.m[9]) + 
 			(m1.m[11] * m2.m[10]) + (m1.m[15] * m2.m[11]));
 
-		dst->m[12] = ((m1.m[0] * m2.m[12]) + (m1.m[4] * m2.m[13]) + 
+		ptr->m[12] = ((m1.m[0] * m2.m[12]) + (m1.m[4] * m2.m[13]) + 
 			(m1.m[8] * m2.m[14]) + (m1.m[12] * m2.m[15]));
-		dst->m[13] = ((m1.m[1] * m2.m[12]) + (m1.m[5] * m2.m[13]) + 
+		ptr->m[13] = ((m1.m[1] * m2.m[12]) + (m1.m[5] * m2.m[13]) + 
 			(m1.m[9] * m2.m[14]) + (m1.m[13] * m2.m[15]));
-		dst->m[14] = ((m1.m[2] * m2.m[12]) + (m1.m[6] * m2.m[13]) + 
+		ptr->m[14] = ((m1.m[2] * m2.m[12]) + (m1.m[6] * m2.m[13]) + 
 			(m1.m[10] * m2.m[14]) + (m1.m[14] * m2.m[15]));
-		dst->m[15] = ((m1.m[3] * m2.m[12]) + (m1.m[7] * m2.m[13]) + 
+		ptr->m[15] = ((m1.m[3] * m2.m[12]) + (m1.m[7] * m2.m[13]) + 
 			(m1.m[11] * m2.m[14]) + (m1.m[15] * m2.m[15]));
 	}
 
@@ -661,8 +661,8 @@ namespace iron {
 		multiply(*this, m, this);
 	}
 	
-	bool Matrix::invert(Matrix* dst) const {
-		if (dst == nullptr) {
+	bool Matrix::invert(Matrix* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return false;
@@ -681,17 +681,17 @@ namespace iron {
 		}
 
 		for (int i = 1; i < 4; i++) {
-			dst->m[i] /= dst->m[0];
+			ptr->m[i] /= ptr->m[0];
 		}
 
 		for (int i = 1; i < 4; i++) {
 			for (int j = i; j < 4; j++)  {
 				float sum = 0.0f;
 				for (int k = 0; k < i; k++) {
-					sum += dst->m[((j * 4) + k)] * dst->m[((k * 4) + i)];
+					sum += ptr->m[((j * 4) + k)] * ptr->m[((k * 4) + i)];
 				}
 
-				dst->m[((j * 4) + i)] -= sum;
+				ptr->m[((j * 4) + i)] -= sum;
 			}
 
 			if (i == 3) {
@@ -701,10 +701,10 @@ namespace iron {
 			for (int j = i + 1; j < 4; j++) {
 				float sum = 0.0f;
 				for (int k = 0; k < i; k++) {
-					sum += dst->m[((i * 4) + k)] * dst->m[((k * 4) + j)];
+					sum += ptr->m[((i * 4) + k)] * ptr->m[((k * 4) + j)];
 				}
 
-				dst->m[((i * 4) + j)] = (dst->m[((i * 4) + j)] - sum) / dst->m[((i * 4) + i)];
+				ptr->m[((i * 4) + j)] = (ptr->m[((i * 4) + j)] - sum) / ptr->m[((i * 4) + i)];
 			}
 		}
 
@@ -714,11 +714,11 @@ namespace iron {
 				if (i != j) {
 					x = 0.0f;
 					for (int k = i; k < j; k++) {
-						x -= dst->m[((j * 4) + k)] * dst->m[((k * 4) + i)];
+						x -= ptr->m[((j * 4) + k)] * ptr->m[((k * 4) + i)];
 					}
 				}
 
-				dst->m[((j * 4) + i)] = x / dst->m[((j * 4) + j)];
+				ptr->m[((j * 4) + i)] = x / ptr->m[((j * 4) + j)];
 			}
 		}
 
@@ -730,10 +730,10 @@ namespace iron {
 
 				float sum = 0.0f;
 				for (int k = i; k < j; k++) {
-					sum += ((float)dst->m[((k * 4) + j)] * ((i == k) ? 1.0f : dst->m[i * 4 + k]));
+					sum += ((float)ptr->m[((k * 4) + j)] * ((i == k) ? 1.0f : ptr->m[i * 4 + k]));
 				}
 
-				dst->m[i * 4 + j] = -sum;
+				ptr->m[i * 4 + j] = -sum;
 			}
 		}
 
@@ -741,10 +741,10 @@ namespace iron {
 			for (int j = 0; j < 4; j++)  {
 				float sum = 0.0f;
 				for (int k = ((i>j) ? i : j); k < 4; k++) {
-					sum += ((float)((j == k) ? 1.0f : dst->m[((j * 4) + k)]) * dst->m[((k * 4) + i)]);
+					sum += ((float)((j == k) ? 1.0f : ptr->m[((j * 4) + k)]) * ptr->m[((k * 4) + i)]);
 				}
 
-				dst->m[((j * 4) + i)] = sum;
+				ptr->m[((j * 4) + i)] = sum;
 			}
 		}
 
@@ -770,7 +770,7 @@ namespace iron {
 		//if (fabs(det) <= MATH_TOLERANCE)
 		//	return false;
 
-		//// Support the case where m == dst.
+		//// Support the case where m == ptr.
 		//Matrix inverse;
 		//inverse.m[0] = m[5] * b5 - m[6] * b4 + m[7] * b3;
 		//inverse.m[1] = -m[1] * b5 + m[2] * b4 - m[3] * b3;
@@ -792,7 +792,7 @@ namespace iron {
 		//inverse.m[14] = -m[12] * a3 + m[13] * a1 - m[14] * a0;
 		//inverse.m[15] = m[8] * a3 - m[9] * a1 + m[10] * a0;
 
-		//multiply(inverse, 1.0f / det, dst);
+		//multiply(inverse, 1.0f / det, ptr);
 
 		//return true;
 	}
@@ -801,17 +801,17 @@ namespace iron {
 		return invert(this);
 	}
 
-	void Matrix::negate(Matrix* dst) const {
-		if (dst == nullptr) {
+	void Matrix::negate(Matrix* ptr) const {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__),
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->m[0] = -m[0]; dst->m[1] = -m[1]; dst->m[2] = -m[2]; dst->m[3] = -m[3];
-		dst->m[4] = -m[4]; dst->m[5] = -m[5]; dst->m[6] = -m[6]; dst->m[7] = -m[7];
-		dst->m[8] = -m[8]; dst->m[9] = -m[9]; dst->m[10] = -m[10]; dst->m[11] = -m[11];
-		dst->m[12] = -m[12]; dst->m[13] = -m[13]; dst->m[14] = -m[14]; dst->m[15] = -m[15];
+		ptr->m[0] = -m[0]; ptr->m[1] = -m[1]; ptr->m[2] = -m[2]; ptr->m[3] = -m[3];
+		ptr->m[4] = -m[4]; ptr->m[5] = -m[5]; ptr->m[6] = -m[6]; ptr->m[7] = -m[7];
+		ptr->m[8] = -m[8]; ptr->m[9] = -m[9]; ptr->m[10] = -m[10]; ptr->m[11] = -m[11];
+		ptr->m[12] = -m[12]; ptr->m[13] = -m[13]; ptr->m[14] = -m[14]; ptr->m[15] = -m[15];
 	}
 
 	void Matrix::negate() {

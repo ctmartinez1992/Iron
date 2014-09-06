@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log',['Log',['../classiron_1_1_log.html',1,'iron']]]
+  ['ironmath',['IronMath',['../classiron_1_1_iron_math.html',1,'iron']]]
 ];

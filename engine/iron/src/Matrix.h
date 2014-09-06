@@ -99,17 +99,17 @@ namespace iron {
 
 	public:
 		/**
-		* Simulates a camera with the given values and stores the result in dst.
+		* Simulates a camera with the given values and stores the result in ptr.
 		*
 		* @param eye The eye position.
 		* @param point The target point (where the camera looks at).
 		* @param up The up vector.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		static void lookAt(const Vector3& eye, const Vector3& point, const Vector3& up, Matrix* dst);
+		static void lookAt(const Vector3& eye, const Vector3& point, const Vector3& up, Matrix* ptr);
 
 		/**
-		* Simulates a "eye-point" camera with the given values and stores the result in dst.
+		* Simulates a "eye-point" camera with the given values and stores the result in ptr.
 		*
 		* @param eyeX The eye x-coordinate position.
 		* @param eyeY The eye y-coordinate position.
@@ -120,46 +120,46 @@ namespace iron {
 		* @param upX The up vector x-coordinate value.
 		* @param upY The up vector y-coordinate value.
 		* @param upZ The up vector z-coordinate value.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
 		static void lookAt(const float eyeX, const float eyeY, const float eyeZ,
 			const float pointX, const float pointY, const float pointZ,
-			const float upX, const float upY, const float upZ, Matrix* dst);
+			const float upX, const float upY, const float upZ, Matrix* ptr);
 
 		/**
 		* Simulates an orthographic projection matrix which forms a square of visible space and stores the
-		* result in dst.
+		* result in ptr.
 		*
 		* @param w The width of the space.
 		* @param h The height of the space.
 		* @param zNear The distance to the near view plane in the z coordinate.
 		* @param zFar The distance to the far view plane in the z coordinate.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
 		static void orthographic(const float w, const float h, const float zNear, const float zFar, 
-			Matrix* dst);
+			Matrix* ptr);
 
 		/**
-		* Simulates a perspective projection matrix with the given values and stores the result in dst.
+		* Simulates a perspective projection matrix with the given values and stores the result in ptr.
 		*
 		* @param fov The field of view in the y coordinate (degrees). Clamped between 30 and 180 degrees.
 		* @param aspect The aspect ratio (width/height).
 		* @param zNear The distance to the near view plane in the z coordinate.
 		* @param zFar The distance to the far view plane in the z coordinate.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
 		static void perspective(const float fov, const float aspect, const float zNear, const float zFar,
-			Matrix* dst);
+			Matrix* ptr);
 
 		/**
-		* Translates this matrix with the given values and stores the result in dst.
+		* Translates this matrix with the given values and stores the result in ptr.
 		*
 		* @param x The translation value applied on the x coordinate.
 		* @param y The translation value applied on the y coordinate.
 		* @param z The translation value applied on the z coordinate.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void translate(const float x, const float y, const float z, Matrix* dst);
+		void translate(const float x, const float y, const float z, Matrix* ptr);
 
 		/**
 		* Translates this matrix by the given values.
@@ -171,12 +171,12 @@ namespace iron {
 		void translate(const float x, const float y, const float z);
 
 		/**
-		* Translates this matrix with the given vector and stores the result in dst.
+		* Translates this matrix with the given vector and stores the result in ptr.
 		*
 		* @param t The translation vector.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void translate(const Vector3& t, Matrix* dst);
+		void translate(const Vector3& t, Matrix* ptr);
 
 		/**
 		* Translates this matrix with the given vector.
@@ -186,12 +186,12 @@ namespace iron {
 		void translate(const Vector3& t);
 
 		/**
-		* Rotates this matrix with the given quaternion's matrix rotation and stores the result in dst.
+		* Rotates this matrix with the given quaternion's matrix rotation and stores the result in ptr.
 		*
 		* @param q The quaternion to rotate by.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void rotate(const Quaternion& q, Matrix* dst);
+		void rotate(const Quaternion& q, Matrix* ptr);
 
 		/**
 		* Rotates this matrix with the given quaternion's matrix rotation.
@@ -202,13 +202,13 @@ namespace iron {
 
 		/**
 		* Rotates this matrix around the result of the rotation between the given axis and angle,
-		* stores the result in dst.
+		* stores the result in ptr.
 		*
 		* @param axis The axis of the rotation.
 		* @param a The angle of the rotation (radians).
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void rotate(const Vector3& axis, const float a, Matrix* dst);
+		void rotate(const Vector3& axis, const float a, Matrix* ptr);
 
 		/**
 		* Rotates this matrix with the given vector by the given rotation.
@@ -222,9 +222,9 @@ namespace iron {
 		* Rotates this matrix around the x axis.
 		*
 		* @param a The angle of the rotation (radians).
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void rotateX(const float a, Matrix* dst);
+		void rotateX(const float a, Matrix* ptr);
 
 		/**
 		* Rotates this matrix around the x axis.
@@ -237,9 +237,9 @@ namespace iron {
 		* Rotates this matrix around the y axis.
 		*
 		* @param a The angle of the rotation (radians).
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void rotateY(const float a, Matrix* dst);
+		void rotateY(const float a, Matrix* ptr);
 
 		/**
 		* Rotates this matrix around the y axis.
@@ -252,9 +252,9 @@ namespace iron {
 		* Rotates this matrix around the z axis.
 		*
 		* @param a The angle of the rotation (radians).
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void rotateZ(float a, Matrix* dst);
+		void rotateZ(float a, Matrix* ptr);
 
 		/**
 		* Rotates this matrix around the z axis.
@@ -264,12 +264,12 @@ namespace iron {
 		void rotateZ(const float a);
 
 		/**
-		* Scales this matrix by the given value and stores the result in dst.
+		* Scales this matrix by the given value and stores the result in ptr.
 		*
 		* @param s The amount to scale.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void scale(const float s, Matrix* dst);
+		void scale(const float s, Matrix* ptr);
 
 		/**
 		* Scales this matrix by the given value.
@@ -279,31 +279,31 @@ namespace iron {
 		void scale(const float s);
 
 		/**
-		* Scales this matrix by the given values and stores the result in dst.
+		* Scales this matrix by the given values and stores the result in ptr.
 		*
 		* @param x The amount to scale along the x coordinate.
-		* @param x The amount to scale along the y coordinate.
-		* @param x The amount to scale along the z coordinate.
-		* @param dst The matrix that stores the result.
+		* @param y The amount to scale along the y coordinate.
+		* @param z The amount to scale along the z coordinate.
+		* @param ptr The matrix that stores the result.
 		*/
-		void scale(const float x, const float y, const float z, Matrix* dst);
+		void scale(const float x, const float y, const float z, Matrix* ptr);
 
 		/**
 		* Scales this matrix by the given values.
 		*
 		* @param x The amount to scale along the x coordinate.
-		* @param x The amount to scale along the y coordinate.
-		* @param x The amount to scale along the z coordinate.
+		* @param y The amount to scale along the y coordinate.
+		* @param z The amount to scale along the z coordinate.
 		*/
 		void scale(const float x, const float y, const float z);
 
 		/**
-		* Scales this matrix by the given vector and stores the result in dst.
+		* Scales this matrix by the given vector and stores the result in ptr.
 		*
 		* @param s The vector with the scaling values.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		void scale(const Vector3& s, Matrix* dst);
+		void scale(const Vector3& s, Matrix* ptr);
 
 		/**
 		* Scales this matrix by the given vector.
@@ -313,95 +313,95 @@ namespace iron {
 		void scale(const Vector3& s);
 
 		/**
-		* Gets the translate component of this matrix and stores the result in dst.
+		* Gets the translate component of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		* @return true If it successfully separated the translate component from the matrix, false if
 		* not.
 		*/
-		bool getTranslate(Vector3* dst) const;
+		bool getTranslate(Vector3* ptr) const;
 
 		/**
-		* Gets the rotation component of this matrix and stores the result in dst.
+		* Gets the rotation component of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		* @return true If it successfully separated the rotation component from the matrix, false if not.
 		*/
-		bool getRotate(Quaternion* dst) const;
+		bool getRotate(Quaternion* ptr) const;
 
 		/**
-		* Gets the scalar component of this matrix and stores the result in dst.
+		* Gets the scalar component of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		* @return true If it successfully separated the scalar component from the matrix, false if not.
 		*/
-		bool getScale(Vector3* dst) const;
+		bool getScale(Vector3* ptr) const;
 
 		/**
-		* Gets the up vector of this matrix and stores the result in dst.
+		* Gets the up vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void upVector(Vector3* dst) const;
+		void upVector(Vector3* ptr) const;
 
 		/**
-		* Gets the down vector of this matrix and stores the result in dst.
+		* Gets the down vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void downVector(Vector3* dst) const;
+		void downVector(Vector3* ptr) const;
 
 		/**
-		* Gets the left vector of this matrix and stores the result in dst.
+		* Gets the left vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void leftVector(Vector3* dst) const;
+		void leftVector(Vector3* ptr) const;
 
 		/**
-		* Gets the right vector of this matrix and stores the result in dst.
+		* Gets the right vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void rightVector(Vector3* dst) const;
+		void rightVector(Vector3* ptr) const;
 
 		/**
-		* Gets the front vector of this matrix and stores the result in dst.
+		* Gets the front vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void frontVector(Vector3* dst) const;
+		void frontVector(Vector3* ptr) const;
 
 		/**
-		* Gets the back vector of this matrix and stores the result in dst.
+		* Gets the back vector of this matrix and stores the result in ptr.
 		*
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void backVector(Vector3* dst) const;
+		void backVector(Vector3* ptr) const;
 
 		/**
-		* Transforms the given point with this matrix and stores the result in dst.
+		* Transforms the given point with this matrix and stores the result in ptr.
 		*
 		* @param p The point.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void transformPoint(const Vector3& p, Vector3* dst) const;
+		void transformPoint(const Vector3& p, Vector3* ptr) const;
 
 		/**
-		* Transforms the given vector with this matrix by and stores the result in dst.
+		* Transforms the given vector with this matrix by and stores the result in ptr.
 		*
 		* @param v The vector.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void transformVector(const Vector3& v, Vector3* dst) const;
+		void transformVector(const Vector3& v, Vector3* ptr) const;
 
 		/**
-		* Transforms the given vector with this matrix by and stores the result in dst.
+		* Transforms the given vector with this matrix by and stores the result in ptr.
 		*
 		* @param v The vector.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void transformVector(const Vector4& v, Vector4* dst) const;
+		void transformVector(const Vector4& v, Vector4* ptr) const;
 
 		/**
 		* Adds the given float value to all components of this matrix. Negative scalar for subtraction.
@@ -411,13 +411,13 @@ namespace iron {
 		void add(const float s);
 
 		/**
-		* Adds the given matrices and stores the result in dst.
+		* Adds the given matrices and stores the result in ptr.
 		*
 		* @param m1 The first matrix.
 		* @param m2 The second matrix.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		static void add(const Matrix& m1, const Matrix& m2, Matrix* dst);
+		static void add(const Matrix& m1, const Matrix& m2, Matrix* ptr);
 
 		/**
 		* Adds the given matrix to this matrix.
@@ -427,13 +427,13 @@ namespace iron {
 		void add(const Matrix& m);
 
 		/**
-		* Subtracts the given matrices and stores the result in dst.
+		* Subtracts the given matrices and stores the result in ptr.
 		*
 		* @param m1 The first matrix.
 		* @param m2 The second matrix.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		static void subtract(const Matrix& m1, const Matrix& m2, Matrix* dst);
+		static void subtract(const Matrix& m1, const Matrix& m2, Matrix* ptr);
 
 		/**
 		* Subtracts the given matrix to this matrix.
@@ -450,13 +450,13 @@ namespace iron {
 		void multiply(float s);
 
 		/**
-		* Multiplies the given matrices and stores the result in dst.
+		* Multiplies the given matrices and stores the result in ptr.
 		*
 		* @param m1 The first matrix.
 		* @param m2 The second matrix.
-		* @param dst The matrix that stores the result.
+		* @param ptr The matrix that stores the result.
 		*/
-		static void multiply(const Matrix& m1, const Matrix& m2, Matrix* dst);
+		static void multiply(const Matrix& m1, const Matrix& m2, Matrix* ptr);
 
 		/**
 		* Multiplies the given matrix to this matrix.
@@ -468,11 +468,11 @@ namespace iron {
 		/**
 		* Stores the inverse of this matrix in the specified matrix.
 		*
-		* @param dst A matrix to store the invert of this matrix in.
+		* @param ptr A matrix to store the invert of this matrix in.
 		*
 		* @return true if the the matrix can be inverted, false otherwise.
 		*/
-		bool invert(Matrix* dst) const;
+		bool invert(Matrix* ptr) const;
 
 		/**
 		* Inverts this matrix.
@@ -482,11 +482,11 @@ namespace iron {
 		bool invert();
 
 		/**
-		* Negates this matrix and stores the result in dst.
+		* Negates this matrix and stores the result in ptr.
 		*
-		* @param dst A matrix to store the result in.
+		* @param ptr A matrix to store the result in.
 		*/
-		void negate(Matrix* dst) const;
+		void negate(Matrix* ptr) const;
 
 		/**
 		* Negates this matrix.

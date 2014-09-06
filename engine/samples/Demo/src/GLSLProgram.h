@@ -1,31 +1,36 @@
-#ifndef Demo_GLSL_Program_H_
-#define Demo_GLSL_Program_H_
+#pragma once
 
 #include <string>
 #include <glew.h>
 
-class GLSLProgram {
-private:
-	GLuint		 _programID;
-	GLuint		_vertexShaderID;
-	GLuint		_fragmentShaderID;
-	int			_numAttributes;
 
+//This class handles the compilation, linking, and usage of a GLSL shader program.
+//Reference: http://www.opengl.org/wiki/Shader_Compilation
+class GLSLProgram
+{
 public:
     GLSLProgram();
-	~GLSLProgram();
+    ~GLSLProgram();
 
-private:
-	void compileShader(const std::string& filePath, GLuint id);
+    void compileShaders(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilepath);
 
-public:
-    void compileShaders(const std::string& vSPath, const std::string& fSpath);
-	void linkShaders();
+    void linkShaders();
+
     void addAttribute(const std::string& attributeName);
-	GLuint getUniformLocation(const std::string& uniformName);
+
+    GLint getUniformLocation(const std::string& uniformName);
+
     void use();
     void unuse();
-};
+private:
 
-#endif
+    int _numAttributes;
+
+    void compileShader(const std::string& filePath, GLuint id);
+
+    GLuint _programID;
+
+    GLuint _vertexShaderID;
+    GLuint _fragmentShaderID;
+};
 

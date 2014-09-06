@@ -1,93 +1,141 @@
 #include "MainGame.h"
 #include "Errors.h"
+#include "ImageLoader.h"
 
-MainGame::MainGame() : w(nullptr), state(GameState::PLAY), time(0), sW(1024), sH(768)
+#include <iostream>
+#include <string>
+
+//Constructor, just initializes private member variables
+MainGame::MainGame() : 
+    _screenWidth(1024),
+    _screenHeight(768), 
+    _time(0.0f),
+    _window(nullptr), 
+    _gameState(GameState::PLAY)
 {
 
 }
 
-MainGame::~MainGame() {
-
+//Destructor
+MainGame::~MainGame()
+{
 }
 
+//This runs the game
+void MainGame::run() {
+    initSystems();
+
+    //Initialize our sprite. (temporary)
+    _sprite.init(-1.0f, -1.0f, 2.0f, 2.0f);
+
+    _playerTexture = ImageLoader::loadPNG("res/textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+
+    //This only returns when the game ends
+    gameLoop();
+}
+
+//Initialize SDL and Opengl and whatever else we need
 void MainGame::initSystems() {
-	SDL_Init(SDL_INIT_EVERYTHING);
+    //Initialize SDL
+    SDL_Init(SDL_INIT_EVERYTHING);
 
-	w = SDL_CreateWindow("Demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
-		, sW, sH, SDL_WINDOW_OPENGL);
-	if (w == nullptr) {
-		fatalError("SDL Window could not be created!");
-	}
+    //Open an SDL window
+    _window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL);
+    if (_window == nullptr) {
+        fatalError("SDL Window could not be created!");
+    }
 
-	SDL_GLContext glContext = SDL_GL_CreateContext(w);
-	if (glContext == nullptr) {
-		fatalError("SDL_GL context could not be created!");
-	}
+    //Set up our OpenGL context
+    SDL_GLContext glContext = SDL_GL_CreateContext(_window);
+    if (glContext == nullptr) {
+        fatalError("SDL_GL context could not be created!");
+    }
 
-	glewExperimental = true;
-	GLenum error = glewInit();
-	if (error != GLEW_OK) {
-		fatalError("Could not initialize glew!");
-	}
+    //Set up glew (optional but recommended)
+    GLenum error = glewInit();
+    if (error != GLEW_OK) {
+        fatalError("Could not initialize glew!");
+    }
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    //Tell SDL that we want a double buffered window so we dont get
+    //any flickering
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	initShaders();
+    //Set the background color to blue
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+    initShaders();
 }
 
 void MainGame::initShaders() {
-	program.compileShaders("res/shaders/colorShading.vert",
-		"res/shaders/colorShading.frag");
-	program.addAttribute("vertexPosition");
-	program.addAttribute("vertexColor");
-	program.linkShaders();
+    _colorProgram.compileShaders("res/shaders/colorShading.vert", "res/shaders/colorShading.frag");
+    _colorProgram.addAttribute("vertexPosition");
+    _colorProgram.addAttribute("vertexColor");
+    _colorProgram.addAttribute("vertexUV");
+    _colorProgram.linkShaders();
 }
 
-void MainGame::input() {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		switch (e.type) {
-			case SDL_QUIT:
-				state = GameState::EXIT;
-				break;
+//This is the main game loop for our program
+void MainGame::gameLoop() {
 
-			case SDL_MOUSEMOTION:
-				std::cout << e.motion.x << " - " << e.motion.y << std::endl;
-				break;
-
-			default:
-				break;
-		}
-	}
+    //Will loop until we set _gameState to EXIT
+    while (_gameState != GameState::EXIT) {
+        processInput();
+        _time += 0.01f;
+        drawGame();
+    }
 }
 
-void MainGame::loop() {
-	while (state != GameState::EXIT) {
-		input();
-		time += 0.1f;
-		render();
-	}
+//Processes input with SDL
+void MainGame::processInput() {
+    SDL_Event evnt;
+
+    //Will keep looping until there are no more events to process
+    while (SDL_PollEvent(&evnt)) {
+        switch (evnt.type) {
+            case SDL_QUIT:
+                _gameState = GameState::EXIT;
+                break;
+            case SDL_MOUSEMOTION:
+                std::cout << evnt.motion.x << " " << evnt.motion.y << std::endl;
+                break;
+        }
+    }
 }
 
-void MainGame::render() {
-	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//Draws the game using the almighty OpenGL
+void MainGame::drawGame() {
 
-	program.use();
+    //Set the base depth to 1.0
+    glClearDepth(1.0);
+    //Clear the color and depth buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	GLuint timeLocation = program.getUniformLocation("time");
-	glUniform1f(timeLocation, time);
+    //Enable the shader
+    _colorProgram.use();
 
-	sprite.render();
+    //We are using texture unit 0
+    glActiveTexture(GL_TEXTURE0);
+    //Bind the texture to texture unit 0
+    glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
+    //Get the uniform location
+    GLint textureLocation = _colorProgram.getUniformLocation("mySampler");
+    //Tell the shader that the texture is in texture unit 0
+    glUniform1i(textureLocation, 0);
 
-	program.unuse();
+    //Set the constantly changing time variable
+    GLint timeLocation = _colorProgram.getUniformLocation("time");
+    glUniform1f(timeLocation, _time);
 
-	SDL_GL_SwapWindow(w);
-}
+    //Draw our sprite!
+    _sprite.draw();
 
-void MainGame::run() {
-	initSystems();
-	sprite.init(-1.0f, -1.0f, 2.0f, 2.0f);
-	loop();
-}
+    //unbind the texture
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    //disable the shader
+    _colorProgram.unuse();
+
+    //Swap our buffer and draw everything to the screen!
+    SDL_GL_SwapWindow(_window);
+}    

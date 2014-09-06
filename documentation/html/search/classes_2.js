@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vector2',['Vector2',['../classiron_1_1_vector2.html',1,'iron']]]
+  ['log',['Log',['../classiron_1_1_log.html',1,'iron']]]
 ];

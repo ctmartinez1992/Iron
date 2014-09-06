@@ -17,10 +17,13 @@
 //Physics
 #include "Particle.h"
 
+//Threading
+#include "ThreadPool.h"
+
 //UI
 
 
 //General Stuff that needs to be done
-//TODO Substitue all dst with ptr.
 //TODO Create rules for warning and errors and fix all logs accordingly.
-//TODO Add NEON_ON stuff, might be interesting to experiment this stuff.
+//TODO Add deep commentary with formulas on physics part.
+//TODO Put physics inside its own namespace

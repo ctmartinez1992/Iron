@@ -159,13 +159,13 @@ namespace iron {
 		void add(const Vector2& vector);
 
 		/**
-		* Adds the given vectors and stores the result in the dst.
+		* Adds the given vectors and stores the result in the ptr.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		static void add(const Vector2& v1, const Vector2& v2, Vector2* dst);
+		static void add(const Vector2& v1, const Vector2& v2, Vector2* ptr);
 
 		/**
 		* Subtracts the given float values to this vector.
@@ -183,13 +183,13 @@ namespace iron {
 		void subtract(const Vector2& vector);
 
 		/**
-		* Subtracts the given vectors and stores the result in the dst.
+		* Subtracts the given vectors and stores the result in the ptr.
 		*
 		* @param v1 The first vector.
 		* @param v2 The second vector.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		static void subtract(const Vector2& v1, const Vector2& v2, Vector2* dst);
+		static void subtract(const Vector2& v1, const Vector2& v2, Vector2* ptr);
 
 		/**
 		* Scales the coordinates in this vector by the given float value.
@@ -199,12 +199,12 @@ namespace iron {
 		void scale(const float scalar);
 
 		/**
-		* Scales the coordinates in this vector by the given float value and stores the result in dst.
+		* Scales the coordinates in this vector by the given float value and stores the result in ptr.
 		*
 		* @param scalar The scalar value.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void scale(const float scalar, Vector2* dst) const;
+		void scale(const float scalar, Vector2* ptr) const;
 
 		/**
 		* Divides the coordinates in this vector by the given float value.
@@ -214,12 +214,12 @@ namespace iron {
 		void divide(const float denominator);
 
 		/**
-		* Divides the coordinates in this vector by the given float value and stores the result in dst.
+		* Divides the coordinates in this vector by the given float value and stores the result in ptr.
 		*
 		* @param denominator The denominator value.
-		* @param dst The vector that stores the result.
+		* @param ptr The vector that stores the result.
 		*/
-		void divide(const float denominator, Vector2* dst) const;
+		void divide(const float denominator, Vector2* ptr) const;
 
 		/**
 		* Adds the given vector to this, scaled by the given amount.
@@ -285,12 +285,12 @@ namespace iron {
 		float dot(const Vector2& vector) const;
 
 		/**
-		* Normalizes the given vector and stores the result in dst.
+		* Normalizes the given vector and stores the result in ptr.
 		*
 		* @param vector The vector with the values.
-		* @param dst The vector that will store the result.
+		* @param ptr The vector that will store the result.
 		*/
-		static void normalize(const Vector2& vector, Vector2* dst);
+		static void normalize(const Vector2& vector, Vector2* ptr);
 
 		/**
 		* Normalizes this vector and stores the result in this vector.
@@ -300,21 +300,21 @@ namespace iron {
 		Vector2& normalize();
 
 		/**
-		* Normalizes this vector and stores the result in the dst.
+		* Normalizes this vector and stores the result in the ptr.
 		*
-		* @return The result of the normalization in dst.
+		* @return The result of the normalization in ptr.
 		*/
-		void normalize(Vector2* dst) const;
+		void normalize(Vector2* ptr) const;
 
 		/**
-		* Calculates the linear interpolation between 2 given vectors and stores in dst.
+		* Calculates the linear interpolation between 2 given vectors and stores in ptr.
 		*
 		* @param start Start vector.
 		* @param end End vector.
 		* @param value Value to interpolate by.
-		* @param dst The vector to store the result.
+		* @param ptr The vector to store the result.
 		*/
-		static void lerp(const Vector2& start, const Vector2& end, float value, Vector2* dst);
+		static void lerp(const Vector2& start, const Vector2& end, float value, Vector2* ptr);
 
 		/**
 		* Calculates the linear interpolation between this vector and the given vector and stores the
@@ -327,27 +327,27 @@ namespace iron {
 
 		/**
 		* Clamps the given vector within the given minX, minY, maxX and maxY values and stores the
-		* result in dst.
+		* result in ptr.
 		*
 		* @param vector The vector to clamp.
 		* @param minX The minimum x value.
 		* @param minY The minimum y value.
 		* @param maxX The maximum x value.
 		* @param maxY The maximum y value.
-		* @param dst A pointer to a Vector2 object to store the result in.
+		* @param ptr A pointer to a Vector2 object to store the result in.
 		*/
 		static void clamp(const Vector2& vector, const float minX, const float minY, const float maxX, 
-			const float maxY, Vector2* dst);
+			const float maxY, Vector2* ptr);
 
 		/**
-		* Clamps the given vector within the given min and max values and stores the result in dst.
+		* Clamps the given vector within the given min and max values and stores the result in ptr.
 		*
 		* @param vector The vector to clamp.
 		* @param min The minimum value.
 		* @param max The maximum value.
-		* @param dst A pointer to a Vector2 object to store the result in.
+		* @param ptr A pointer to a Vector2 object to store the result in.
 		*/
-		static void clamp(const Vector2& vector, const Vector2& min, const Vector2& max, Vector2* dst);
+		static void clamp(const Vector2& vector, const Vector2& min, const Vector2& max, Vector2* ptr);
 
 		/**
 		* Clamps this vector within the given minX, minY, maxX and maxY values and stores the result in

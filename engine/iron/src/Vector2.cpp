@@ -84,15 +84,15 @@ namespace iron {
 		y += vector.y;
 	}
 
-	void Vector2::add(const Vector2& v1, const Vector2& v2, Vector2* dst) {
-		if (dst == nullptr) {
+	void Vector2::add(const Vector2& v1, const Vector2& v2, Vector2* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = v1.x + v2.x;
-		dst->y = v1.y + v2.y;
+		ptr->x = v1.x + v2.x;
+		ptr->y = v1.y + v2.y;
 	}
 
 	void Vector2::subtract(const float x, const float y) {
@@ -105,15 +105,15 @@ namespace iron {
 		y -= vector.y;
 	}
 
-	void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* dst) {
-		if (dst == nullptr) {
+	void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = v1.x - v2.x;
-		dst->y = v1.y - v2.y;
+		ptr->x = v1.x - v2.x;
+		ptr->y = v1.y - v2.y;
 	}
 
 	void Vector2::scale(float scalar) {
@@ -121,9 +121,9 @@ namespace iron {
 		y *= scalar;
 	}
 
-	void Vector2::scale(float scalar, Vector2* dst) const {
-		dst->x *= scalar;
-		dst->y *= scalar;
+	void Vector2::scale(float scalar, Vector2* ptr) const {
+		ptr->x *= scalar;
+		ptr->y *= scalar;
 	}
 
 	void Vector2::divide(float denominator) {
@@ -131,9 +131,9 @@ namespace iron {
 		y /= denominator;
 	}
 
-	void Vector2::divide(float denominator, Vector2* dst) const {
-		dst->x /= denominator;
-		dst->y /= denominator;
+	void Vector2::divide(float denominator, Vector2* ptr) const {
+		ptr->x /= denominator;
+		ptr->y /= denominator;
 	}
 	
 	void Vector2::addScaledVector(const Vector2& vector, float scale) {
@@ -169,8 +169,8 @@ namespace iron {
 		return ((x * vector.x) + (y * vector.y));
 	}
 
-	void Vector2::normalize(const Vector2& vector, Vector2* dst) {
-		if (dst == nullptr) {
+	void Vector2::normalize(const Vector2& vector, Vector2* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -178,21 +178,21 @@ namespace iron {
 
 		float l = ((vector.x * vector.x) + (vector.y * vector.y));
 		if (l == 1.0f) {
-			dst->x = vector.x;
-			dst->y = vector.y;
+			ptr->x = vector.x;
+			ptr->y = vector.y;
 			return;
 		}
 
 		l = sqrt(l);
 		if (l < IronMath::MATH_FLOAT_MIN) {
-			dst->x = vector.x;
-			dst->y = vector.y;
+			ptr->x = vector.x;
+			ptr->y = vector.y;
 			return;
 		}
 
 		l = (1.0f / l);
-		dst->x *= l;
-		dst->y *= l;
+		ptr->x *= l;
+		ptr->y *= l;
 	}
 
 	Vector2& Vector2::normalize() {
@@ -200,8 +200,8 @@ namespace iron {
 		return *this;
 	}
 
-	void Vector2::normalize(Vector2* dst) const	{
-		if (dst == nullptr) {
+	void Vector2::normalize(Vector2* ptr) const	{
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -209,25 +209,25 @@ namespace iron {
 
 		float l = lengthSquared();
 		if (l == 1.0f) {
-			dst->x = x;
-			dst->y = y;
+			ptr->x = x;
+			ptr->y = y;
 			return;
 		}
 
 		l = sqrt(l);
 		if (l < IronMath::MATH_FLOAT_MIN) {
-			dst->x = x;
-			dst->y = y;
+			ptr->x = x;
+			ptr->y = y;
 			return;
 		}
 
 		l = (1.0f / l);
-		dst->x *= l;
-		dst->y *= l;
+		ptr->x *= l;
+		ptr->y *= l;
 	}
 
-	void Vector2::lerp(const Vector2& start, const Vector2& end, float value, Vector2* dst) {
-		if (dst == nullptr) {
+	void Vector2::lerp(const Vector2& start, const Vector2& end, float value, Vector2* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -240,19 +240,19 @@ namespace iron {
 		}
 
 		if (value == 0.0f) {
-			dst->x = start.x;
-			dst->y = start.y;
+			ptr->x = start.x;
+			ptr->y = start.y;
 			return;
 		}
 		if (value == 1.0f) {
-			dst->x = end.x;
-			dst->y = end.y;
+			ptr->x = end.x;
+			ptr->y = end.y;
 			return;
 		}
 
 		float value1 = 1.0f - value;
-		dst->x = value1 * start.x + value * end.x;
-		dst->y = value1 * start.y + value * end.y;
+		ptr->x = value1 * start.x + value * end.x;
+		ptr->y = value1 * start.y + value * end.y;
 	}
 
 	void Vector2::lerp(const Vector2& end, float value) {
@@ -277,9 +277,9 @@ namespace iron {
 	}
 
 	void Vector2::clamp(const Vector2& vector, const float minX, const float minY, const float maxX, 
-		const float maxY, Vector2* dst) 
+		const float maxY, Vector2* ptr) 
 	{
-		if (dst == nullptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -291,24 +291,24 @@ namespace iron {
 			return;
 		}
 
-		dst->x = vector.x;
-		if (dst->x < minX) {
-			dst->x = minX;
+		ptr->x = vector.x;
+		if (ptr->x < minX) {
+			ptr->x = minX;
 		}
-		if (dst->x > maxX) {
-			dst->x = maxX;
+		if (ptr->x > maxX) {
+			ptr->x = maxX;
 		}
-		dst->y = vector.y;
-		if (dst->y < minY) {
-			dst->y = minY;
+		ptr->y = vector.y;
+		if (ptr->y < minY) {
+			ptr->y = minY;
 		}
-		if (dst->y > maxY) {
-			dst->y = maxY;
+		if (ptr->y > maxY) {
+			ptr->y = maxY;
 		}
 	}
 
-	void Vector2::clamp(const Vector2& v, const Vector2& min, const Vector2& max, Vector2* dst)	{
-		clamp(v, min.x, min.y, max.x, max.y, dst);
+	void Vector2::clamp(const Vector2& v, const Vector2& min, const Vector2& max, Vector2* ptr)	{
+		clamp(v, min.x, min.y, max.x, max.y, ptr);
 	}
 
 	void Vector2::clamp(const float minX, const float minY, const float maxX, const float maxY) {

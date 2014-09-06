@@ -99,16 +99,16 @@ namespace iron {
 		z += vector.z;
 	}
 
-	void Vector4::add(const Vector4& v1, const Vector4& v2, Vector4* dst) {
-		if (dst == nullptr) {
+	void Vector4::add(const Vector4& v1, const Vector4& v2, Vector4* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = v1.x + v2.x;
-		dst->y = v1.y + v2.y;
-		dst->z = v1.z + v2.z;
+		ptr->x = v1.x + v2.x;
+		ptr->y = v1.y + v2.y;
+		ptr->z = v1.z + v2.z;
 	}
 
 	void Vector4::subtract(const float x, const float y, const float z) {
@@ -123,16 +123,16 @@ namespace iron {
 		z -= vector.z;
 	}
 
-	void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst) {
-		if (dst == nullptr) {
+	void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = v1.x - v2.x;
-		dst->y = v1.y - v2.y;
-		dst->z = v1.z - v2.z;
+		ptr->x = v1.x - v2.x;
+		ptr->y = v1.y - v2.y;
+		ptr->z = v1.z - v2.z;
 	}
 
 	void Vector4::scale(float scalar) {
@@ -141,10 +141,10 @@ namespace iron {
 		z *= scalar;
 	}
 
-	void Vector4::scale(float scalar, Vector4* dst) const {
-		dst->x *= scalar;
-		dst->y *= scalar;
-		dst->z *= scalar;
+	void Vector4::scale(float scalar, Vector4* ptr) const {
+		ptr->x *= scalar;
+		ptr->y *= scalar;
+		ptr->z *= scalar;
 	}
 
 	void Vector4::divide(float denominator) {
@@ -153,10 +153,10 @@ namespace iron {
 		z /= denominator;
 	}
 
-	void Vector4::divide(float denominator, Vector4* dst) const {
-		dst->x /= denominator;
-		dst->y /= denominator;
-		dst->z /= denominator;
+	void Vector4::divide(float denominator, Vector4* ptr) const {
+		ptr->x /= denominator;
+		ptr->y /= denominator;
+		ptr->z /= denominator;
 	}
 	
 	void Vector4::addScaledVector(const Vector4& vector, float scale) {
@@ -195,24 +195,24 @@ namespace iron {
 		return ((x * vector.x) + (y * vector.y) + (z * vector.z));
 	}
 
-	void Vector4::cross(const Vector4& v1, const Vector4& v2, Vector4* dst)	{
-		if (dst == nullptr) {
+	void Vector4::cross(const Vector4& v1, const Vector4& v2, Vector4* ptr)	{
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
 		}
 
-		dst->x = (v1.y * v2.z) - (v1.z * v2.y);
-		dst->y = (v1.z * v2.x) - (v1.x * v2.z);
-		dst->z = (v1.x * v2.y) - (v1.y * v2.x);
+		ptr->x = (v1.y * v2.z) - (v1.z * v2.y);
+		ptr->y = (v1.z * v2.x) - (v1.x * v2.z);
+		ptr->z = (v1.x * v2.y) - (v1.y * v2.x);
 	}
 
 	void Vector4::cross(const Vector4& vector) {
 		cross(*this, vector, this);
 	}
 
-	void Vector4::normalize(const Vector4& vector, Vector4* dst) {
-		if (dst == nullptr) {
+	void Vector4::normalize(const Vector4& vector, Vector4* ptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -220,24 +220,24 @@ namespace iron {
 
 		float l = ((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z));
 		if (l == 1.0f) {
-			dst->x = vector.x;
-			dst->y = vector.y;
-			dst->z = vector.z;
+			ptr->x = vector.x;
+			ptr->y = vector.y;
+			ptr->z = vector.z;
 			return;
 		}
 
 		l = sqrt(l);
 		if (l < IronMath::MATH_FLOAT_MIN) {
-			dst->x = vector.x;
-			dst->y = vector.y;
-			dst->z = vector.z;
+			ptr->x = vector.x;
+			ptr->y = vector.y;
+			ptr->z = vector.z;
 			return;
 		}
 
 		l = (1.0f / l);
-		dst->x *= l;
-		dst->y *= l;
-		dst->z *= l;
+		ptr->x *= l;
+		ptr->y *= l;
+		ptr->z *= l;
 	}
 
 	Vector4& Vector4::normalize() {
@@ -245,8 +245,8 @@ namespace iron {
 		return *this;
 	}
 
-	void Vector4::normalize(Vector4* dst) const	{
-		if (dst == nullptr) {
+	void Vector4::normalize(Vector4* ptr) const	{
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -254,30 +254,30 @@ namespace iron {
 
 		float l = lengthSquared();
 		if (l == 1.0f) {
-			dst->x = x;
-			dst->y = y;
-			dst->z = z;
+			ptr->x = x;
+			ptr->y = y;
+			ptr->z = z;
 			return;
 		}
 
 		l = sqrt(l);
 		if (l < IronMath::MATH_FLOAT_MIN) {
-			dst->x = x;
-			dst->y = y;
-			dst->z = z;
+			ptr->x = x;
+			ptr->y = y;
+			ptr->z = z;
 			return;
 		}
 
 		l = (1.0f / l);
-		dst->x *= l;
-		dst->y *= l;
-		dst->z *= l;
+		ptr->x *= l;
+		ptr->y *= l;
+		ptr->z *= l;
 	}
 
 	void Vector4::clamp(const Vector4& vector, const float minX, const float minY, const float minZ, 
-		const float maxX, const float maxY, const float maxZ, Vector4* dst)
+		const float maxX, const float maxY, const float maxZ, Vector4* ptr)
 	{
-		if (dst == nullptr) {
+		if (ptr == nullptr) {
 			iron::Log::s()->logWarning("NULL ptr was passed.", __LINE__, std::string(__FUNCTION__), 
 				std::string(__FILE__));
 			return;
@@ -289,31 +289,31 @@ namespace iron {
 			return;
 		}
 
-		dst->x = vector.x;
-		if (dst->x < minX) {
-			dst->x = minX;
+		ptr->x = vector.x;
+		if (ptr->x < minX) {
+			ptr->x = minX;
 		}
-		if (dst->x > maxX) {
-			dst->x = maxX;
+		if (ptr->x > maxX) {
+			ptr->x = maxX;
 		}
-		dst->y = vector.y;
-		if (dst->y < minY) {
-			dst->y = minY;
+		ptr->y = vector.y;
+		if (ptr->y < minY) {
+			ptr->y = minY;
 		}
-		if (dst->y > maxY) {
-			dst->y = maxY;
+		if (ptr->y > maxY) {
+			ptr->y = maxY;
 		}
-		dst->z = vector.z;
-		if (dst->z < minZ) {
-			dst->z = minZ;
+		ptr->z = vector.z;
+		if (ptr->z < minZ) {
+			ptr->z = minZ;
 		}
-		if (dst->z > maxZ) {
-			dst->z = maxZ;
+		if (ptr->z > maxZ) {
+			ptr->z = maxZ;
 		}
 	}
 
-	void Vector4::clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* dst)	{
-		clamp(v, min.x, min.y, min.z, max.x, max.y, max.z, dst);
+	void Vector4::clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* ptr)	{
+		clamp(v, min.x, min.y, min.z, max.x, max.y, max.z, ptr);
 	}
 
 	void Vector4::clamp(const float minX, const float minY, const float minZ, const float maxX, 

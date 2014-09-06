@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['log_2ecpp',['Log.cpp',['../_log_8cpp.html',1,'']]],
-  ['log_2eh',['Log.h',['../_log_8h.html',1,'']]]
+  ['iron_2eh',['Iron.h',['../_iron_8h.html',1,'']]],
+  ['ironmath_2ecpp',['IronMath.cpp',['../_iron_math_8cpp.html',1,'']]],
+  ['ironmath_2eh',['IronMath.h',['../_iron_math_8h.html',1,'']]]
 ];

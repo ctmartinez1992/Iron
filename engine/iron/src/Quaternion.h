@@ -92,13 +92,13 @@ namespace iron {
 		* @param z2 The z component of the second quaternion.
 		* @param w2 The w component of the second quaternion.
 		* @param c The interpolation coefficient.
-		* @param dstx The float that stores the x component result.
-		* @param dsty The float that stores the y component result.
-		* @param dstz The float that stores the z component result.
-		* @param dstw The float that stores the w component result.
+		* @param ptrx The float that stores the x component result.
+		* @param ptry The float that stores the y component result.
+		* @param ptrz The float that stores the z component result.
+		* @param ptrw The float that stores the w component result.
 		*/
 		static void slerp(float x1, float y1, float z1, float w1, float x2, float y2, float z2, 
-			float w2, float c, float* dstx, float* dsty, float* dstz, float* dstw);
+			float w2, float c, float* ptrx, float* ptry, float* ptrz, float* ptrw);
 
 	protected:
 
@@ -109,9 +109,9 @@ namespace iron {
 		* @param q1 The first quaternion.
 		* @param q2 The second quaternion.
 		* @param c The interpolation coefficient.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		*/
-		static void lerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* dst);
+		static void lerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* ptr);
 
 		/**
 		* Linear interpolation between this quaternion and the given one. Produces a straight line.
@@ -130,9 +130,9 @@ namespace iron {
 		* @param q1 The first quaternion.
 		* @param q2 The second quaternion.
 		* @param c The interpolation coefficient.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		*/
-		static void slerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* dst);
+		static void slerp(const Quaternion& q1, const Quaternion& q2, const float c, Quaternion* ptr);
 
 		/**
 		* Spherical linear interpolation between this quaternion and the given one.
@@ -146,13 +146,13 @@ namespace iron {
 		void slerp(const Quaternion& q, const float c);
 
 		/**
-		* Multiplies the given quaternions and stores the result in dst.
+		* Multiplies the given quaternions and stores the result in ptr.
 		*
 		* @param q1 The first quaternion.
 		* @param q2 The second quaternion.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		*/
-		static void multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* dst);
+		static void multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* ptr);
 
 		/**
 		* Multiplies the given vector by this one.
@@ -163,13 +163,13 @@ namespace iron {
 
 		/**
 		* Returns true if the given quaternion was successfully inverted, false if not. The inverse
-		* is stored in dst.
+		* is stored in ptr.
 		*
 		* @param q The quaternion.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		* @return True if the given quaternion was successfully inverted, false if not.
 		*/
-		static bool invert(const Quaternion& q, Quaternion* dst);
+		static bool invert(const Quaternion& q, Quaternion* ptr);
 
 		/**
 		* Returns true if successfully inverted, false if not. The inverse is stored in this quaternion.
@@ -179,12 +179,12 @@ namespace iron {
 		bool invert();
 
 		/**
-		* Calculates the conjugate of the given quaternion and stores the result in dst.
+		* Calculates the conjugate of the given quaternion and stores the result in ptr.
 		*
 		* @param q The quaternion.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		*/
-		static void conjugate(const Quaternion& q, Quaternion* dst);
+		static void conjugate(const Quaternion& q, Quaternion* ptr);
 
 		/**
 		* Sets this quaternion to the conjugate of itself.
@@ -192,12 +192,12 @@ namespace iron {
 		void conjugate();
 
 		/**
-		* Normalizes the given quaternion and stores the result in dst.
+		* Normalizes the given quaternion and stores the result in ptr.
 		*
 		* @param q The quaternion.
-		* @param dst The quaternion that stores the result.
+		* @param ptr The quaternion that stores the result.
 		*/
-		static void normalize(const Quaternion& q, Quaternion* dst);
+		static void normalize(const Quaternion& q, Quaternion* ptr);
 		
 		/**
 		* Normalizes this quaternion.

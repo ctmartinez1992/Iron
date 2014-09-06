@@ -12,13 +12,14 @@ namespace iron {
 	*/
 	class Particle {
 
-		//We want this classes to have access to particles protected variables.
 		friend class ForceGravity;
 		friend class ForceDrag;
 		friend class ForceSpring;
 		friend class ForceAnchorSpring;
 		friend class ForceElastic;
 		friend class ForceAnchorElastic;
+		friend class ForceBuoyancy;
+		friend class ForceStiffSpring;
 
 		/****************************** Variables ******************************/
 	private:
@@ -110,9 +111,9 @@ namespace iron {
 		/**
 		* Returns the position of this particle.
 		*
-		* @param dst The vector that stores the position.
+		* @param ptr The vector that stores the position.
 		*/
-		const void getPosition(Vector3* dst) const;
+		const void getPosition(Vector3* ptr) const;
 
 		/**
 		* Sets the velocity of this particle with the given Vector3 object values.
@@ -133,9 +134,9 @@ namespace iron {
 		/**
 		* Returns the velocity of this particle.
 		*
-		* @param dst The vector that stores the velocity.
+		* @param ptr The vector that stores the velocity.
 		*/
-		const void getVelocity(Vector3* dst) const;
+		const void getVelocity(Vector3* ptr) const;
 
 		/**
 		* Sets the acceleration of this particle with the given Vector3 object values.
@@ -156,9 +157,9 @@ namespace iron {
 		/**
 		* Returns the acceleration of this particle.
 		*
-		* @param dst The vector that stores the acceleration.
+		* @param ptr The vector that stores the acceleration.
 		*/
-		const void getAcceleration(Vector3* dst) const;
+		const void getAcceleration(Vector3* ptr) const;
 		
 		/**
 		* Sets the damp of this particle.

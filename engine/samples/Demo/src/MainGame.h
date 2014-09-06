@@ -1,35 +1,40 @@
-#ifndef Demo_Main_Game_H_
-#define Demo_Main_Game_H_
+#pragma once
 
-#include "Iron.h"
+#include <SDL.h>
+#include <glew.h>
+
 #include "GLSLProgram.h"
+#include "GLTexture.h"
+
 #include "Sprite.h"
 
-enum class GameState {
-	PLAY = 0,
-	EXIT
-};
+enum class GameState {PLAY, EXIT};
 
-class MainGame {
-private:
-	SDL_Window* w;
-	GameState state;
-	Sprite sprite;
-	GLSLProgram	program;
-	float time;
-	int sW;
-	int sH;
-
+class MainGame
+{
 public:
-	MainGame();
-	~MainGame();
+    MainGame();
+    ~MainGame();
 
-	void initSystems();
-	void initShaders();
-	void input();
-	void loop();
-	void render();
-	void run();
+    void run();
+
+private:
+    void initSystems();
+    void initShaders();
+    void gameLoop();
+    void processInput();
+    void drawGame();
+
+    SDL_Window* _window;
+    int _screenWidth;
+    int _screenHeight;
+    GameState _gameState;
+
+    Sprite _sprite;
+
+    GLSLProgram _colorProgram;
+    GLTexture _playerTexture;
+
+    float _time;
 };
 
-#endif

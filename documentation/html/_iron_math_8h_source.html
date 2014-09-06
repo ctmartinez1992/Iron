@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,8 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">IronMath.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="_iron_math_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef IRONMATH_H_</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define IRONMATH_H_</span></div>
+<a href="_iron_math_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef IRON_MATH_IRONMATH_H_</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define IRON_MATH_IRONMATH_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">namespace </span>iron {</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
@@ -110,35 +110,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classiron_1_1_iron_math.html#afa51e38b4b0e29fb1fab75bc50541798">   22</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">float</span>  <a class="code" href="classiron_1_1_iron_math.html#afa51e38b4b0e29fb1fab75bc50541798">MATH_PIOVER4</a>;       </div>
 <div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classiron_1_1_iron_math.html#ad0cb19c2f12c600ab9c8f492d56b0ed8">   23</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">float</span>  <a class="code" href="classiron_1_1_iron_math.html#ad0cb19c2f12c600ab9c8f492d56b0ed8">MATH_PIX2</a>;          </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="comment">/****************************** Contructors &amp; Destructors ******************************/</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:     </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">/****************************** Methods ******************************/</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="comment">/****************************** Methods ******************************/</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classiron_1_1_iron_math.html#a221db3c676a5ff1d97af207a4c4cea84">deg_to_rad</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> deg);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classiron_1_1_iron_math.html#a2046957c93f78005ec95e44a503f15f1">rad_to_deg</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> rad);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">/****************************** Operators Overloading ******************************/</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classiron_1_1_iron_math.html#a221db3c676a5ff1d97af207a4c4cea84">deg_to_rad</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> deg);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classiron_1_1_iron_math.html#a2046957c93f78005ec95e44a503f15f1">rad_to_deg</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> rad);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">/****************************** Operators Overloading ******************************/</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    };</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_ad0cb19c2f12c600ab9c8f492d56b0ed8"><div class="ttname"><a href="classiron_1_1_iron_math.html#ad0cb19c2f12c600ab9c8f492d56b0ed8">iron::IronMath::MATH_PIX2</a></div><div class="ttdeci">static const float MATH_PIX2</div><div class="ttdef"><b>Definition:</b> IronMath.h:23</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_aad93436c8dbf8b9e792d03810b5138b8"><div class="ttname"><a href="classiron_1_1_iron_math.html#aad93436c8dbf8b9e792d03810b5138b8">iron::IronMath::MATH_PI</a></div><div class="ttdeci">static const float MATH_PI</div><div class="ttdef"><b>Definition:</b> IronMath.h:20</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_afa51e38b4b0e29fb1fab75bc50541798"><div class="ttname"><a href="classiron_1_1_iron_math.html#afa51e38b4b0e29fb1fab75bc50541798">iron::IronMath::MATH_PIOVER4</a></div><div class="ttdeci">static const float MATH_PIOVER4</div><div class="ttdef"><b>Definition:</b> IronMath.h:22</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_a3e3bdaa532f636d14924a3ee0cecf0d3"><div class="ttname"><a href="classiron_1_1_iron_math.html#a3e3bdaa532f636d14924a3ee0cecf0d3">iron::IronMath::MATH_LOG2E</a></div><div class="ttdeci">static const float MATH_LOG2E</div><div class="ttdef"><b>Definition:</b> IronMath.h:18</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_a40b30852f14cecaa2d70406f9db0de9f"><div class="ttname"><a href="classiron_1_1_iron_math.html#a40b30852f14cecaa2d70406f9db0de9f">iron::IronMath::MATH_LOG10E</a></div><div class="ttdeci">static const float MATH_LOG10E</div><div class="ttdef"><b>Definition:</b> IronMath.h:19</div></div>
-<div class="ttc" id="classiron_1_1_iron_math_html"><div class="ttname"><a href="classiron_1_1_iron_math.html">iron::IronMath</a></div><div class="ttdoc">IronMath is a simple utility class that provides some useful function that involve math...</div><div class="ttdef"><b>Definition:</b> IronMath.h:10</div></div>
+<div class="ttc" id="classiron_1_1_iron_math_html"><div class="ttname"><a href="classiron_1_1_iron_math.html">iron::IronMath</a></div><div class="ttdoc">Simple utility class that provides some useful function that involve math. </div><div class="ttdef"><b>Definition:</b> IronMath.h:10</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_a2046957c93f78005ec95e44a503f15f1"><div class="ttname"><a href="classiron_1_1_iron_math.html#a2046957c93f78005ec95e44a503f15f1">iron::IronMath::rad_to_deg</a></div><div class="ttdeci">static float rad_to_deg(const float rad)</div><div class="ttdef"><b>Definition:</b> IronMath.cpp:19</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_a78dc026ec525e9c531b306c0742a97ae"><div class="ttname"><a href="classiron_1_1_iron_math.html#a78dc026ec525e9c531b306c0742a97ae">iron::IronMath::MATH_PIOVER2</a></div><div class="ttdeci">static const float MATH_PIOVER2</div><div class="ttdef"><b>Definition:</b> IronMath.h:21</div></div>
 <div class="ttc" id="classiron_1_1_iron_math_html_a221db3c676a5ff1d97af207a4c4cea84"><div class="ttname"><a href="classiron_1_1_iron_math.html#a221db3c676a5ff1d97af207a4c4cea84">iron::IronMath::deg_to_rad</a></div><div class="ttdeci">static float deg_to_rad(const float deg)</div><div class="ttdef"><b>Definition:</b> IronMath.cpp:15</div></div>
@@ -146,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 8 2014 15:43:13 for Iron Sword by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Sep 6 2014 14:26:28 for Iron Sword by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

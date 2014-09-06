@@ -423,6 +423,136 @@ namespace iron {
 		*/
 		virtual void update(Particle* p, const float d);
 	};
+
+	/****************************************************************************/
+	/****************************** ForceStiffSpring ****************************/
+	/****************************************************************************/
+
+	/*! \brief A Force that applies a spring force to a particle.
+	*
+	*  A Force that applies a spring force to 2 particles, each one positioned at each end of the
+	*  spring. This instance can be applied to multiple particles.
+	*/
+	class ForceStiffSpring : public ForceGenerator {
+
+		/****************************** Variables ******************************/
+	private:
+
+	protected:
+		Vector3*		anchor;					/*!< The position of the anchor. */
+
+		float			damp;					/*!< The damp of the spring. */
+
+		float			constant;				/*!< The spring constant. */
+
+	public:
+
+		/****************************** Contructors & Destructors ******************************/
+	public:
+		/**
+		* Creates a spring force generator with the given values.
+		*
+		* @param a The position of the anchor.
+		* @param d The damp.
+		* @param c The spring constant.
+		*/
+		ForceStiffSpring(Vector3* a, const float d, const float c);
+
+		/**
+		* Destructor.
+		*/
+		virtual ~ForceStiffSpring();
+
+	private:
+
+		/****************************** Methods ******************************/
+	private:
+
+	protected:
+
+	public:
+		/**
+		* Applies the generated spring force to the given particle.
+		*
+		* @param p The particle to update.
+		* @param d The duration value, only used sometimes.
+		*/
+		virtual void update(Particle* p, const float d);
+	};
+
+	/****************************************************************************/
+	/***************************** ForceBuoyancy ***************************/
+	/****************************************************************************/
+
+	/*! \brief A Force that applies a buoyancy force (impulsion) to a fixed position and a particle.
+	*
+	*  Buoyancy force is equal to the weight of the water that an object displaces. Having that in mind.
+	*  This force applies, in most cases, to objects dropped in a liquid which are then pushed  upwards
+	*  by buoyancy force. Applied to only one object. This instance can be applied to multiple particles. 
+	*/
+	class ForceBuoyancy : public ForceGenerator {
+
+		/****************************** Variables ******************************/
+	private:
+		/**
+		* The volume of the object.
+		*/
+		float		volume;
+
+		/**
+		* The depth limit. Upon reaching this limit, the maximum buoyancy force kicks in.
+		*/
+		float		depthLimit;
+
+		/**
+		* The height of the liquid plane. Y coordinate must be above 0. The plane must be parrallel to 
+		* the XZ plane.
+		*/
+		float		liquidHeight;
+
+		/**
+		* The density of the liquid.
+		*/
+		float		liquidDensity;
+
+	protected:
+
+	public:
+
+		/****************************** Contructors & Destructors ******************************/
+	public:
+		/**
+		* Creates a buoyancy force generator with the given values.
+		*
+		* @param v The volume.
+		* @param dl The depth limit.
+		* @param lh The liquid height. Y coordinate must be above 0. The plane must be parrallel to the 
+		* XZ plane.
+		* @param ld The liquid density.
+		*/
+		ForceBuoyancy(const float v, const float dl, const float lh, const float ld);
+
+		/**
+		* Destructor.
+		*/
+		virtual ~ForceBuoyancy();
+
+	private:
+
+		/****************************** Methods ******************************/
+	private:
+
+	protected:
+
+	public:
+		/**
+		* Applies the generated buoyancy force to the given particle.
+		*
+		* @param p The particle to update.
+		* @param d The duration value, only used sometimes.
+		*/
+		virtual void update(Particle* p, const float d);
+	};
 }
 
 #endif
