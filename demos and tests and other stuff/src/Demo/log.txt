@@ -1,0 +1,2 @@
+[15:30:43]:[4]:[SDL_main]:[main.cpp]:[WARNING] - Test.
+[15:30:43]:[89]:[iron::Vector2::add]:[vector2.cpp]:[WARNING] - NULL ptr was passed.

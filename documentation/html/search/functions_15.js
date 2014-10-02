@@ -1,23 +1,4 @@
 var searchData=
 [
-  ['_7eforceanchorelastic',['~ForceAnchorElastic',['../classiron_1_1_force_anchor_elastic.html#a51611eee8fae887f3f837b773f6958aa',1,'iron::ForceAnchorElastic']]],
-  ['_7eforceanchorspring',['~ForceAnchorSpring',['../classiron_1_1_force_anchor_spring.html#a751f4c90c5d4741b1f272a5002d656ac',1,'iron::ForceAnchorSpring']]],
-  ['_7eforcebuoyancy',['~ForceBuoyancy',['../classiron_1_1_force_buoyancy.html#a7bc1e76502c26a4368a63b9a25396d13',1,'iron::ForceBuoyancy']]],
-  ['_7eforcedrag',['~ForceDrag',['../classiron_1_1_force_drag.html#a40d1d071bc36631219833cb0c375965f',1,'iron::ForceDrag']]],
-  ['_7eforceelastic',['~ForceElastic',['../classiron_1_1_force_elastic.html#ac7047d896736b638e71fc601c539c1bb',1,'iron::ForceElastic']]],
-  ['_7eforcegravity',['~ForceGravity',['../classiron_1_1_force_gravity.html#a07f9ef827ed412054fcc79c60db87f73',1,'iron::ForceGravity']]],
-  ['_7eforcespring',['~ForceSpring',['../classiron_1_1_force_spring.html#afab35cba770f6c19176fc37d99a35f84',1,'iron::ForceSpring']]],
-  ['_7eforcestiffspring',['~ForceStiffSpring',['../classiron_1_1_force_stiff_spring.html#a511ff871690f5301e08c317b1fc99380',1,'iron::ForceStiffSpring']]],
-  ['_7elog',['~Log',['../classiron_1_1_log.html#ab82f1ea717f23e53a28cd2b8e840ef33',1,'iron::Log']]],
-  ['_7ematrix',['~Matrix',['../classiron_1_1_matrix.html#a0ea1617ce5ca96370ef0879562ab4201',1,'iron::Matrix']]],
-  ['_7eparticle',['~Particle',['../classiron_1_1_particle.html#afeae1c7ec80e85801532baf83a8979f1',1,'iron::Particle']]],
-  ['_7equaternion',['~Quaternion',['../classiron_1_1_quaternion.html#ace6ec9b7eb4bcc0707d1c665a4b80852',1,'iron::Quaternion']]],
-  ['_7etask',['~Task',['../classiron_1_1thread_1_1_task.html#abe03ee5aa21cf6a17cce8aafbb5c84b3',1,'iron::thread::Task']]],
-  ['_7etaskdata',['~TaskData',['../classiron_1_1thread_1_1_task_data.html#a1bfb404711cb8ea31a093f8cfa30a7af',1,'iron::thread::TaskData']]],
-  ['_7ethread',['~Thread',['../classiron_1_1thread_1_1_thread.html#ab4ccd621a522a426b04815b13c891a98',1,'iron::thread::Thread']]],
-  ['_7ethreadlock',['~ThreadLock',['../classiron_1_1thread_1_1_thread_lock.html#a13d6cc6337a803364e69c8dbeb1be9cb',1,'iron::thread::ThreadLock']]],
-  ['_7etwolockqueue',['~TwoLockQueue',['../classiron_1_1thread_1_1_two_lock_queue.html#ad31f412a8d4abecb18a61277adea52ed',1,'iron::thread::TwoLockQueue']]],
-  ['_7evector2',['~Vector2',['../classiron_1_1_vector2.html#aa20129752dffaddf9e39564b2f35772a',1,'iron::Vector2']]],
-  ['_7evector3',['~Vector3',['../classiron_1_1_vector3.html#ad281766898eda8ac31e2debda4bd40e4',1,'iron::Vector3']]],
-  ['_7evector4',['~Vector4',['../classiron_1_1_vector4.html#ac031e1c4a1017b9662e3d7075a3fe5d8',1,'iron::Vector4']]]
+  ['zero',['zero',['../classiron_1_1_matrix.html#a0ff75eec3d34026904f0993e1e62102b',1,'iron::Matrix::zero()'],['../classiron_1_1_quaternion.html#adaad9ce2be8dd08843ee2fb987d8adc3',1,'iron::Quaternion::zero()'],['../classiron_1_1_vector2.html#a748ddab803fc8ef39a812b0cbe41dcad',1,'iron::Vector2::zero()'],['../classiron_1_1_vector3.html#aa6ab82da2d8160d4b5066a9555bfda48',1,'iron::Vector3::zero()'],['../classiron_1_1_vector4.html#a0433baaf7113f1ce6e09ea5cf6883d2c',1,'iron::Vector4::zero()']]]
 ];

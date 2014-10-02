@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['quaternion_2ecpp',['Quaternion.cpp',['../_quaternion_8cpp.html',1,'']]],
-  ['quaternion_2eh',['Quaternion.h',['../_quaternion_8h.html',1,'']]],
-  ['quaternion_2einl',['Quaternion.inl',['../_quaternion_8inl.html',1,'']]]
+  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['matrix_2ecpp',['Matrix.cpp',['../_matrix_8cpp.html',1,'']]],
+  ['matrix_2eh',['Matrix.h',['../_matrix_8h.html',1,'']]],
+  ['matrix_2einl',['Matrix.inl',['../_matrix_8inl.html',1,'']]]
 ];

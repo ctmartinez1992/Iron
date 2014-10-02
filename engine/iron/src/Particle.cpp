@@ -11,7 +11,7 @@ namespace iron {
 	Particle::~Particle() {
 	}
 
-	void Particle::integration(float duration) {
+	void Particle::update(float duration) {
 		if (inverseMass <= 0.0f) {
 			return;
 		}

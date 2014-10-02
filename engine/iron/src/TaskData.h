@@ -1,5 +1,5 @@
-#ifndef IRON_TASK_DATA_H_
-#define IRON_TASK_DATA_H_
+#ifndef IRON_THREAD_TASK_DATA_H_
+#define IRON_THREAD_TASK_DATA_H_
 
 namespace iron {
 

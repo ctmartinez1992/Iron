@@ -78,7 +78,7 @@ namespace iron {
 		* updates the particle's linear position, calculates the acceleration and velocity, "adds" the 
 		* damp value and zeros the forces.
 		*/
-		void integration(float duration);
+		void update(float duration);
 
 		/**
 		* Applies the given force to this particle in the next integration.

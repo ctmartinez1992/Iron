@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,8 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a989b056ee7aecddc6215f01f9bbac97c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afeae1c7ec80e85801532baf83a8979f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiron_1_1_particle.html#afeae1c7ec80e85801532baf83a8979f1">~Particle</a> ()</td></tr>
 <tr class="separator:afeae1c7ec80e85801532baf83a8979f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d1e4b1db183ecf527c071598eb28886"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiron_1_1_particle.html#a3d1e4b1db183ecf527c071598eb28886">integration</a> (float duration)</td></tr>
-<tr class="separator:a3d1e4b1db183ecf527c071598eb28886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a240ddd0001df12cd678899d68be00a2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiron_1_1_particle.html#a240ddd0001df12cd678899d68be00a2a">update</a> (float duration)</td></tr>
+<tr class="separator:a240ddd0001df12cd678899d68be00a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaffe60d9298ef9ae48bfc2d8cda83bbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiron_1_1_particle.html#aaffe60d9298ef9ae48bfc2d8cda83bbc">addForce</a> (const <a class="el" href="classiron_1_1_vector3.html">Vector3</a> &amp;<a class="el" href="classiron_1_1_particle.html#a4c31da237fd646bd5c2944cf72e6f5db">force</a>)</td></tr>
 <tr class="separator:aaffe60d9298ef9ae48bfc2d8cda83bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a256b13d72a764155c171610d83a0c26a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiron_1_1_particle.html#a256b13d72a764155c171610d83a0c26a">clearForce</a> ()</td></tr>
@@ -397,23 +397,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3d1e4b1db183ecf527c071598eb28886"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void iron::Particle::integration </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>duration</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Integrates this particle forward in time by the given duration. Basically, this function updates the particle's linear position, calculates the acceleration and velocity, "adds" the damp value and zeros the forces. </p>
-
-</div>
-</div>
 <a class="anchor" id="ad42c96dea78cfdd42b4d4071fcade2d0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -676,6 +659,23 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a240ddd0001df12cd678899d68be00a2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void iron::Particle::update </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>duration</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Integrates this particle forward in time by the given duration. Basically, this function updates the particle's linear position, calculates the acceleration and velocity, "adds" the damp value and zeros the forces. </p>
 
 </div>
 </div>
@@ -978,7 +978,7 @@ Friends</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 6 2014 14:26:29 for Iron Sword by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 2 2014 15:25:17 for Iron Sword by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

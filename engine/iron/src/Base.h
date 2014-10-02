@@ -53,8 +53,8 @@
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	//#define USE_VAO
-	#include "SDL.h"
-	#include "glew.h"
+	#include "sdl/SDL.h"
+	#include "sdl/glew.h"
 	#define GLEW_STATIC
 #elif __linux__
 	//#define USE_VAO
